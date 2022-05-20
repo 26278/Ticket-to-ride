@@ -47,6 +47,7 @@ public class GameController {
         db.collection("games").document(id).update("Players", playerData("player_1", "bob"));
 
         list.getChildren().add(p2b);
+
     }
     @FXML
     protected void playerSelect2() {
