@@ -1,4 +1,4 @@
-package com.example.iipsene_ttr.Config;
+package ttr.Config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Database {
-    private static final String privateKey = "src/main/resources/com/example/iipsene_ttr/firebase/iipsene-ttr-firebase-adminsdk-uea7f-1bc1be03bb.json";
+    private static final String privateKey = "src/main/resources/ttr/firebase/iipsene-ttr-firebase-adminsdk-uea7f-1bc1be03bb.json";
     private static final String databaseUrl = "https://console.firebase.google.com/project/iipsene-ttr/firestore/data/";
     private Firestore db;
 

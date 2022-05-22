@@ -1,4 +1,4 @@
-package com.example.iipsene_ttr;
+package ttr;
 
 
 import java.io.IOException;
@@ -6,15 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-import com.example.iipsene_ttr.Config.Database;
-import com.example.iipsene_ttr.Services.FirestoreService;
+import ttr.Config.Database;
+import ttr.Services.FirestoreService;
 import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreException;
-import com.google.firebase.database.annotations.Nullable;
-
 
 
 public class App {

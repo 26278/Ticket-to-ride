@@ -1,4 +1,4 @@
-package com.example.iipsene_ttr.Services;
+package ttr.Services;
 
 import com.google.cloud.firestore.Firestore;
 import java.util.Map;
@@ -11,8 +11,8 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 
 
-import com.example.iipsene_ttr.Config.Database;
-import com.example.iipsene_ttr.Controllers.Controller;
+import ttr.Config.Database;
+import ttr.Controllers.Controller;
 
 
 public class FirestoreService {

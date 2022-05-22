@@ -1,4 +1,4 @@
-package com.example.iipsene_ttr.Controllers;
+package ttr.Controllers;
 
 import com.google.cloud.firestore.DocumentSnapshot;
 

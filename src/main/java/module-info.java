@@ -1,4 +1,4 @@
-module com.example.iipsene_ttr {
+module ttr {
     requires javafx.controls;
     requires javafx.fxml;
     requires google.cloud.firestore;
@@ -9,8 +9,8 @@ module com.example.iipsene_ttr {
     requires com.google.auth;
     requires javafx.graphics;
 
-    opens com.example.iipsene_ttr to javafx.fxml;
-    exports com.example.iipsene_ttr;
-    exports com.example.iipsene_ttr.Controllers;
-    opens com.example.iipsene_ttr.Controllers to javafx.fxml;
+    opens ttr to javafx.fxml;
+    exports ttr;
+    exports ttr.Controllers;
+    opens ttr.Controllers to javafx.fxml;
 }
