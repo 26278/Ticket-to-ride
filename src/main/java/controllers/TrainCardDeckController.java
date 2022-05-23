@@ -3,7 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TrainCardDeck {
+public class TrainCardDeckController {
     ArrayList<String> TrainDeck = new ArrayList<>();
 
     public ArrayList<String> getTrainDeck() {

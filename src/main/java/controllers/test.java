@@ -1,30 +1,30 @@
 package controllers;
 
 public class test {
-    public static TrainCardDeck trainCardDeck = new TrainCardDeck();
+    public static TrainCardDeckController trainCardDeckController = new TrainCardDeckController();
 
     public static void main(String[] args){
         for (int i = 0; i < 12; i++) {
-            trainCardDeck.TrainDeck.add("red");
-            trainCardDeck.TrainDeck.add("blue");
-            trainCardDeck.TrainDeck.add("yellow");
-            trainCardDeck.TrainDeck.add("orange");
-            trainCardDeck.TrainDeck.add("pink");
-            trainCardDeck.TrainDeck.add("black");
-            trainCardDeck.TrainDeck.add("white");
-            trainCardDeck.TrainDeck.add("green");
-            trainCardDeck.TrainDeck.add("rainbow");
+            trainCardDeckController.TrainDeck.add("red");
+            trainCardDeckController.TrainDeck.add("blue");
+            trainCardDeckController.TrainDeck.add("yellow");
+            trainCardDeckController.TrainDeck.add("orange");
+            trainCardDeckController.TrainDeck.add("pink");
+            trainCardDeckController.TrainDeck.add("black");
+            trainCardDeckController.TrainDeck.add("white");
+            trainCardDeckController.TrainDeck.add("green");
+            trainCardDeckController.TrainDeck.add("rainbow");
         }
-        trainCardDeck.Shuffle();
+        trainCardDeckController.Shuffle();
 
-        //Dit zal een button onAction zijn
+        //Dit zal een button mouseEvent zijn
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.println(trainCardDeck.TrainDeck.get(0));
                 //hier naar hand arraylist sturen ofzo
+                System.out.println(trainCardDeckController.TrainDeck.get(0));
 
                 //Dit gaat naar deposit
-                trainCardDeck.TrainDeck.remove(0);
+                trainCardDeckController.TrainDeck.remove(0);
             }
         }
 
