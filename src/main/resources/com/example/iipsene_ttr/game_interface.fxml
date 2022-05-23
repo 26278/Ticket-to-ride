@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.iipsene_ttr.Controllers.BoardController">
+   <children>
+      <ImageView fitHeight="670.0" fitWidth="1006.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@ttr_map.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="Edinburgh_London_R1" arcHeight="5.0" arcWidth="5.0" fill="#ffa81f" height="36.0" layoutX="178.0" layoutY="65.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-22.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="Edinburgh_London_R2" arcHeight="5.0" arcWidth="5.0" fill="#ffa51f" height="36.0" layoutX="191.0" layoutY="98.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-22.4" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="Edinburgh_London_R4" arcHeight="5.0" arcWidth="5.0" fill="#ffa51f" height="36.0" layoutX="216.0" layoutY="160.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-23.6" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="Edinburgh_London_R3" arcHeight="5.0" arcWidth="5.0" fill="#ffa51f" height="36.0" layoutX="203.0" layoutY="127.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-23.8" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Circle fx:id="Edinburgh" fill="DODGERBLUE" layoutX="165.0" layoutY="60.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="London" fill="DODGERBLUE" layoutX="229.0" layoutY="204.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Rectangle fx:id="Edinburgh_London_L1" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="165.0" layoutY="70.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-24.4" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="Edinburgh_London_L2" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="179.0" layoutY="102.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-25.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="Edinburgh_London_L3" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="192.0" layoutY="135.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-22.4" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="Edinburgh_London_L4" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="204.0" layoutY="164.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-30.1" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+   </children>
+</AnchorPane>
