@@ -1,12 +1,10 @@
 package ttr.Controllers;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import ttr.Config.Database;
 import ttr.Services.FirestoreService;
 import com.google.cloud.firestore.Firestore;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
@@ -14,7 +12,7 @@ import java.util.Map;
 
 public class GameController {
 
-    String id = "ABCDEF";
+    String id = "ABCDEG";
     int localPlayer;
 
     FirestoreService fs = new FirestoreService();
@@ -25,43 +23,44 @@ public class GameController {
     private VBox list;
 
     @FXML
-    public Button p1b;
+    public Button playerSelect;
     @FXML
-    public Button p2b;
+    public Button playerSubmit;
     @FXML
     private Label welcomeText;
     @FXML
     private TextField nameField;
+    @FXML
+    private ToggleGroup group;
 
 
     @FXML
     protected void playerSelect() {
-        welcomeText.setText("You are player 1");
-        list.getChildren().remove(p1b);
-        list.getChildren().remove(p2b);
+        RadioButton groupSelected = (RadioButton) group.getSelectedToggle();
+        welcomeText.setText("You are " + groupSelected.getText());
+        list.getChildren().remove(playerSelect);
 
         localPlayer = 1;
 
         Database change = new Database();
         Firestore db = change.getDb();
 
-        db.collection("games").document(id).update("Players", playerData("player_1", "bob"));
-
-        list.getChildren().add(p2b);
+        list.getChildren().remove(group.getSelectedToggle());
     }
+
 
     @FXML
     protected void playerNameSubmit() {
+        RadioButton groupSelected = (RadioButton) group.getSelectedToggle();
         welcomeText.setText("Name submitted!");
-        list.getChildren().remove(p1b);
-        list.getChildren().remove(p2b);
+        list.getChildren().remove(playerSubmit);
 
         localPlayer = 2;
 
         Database change = new Database();
         Firestore db = change.getDb();
 
-        db.collection("games").document(id).update("Players", playerData("player_2", nameField.getText()));
+        db.collection("games").document(id).update("Players", playerData(groupSelected.getId(), nameField.getText()));
 
     }
 

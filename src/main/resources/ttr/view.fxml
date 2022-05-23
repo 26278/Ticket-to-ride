@@ -7,6 +7,9 @@
 <?import javafx.scene.control.Button?>
 
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.shape.Rectangle?>
 <VBox fx:id="list" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="ttr.Controllers.GameController">
     <padding>
@@ -14,10 +17,32 @@
     </padding>
 
     <Label fx:id="welcomeText"/>
-    <Button fx:id="p1b" text="Player_1!" onAction="#playerSelect"/>
-    <TextField fx:id="nameField"/>
+    <Button fx:id="p1b" text="Select player!" onAction="#playerSelect"/>
 
-    <Button fx:id="p2b" text="Player_2!" onAction="#playerNameSubmit"/>
+
+    <fx:define>
+        <ToggleGroup fx:id="group" />
+    </fx:define>
+
+    <RadioButton fx:id="player_1" text="player 1" toggleGroup="$group">
+    </RadioButton>
+
+    <RadioButton fx:id="player_2" text="player 2" toggleGroup="$group">
+    </RadioButton>
+
+    <RadioButton fx:id="player_3" text="player 3" toggleGroup="$group">
+    </RadioButton>
+
+    <RadioButton fx:id="player_4" text="player 4" toggleGroup="$group">
+    </RadioButton>
+
+    <RadioButton fx:id="player_5" text="player 5" toggleGroup="$group">
+    </RadioButton>
+
+
+
+    <TextField fx:id="nameField"/>
+    <Button fx:id="p2b" text="submit name!" onAction="#playerNameSubmit"/>
 
     <Button text="exit" onAction="#deleteAndExit"/>
 </VBox>

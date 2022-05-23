@@ -20,7 +20,7 @@ public class App {
     private String player_4 = null;
     private String player_5 = null;
 
-    String gameIdentifier = "ABCDEF";
+    String gameIdentifier = "ABCDEG";
 
     public App() throws IOException, InterruptedException {
 
@@ -31,11 +31,11 @@ public class App {
 
         // We maken hier een hashmap met de gegevens van de spelers.
         Map playerData = new HashMap<String, String>();
-        playerData.put("Player_1", player_1);
-        playerData.put("Player_2", player_2);
-        playerData.put("Player_3", player_3);
-        playerData.put("Player_4", player_4);
-        playerData.put("Player_5", player_5);
+        playerData.put("player_1", player_1);
+        playerData.put("player_2", player_2);
+        playerData.put("player_3", player_3);
+        playerData.put("player_4", player_4);
+        playerData.put("player_5", player_5);
 
         // We maken hier de HashMap met de "game" gegevens.
         Map dataForFirebase = new HashMap<String, Object>();
