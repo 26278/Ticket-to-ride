@@ -1,10 +1,10 @@
 package controllers;
 
-import models.PlayerModel;
+import models.PlayerHandModel;
 
 public class test {
     public static TrainCardDeckController trainCardDeckController = new TrainCardDeckController();
-
+    private static PlayerHandModel playerHandModel;
     public static void main(String[] args){
         for (int i = 0; i < 12; i++) {
             trainCardDeckController.TrainDeck.add("red");
@@ -22,13 +22,11 @@ public class test {
         //Dit zal een button mouseEvent zijn
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                //hier naar hand arraylist sturen ofzo
                 //System.out.println(trainCardDeckController.TrainDeck.get(0));
-                //Dit gaat naar deposit
                 //trainCardDeckController.TrainDeck.remove(0);
-                models.PlayerModel.playerHand.add(trainCardDeckController.TrainDeck.remove(0));
-                System.out.println(PlayerModel.playerHand.get(0));
-                PlayerModel.playerHand.remove(0);
+                playerHandModel.playerHand.add(trainCardDeckController.TrainDeck.remove(0));
+                System.out.println(playerHandModel.playerHand.get(0));
+                playerHandModel.playerHand.remove(0);
             }
         }
 
