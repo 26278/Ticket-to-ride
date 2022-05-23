@@ -1,5 +1,6 @@
 package ttr.Controllers;
 
+import javafx.scene.control.TextField;
 import ttr.Config.Database;
 import ttr.Services.FirestoreService;
 import com.google.cloud.firestore.Firestore;
@@ -29,9 +30,12 @@ public class GameController {
     public Button p2b;
     @FXML
     private Label welcomeText;
+    @FXML
+    private TextField nameField;
+
 
     @FXML
-    protected void playerSelect1() {
+    protected void playerSelect() {
         welcomeText.setText("You are player 1");
         list.getChildren().remove(p1b);
         list.getChildren().remove(p2b);
@@ -47,8 +51,8 @@ public class GameController {
     }
 
     @FXML
-    protected void playerSelect2() {
-        welcomeText.setText("You are player 2");
+    protected void playerNameSubmit() {
+        welcomeText.setText("Name submitted!");
         list.getChildren().remove(p1b);
         list.getChildren().remove(p2b);
 
@@ -57,9 +61,8 @@ public class GameController {
         Database change = new Database();
         Firestore db = change.getDb();
 
-        db.collection("games").document(id).update("Players", playerData("player_2", "pete"));
+        db.collection("games").document(id).update("Players", playerData("player_2", nameField.getText()));
 
-        list.getChildren().add(p1b);
     }
 
     private Map playerData(String player, String name) {
