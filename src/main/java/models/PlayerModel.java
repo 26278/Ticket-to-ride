@@ -6,7 +6,10 @@ RoutesOwned = Arraylist van Routes
 */
 
 
+import java.util.ArrayList;
+
 public class PlayerModel implements Observable{
+    public static ArrayList<String> playerHand = new ArrayList<>();
     private String playerColor;
     private String playerName;
     private int score;

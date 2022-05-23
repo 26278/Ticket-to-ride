@@ -1,5 +1,7 @@
 package controllers;
 
+import models.PlayerModel;
+
 public class test {
     public static TrainCardDeckController trainCardDeckController = new TrainCardDeckController();
 
@@ -21,10 +23,12 @@ public class test {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 //hier naar hand arraylist sturen ofzo
-                System.out.println(trainCardDeckController.TrainDeck.get(0));
-
+                //System.out.println(trainCardDeckController.TrainDeck.get(0));
                 //Dit gaat naar deposit
-                trainCardDeckController.TrainDeck.remove(0);
+                //trainCardDeckController.TrainDeck.remove(0);
+                models.PlayerModel.playerHand.add(trainCardDeckController.TrainDeck.remove(0));
+                System.out.println(PlayerModel.playerHand.get(0));
+                PlayerModel.playerHand.remove(0);
             }
         }
 
