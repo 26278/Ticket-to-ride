@@ -4,6 +4,7 @@ import ttr.Constants.ColorConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import static ttr.Constants.ColorConstants.*;
 
@@ -34,8 +35,19 @@ public class TrainCardDeckModel implements Observable{
     }
 
 
-    public void pullTwoCards(){
-//        if (trainCardDeck.get(0) == )
+    public ArrayList<TrainCardModel> pullTwoCards(){
+        ArrayList<TrainCardModel> returnHand = new ArrayList<>();
+        if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)){
+            returnHand.add(trainCardDeck.get(0));
+            trainCardDeck.remove(0);
+            //firebase remove card!
+        }else {
+            returnHand.add(trainCardDeck.get(1));
+            returnHand.add(trainCardDeck.get(0));
+            trainCardDeck.remove(1);
+            trainCardDeck.remove(0);
+        }
+        return returnHand;
     }
 
 

@@ -6,4 +6,8 @@ public class TrainCardModel {
     public TrainCardModel(String cardColor) {
         this.cardColor = cardColor;
     }
+
+    public String getCardColor() {
+        return cardColor;
+    }
 }
