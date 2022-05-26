@@ -12,9 +12,15 @@ public class PlayerModel implements Observable{
     private int score;
     private int trainCount = 45;
     private int stationCount = 45;
-    //PLAYERHAND
+    private PlayerHandModel playerHand;
+
     //RoutesOwned
     private boolean playerTurn;
+
+    public void pullCard(TrainCardModel trainCard){
+
+        notifyObservers();
+    }
 
     private String getPlayerColor(){
         return playerColor;
