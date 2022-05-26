@@ -10,7 +10,6 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 
-
 import ttr.Config.Database;
 import ttr.Controllers.Controller;
 
@@ -42,15 +41,9 @@ public class FirestoreService {
 
             if (snapshot != null && snapshot.exists()) {
                 controller.update(snapshot);
-                System.out.println("Current data: " + snapshot.getData());
-            }
-            else {
-                System.out.print("Current data: null");
             }
         });
     }
-
-
 
     public void set(String documentId, Map<String, Object> docData) {
         ApiFuture<WriteResult> future = this.colRef.document(documentId).set(docData);
@@ -73,9 +66,6 @@ public class FirestoreService {
             document = future.get();
             if (document.exists()) {
                 return document;
-            }
-            else {
-                System.out.println("No such document!");
             }
         }
         catch (InterruptedException | ExecutionException e) {

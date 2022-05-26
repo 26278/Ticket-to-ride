@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
-        stage.setTitle("Hello!");
+        stage.setTitle("TTR!");
         stage.setScene(scene);
         stage.show();
 

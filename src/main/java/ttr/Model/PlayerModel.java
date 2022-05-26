@@ -12,14 +12,28 @@ public class PlayerModel implements Observable{
     private int score;
     private int trainCount = 45;
     private int stationCount = 45;
+
+    private boolean playerTurn;
     //PLAYERHAND
     //RoutesOwned
-    private boolean playerTurn;
 
-    private String getPlayerColor(){
+
+    public String getPlayerColor(){
         return playerColor;
     }
 
+
+    public void setPlayerColor(String playerColor) {
+        this.playerColor = playerColor;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 
     private void isPlayerTurn(){
 
@@ -29,18 +43,16 @@ public class PlayerModel implements Observable{
         return score;
     }
 
+
     @Override
     public void notifyObservers() {
-
     }
 
     @Override
     public void addObserver() {
-
     }
 
     @Override
     public void removeObserver() {
-
     }
 }

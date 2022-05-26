@@ -7,6 +7,9 @@ import java.util.Map;
 
 
 import ttr.Config.Database;
+import ttr.Constants.ClientConstants;
+import ttr.Controllers.Controller;
+import ttr.Controllers.FirebaseController;
 import ttr.Services.FirestoreService;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
@@ -20,47 +23,44 @@ public class App {
     private String player_4 = null;
     private String player_5 = null;
 
-    String gameIdentifier = "ABCDEG";
+    ClientConstants cc = new ClientConstants();
+    String gameIdentifier = cc.getID();
+    Controller firebaseController = new FirebaseController();
 
-    public App() throws IOException, InterruptedException {
+    public App() {
 
         Database setup = new Database();
         Firestore db = setup.getDb();
 
         DocumentReference docRef = db.collection("games").document(gameIdentifier);
 
-        // We maken hier een hashmap met de gegevens van de spelers.
-        Map playerData = new HashMap<String, String>();
-        playerData.put("player_1", player_1);
-        playerData.put("player_2", player_2);
-        playerData.put("player_3", player_3);
-        playerData.put("player_4", player_4);
-        playerData.put("player_5", player_5);
+        // create hashmap with traincardDeck
+        Map trainCardDeck = new HashMap<String, String>();
+        trainCardDeck.put("red", 12);
+        trainCardDeck.put("blue", 12);
+        trainCardDeck.put("yellow", 12);
+        trainCardDeck.put("orange", 12);
+        trainCardDeck.put("white", 12);
+        trainCardDeck.put("black", 12);
+        trainCardDeck.put("rainbow", 12);
+        trainCardDeck.put("green", 12);
 
-        // We maken hier de HashMap met de "game" gegevens.
+        //create hasmap with ticketDeck
+        Map ticketDeck = new HashMap<String, String>();
+        ticketDeck.put("1", "Barcelona_Munchen");
+
+        // combine hashmaps
         Map dataForFirebase = new HashMap<String, Object>();
-        dataForFirebase.put("Players", playerData);
-        dataForFirebase.put("current_player", "Player_1");
+        dataForFirebase.put("TraincardDeck", trainCardDeck);
+        dataForFirebase.put("TicketDeck", ticketDeck);
+        dataForFirebase.put("current_player", 1);
 
-        FirestoreService fbService = new FirestoreService();		// Gebruik de firebase server voor contact met firebase.
+        //add data to firebase
+        FirestoreService fbService = new FirestoreService();
         fbService.set(gameIdentifier, dataForFirebase);
 
-
-        // De listener
-        docRef.addSnapshotListener((snapshot, error) -> {
-            if (error != null) {
-                System.err.println("Listen failed: " + error);
-                return;
-            }
-
-            if (snapshot != null && snapshot.exists()) {
-
-                System.out.println("Current data: " + snapshot.getData());
-            } else {
-                System.out.print("Current data: null");
-            }
-
-        });
+        //initialise listener for firebase
+        fbService.listen(gameIdentifier, firebaseController);
     }
 
 }

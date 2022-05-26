@@ -1,4 +1,5 @@
 package ttr.Views;
 
-public class TrainView {
+public interface TrainView {
+
 }

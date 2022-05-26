@@ -3,40 +3,38 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.shape.Rectangle?>
+
 <VBox fx:id="list" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ttr.Controllers.GameController">
+      fx:controller="ttr.Views.GameStartView">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <Label fx:id="welcomeText"/>
-    <Button fx:id="p1b" text="Select player!" onAction="#playerSelect"/>
+    <Label fx:id="playerLabel"/>
+    <Button text="Select player!" onAction="#playerSelect"/>
 
 
     <fx:define>
         <ToggleGroup fx:id="group" />
     </fx:define>
 
-    <RadioButton fx:id="player_1" text="player 1" toggleGroup="$group">
+    <RadioButton fx:id="player_1" text="red" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_2" text="player 2" toggleGroup="$group">
+    <RadioButton fx:id="player_2" text="blue" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_3" text="player 3" toggleGroup="$group">
+    <RadioButton fx:id="player_3" text="green" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_4" text="player 4" toggleGroup="$group">
+    <RadioButton fx:id="player_4" text="yellow" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_5" text="player 5" toggleGroup="$group">
+    <RadioButton fx:id="player_5" text="black" toggleGroup="$group">
     </RadioButton>
 
 
@@ -44,7 +42,10 @@
     <TextField fx:id="nameField"/>
     <Button fx:id="p2b" text="submit name!" onAction="#playerNameSubmit"/>
 
-    <Button text="exit" onAction="#deleteAndExit"/>
+    <Button fx:id="startGame" text="Start Game!" onAction="#startGame"/>
+
+    <Button fx:id="endTurn" text="End Turn" onAction="#endTurn"/>
+
 </VBox>
 
 
