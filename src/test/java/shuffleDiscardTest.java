@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 
-public class PullCardsTest {
-
+public class shuffleDiscardTest {
 
     @Test // Letop, deze annotatie moet wel voor een test staan
-    public void test_PlayerPullTwoCards() {
+    public void test_shuffleDeck() {
         // Arrange
         PlayerModel player = new PlayerModel();
         ArrayList<TrainCardModel> testHand;

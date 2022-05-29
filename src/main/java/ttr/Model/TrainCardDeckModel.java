@@ -8,6 +8,7 @@ import static ttr.Constants.ColorConstants.*;
 
 public class TrainCardDeckModel implements Observable {
     private ArrayList<TrainCardModel> trainCardDeck = new ArrayList<TrainCardModel>();
+    private ArrayList<TrainCardModel> discardTrainDeck = new ArrayList<TrainCardModel>();
 
 
     public TrainCardDeckModel() {
@@ -36,11 +37,14 @@ public class TrainCardDeckModel implements Observable {
         ArrayList<TrainCardModel> returnHand = new ArrayList<>();
         if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)) {
             returnHand.add(trainCardDeck.get(0));
+            discardTrainDeck.add(trainCardDeck.get(0));
             trainCardDeck.remove(0);
             //firebase remove card!
         } else {
             returnHand.add(trainCardDeck.get(1));
             returnHand.add(trainCardDeck.get(0));
+            discardTrainDeck.add(trainCardDeck.get(0));
+            discardTrainDeck.add(trainCardDeck.get(1));
             trainCardDeck.remove(1);
             trainCardDeck.remove(0);
         }
