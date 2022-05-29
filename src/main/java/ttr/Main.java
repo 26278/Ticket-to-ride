@@ -1,11 +1,11 @@
-package ttr;
+package com.example.iipsene_ttr;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
+import javafx.scene.control.Button;
+import java.util.ArrayList;
 
 public class Main extends Application {
     @Override
@@ -18,6 +18,28 @@ public class Main extends Application {
 
         listen();
     }
+
+    //        ArrayList<TrainCard> trainCards = new ArrayList<>();
+//        ArrayList<String> trainCards = new ArrayList<>();
+//        ArrayList<Button> trainCardButtons = new ArrayList<>();
+//        trainCards.add("Green");
+//        trainCards.add("Blue");
+//        trainCards.add("Pink");
+//        trainCards.add("Yellow");
+//        trainCards.add("Green");
+//        trainCards.add("Green");
+//
+////        In plaats van String color de TrainCard class gebruiken
+////        for (TrainCard trainCard : trainCards
+//        System.out.println(trainCards.size());
+//
+//        for (String trainCard : trainCards) {
+//            Button card = new Button();
+////            card.setText(trainCard.getColor());
+////            card.setGraphic(trainCard.getGraphic());
+//            card.setText(trainCard);
+//            trainCardButtons.add(card);
+//        }
 
     private void listen() throws IOException, InterruptedException {
         new App();
