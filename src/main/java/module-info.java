@@ -12,5 +12,6 @@ module ttr {
     opens ttr to javafx.fxml;
     exports ttr;
     exports ttr.Controllers;
+    exports ttr.Model;
     opens ttr.Controllers to javafx.fxml;
 }

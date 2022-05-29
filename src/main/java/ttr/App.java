@@ -2,11 +2,14 @@ package ttr;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 import ttr.Config.Database;
+import ttr.Model.PlayerModel;
+import ttr.Model.TrainCardModel;
 import ttr.Services.FirestoreService;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
@@ -42,7 +45,8 @@ public class App {
         dataForFirebase.put("Players", playerData);
         dataForFirebase.put("current_player", "Player_1");
 
-        FirestoreService fbService = new FirestoreService();		// Gebruik de firebase server voor contact met firebase.
+        FirestoreService fbService = new FirestoreService();        // Gebruik de firebase server voor contact met 
+        // firebase.
         fbService.set(gameIdentifier, dataForFirebase);
 
 
@@ -54,7 +58,6 @@ public class App {
             }
 
             if (snapshot != null && snapshot.exists()) {
-
                 System.out.println("Current data: " + snapshot.getData());
             } else {
                 System.out.print("Current data: null");
