@@ -54,6 +54,7 @@ public class SelectTrainCardView {
 //        stage.show();
 //    }
 
+
     public void confirmSelectedCards(MouseEvent mouseEvent) {
 //        SelectTrainCardView word gesloten
 
