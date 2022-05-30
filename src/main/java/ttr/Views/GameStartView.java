@@ -2,16 +2,26 @@ package ttr.Views;
 
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import ttr.Controllers.Controller;
 import ttr.Controllers.GameStartController;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class GameStartView implements Controller {
 
+    @FXML
     GameStartController gsc = new GameStartController();
 
     @FXML
@@ -19,6 +29,10 @@ public class GameStartView implements Controller {
 
     @FXML
     protected TextField nameField;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @FXML
     protected void playerSelect() {
@@ -44,5 +58,14 @@ public class GameStartView implements Controller {
     @Override
     public void update(DocumentSnapshot ds) {
 
+    }
+
+    @FXML
+    public void chooseCard(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/ttr/selectCardsScreen.fxml"));
+        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        this.scene = new Scene(root, 1000, 800);
+        stage.setScene(scene);
+        stage.show();
     }
 }

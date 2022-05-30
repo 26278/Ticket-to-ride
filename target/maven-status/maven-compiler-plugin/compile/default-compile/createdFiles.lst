@@ -1,7 +1,0 @@
-module-info.class
-com/example/iipsene_ttr/Controllers/Controller.class
-com/example/iipsene_ttr/Main.class
-com/example/iipsene_ttr/Controllers/GameController.class
-com/example/iipsene_ttr/Services/FirestoreService.class
-com/example/iipsene_ttr/Config/Database.class
-com/example/iipsene_ttr/App.class

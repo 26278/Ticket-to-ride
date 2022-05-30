@@ -3,7 +3,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="com.example.iipsene_ttr.Views.SelectTrainCardView"
+<GridPane fx:controller="ttr.Views.SelectTrainCardView"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <Button onMouseClicked="#startSelectCards">
         Select Cards

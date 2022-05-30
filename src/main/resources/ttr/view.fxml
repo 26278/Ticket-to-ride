@@ -45,7 +45,7 @@
     <Button fx:id="startGame" text="Start Game!" onAction="#startGame"/>
 
     <Button fx:id="endTurn" text="End Turn" onAction="#endTurn"/>
-
+    <Button onMouseClicked="#chooseCard">ChooseCards</Button>
 </VBox>
 
 

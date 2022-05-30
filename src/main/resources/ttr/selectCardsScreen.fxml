@@ -9,13 +9,16 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.iipsene_ttr.Views.SelectTrainCardView">
+            fx:controller="ttr.Views.SelectTrainCardView">
     <top>
         <Label BorderPane.alignment="TOP_RIGHT"/>
         <Button onAction="#cancelSelectedCards" text="Cancel"/>
     </top>
     <center>
         <Button text="green"></Button>
+        <ListView fx:id="ListView" layoutX="0" layoutY="30" prefWidth="600" prefHeight="300">
+
+        </ListView>
     </center>
     <bottom>
         <Button BorderPane.alignment="CENTER"
