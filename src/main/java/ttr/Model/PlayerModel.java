@@ -6,11 +6,13 @@ RoutesOwned = Arraylist van Routes
 */
 
 
+import com.google.cloud.firestore.DocumentSnapshot;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlayerModel implements Observable {
     private String playerColor;
+    private int playerNumber;
     private String playerName;
     private int score;
     private int trainCount = 45;
@@ -43,13 +45,38 @@ public class PlayerModel implements Observable {
         return playerHand;
     }
 
-    private String getPlayerColor() {
+    public String getPlayerColor() {
         return playerColor;
     }
 
+    public void setPlayerColor(String playerColor) {
+        this.playerColor = playerColor;
+    }
 
-    private void isPlayerTurn() {
+    public String getPlayerName() {
+        return playerName;
+    }
 
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public boolean isPlayerTurn() {
+        return playerTurn;
+    }
+
+    public void setPlayerTurn(boolean playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+    public void hasCurrentTurn(DocumentSnapshot ds) {
+        int current_Player = (int) ds.get("current_player");
+        if (current_Player == playerNumber) {
+            setPlayerTurn(true);
+        }
+        else {
+            setPlayerTurn(false);
+        }
     }
 
     private int getScore() {
