@@ -9,10 +9,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BoardController {
 
-    //public Rectangle Edinburgh_London_R1;
+    public Rectangle Edinburgh_London_R1;
     public Rectangle Edinburgh_London_R2;
     public Rectangle Edinburgh_London_R3;
     public Rectangle Edinburgh_London_R4;
@@ -20,11 +21,12 @@ public class BoardController {
     public javafx.scene.layout.AnchorPane AnchorPane;
 
 
+
     @FXML
     public void highlight(MouseEvent event) {
         // functie om het geselecteerde vakje te highlighten
         String id = event.getPickResult().getIntersectedNode().getId();
-        //route.add(Edinburgh_London_R1);
+        route.add(Edinburgh_London_R1);
         route.add(Edinburgh_London_R2);
         route.add(Edinburgh_London_R3);
         route.add(Edinburgh_London_R4);
@@ -55,4 +57,5 @@ public class BoardController {
 
         System.out.println("place");
     }
+
 }
