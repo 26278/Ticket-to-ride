@@ -1,36 +1,39 @@
 import models.PlayerHandModel;
 import models.TicketDeckModel;
 import models.TicketModel;
+import models.TrainCardDeckModel;
 import org.junit.Test;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import controllers.TrainCardDeckController;
 
 public class playerHandModeltest {
 
     @Test
     public void test_playerHandModel_Train(){
-        TrainCardDeckController trainCardDeckController = new TrainCardDeckController();
+        TrainCardDeckModel trainCardDeckModel = new TrainCardDeckModel();
         PlayerHandModel playerHandModel = new PlayerHandModel();
-        trainCardDeckController.TrainDeck.add("test1");
-        trainCardDeckController.TrainDeck.add("test2");
+        trainCardDeckModel.TrainDeck.add("test1");
+        trainCardDeckModel.TrainDeck.add("test2");
 
-        playerHandModel.playerHand.add(String.valueOf(trainCardDeckController.TrainDeck.remove(0)));
-        playerHandModel.playerHand.add(String.valueOf(trainCardDeckController.TrainDeck.remove(0)));
+        playerHandModel.playerHand.add(String.valueOf(trainCardDeckModel.TrainDeck.remove(0)));
+        playerHandModel.playerHand.add(String.valueOf(trainCardDeckModel.TrainDeck.remove(0)));
 
         assertEquals(Arrays.asList("test1", "test2"), playerHandModel.playerHand);
 
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = AssertionError.class)
     public void test_playerHandModel_Train_unsupported(){
-        TrainCardDeckController trainCardDeckController = new TrainCardDeckController();
         PlayerHandModel playerHandModel = new PlayerHandModel();
-        trainCardDeckController.TrainDeck.add(1);
+        TrainCardDeckModel trainCardDeckModel = new TrainCardDeckModel();
+        trainCardDeckModel.TrainDeck.add("test1");
 
-        playerHandModel.playerHand.add(String.valueOf(trainCardDeckController.TrainDeck.remove(0)));
+        assertNull(playerHandModel.playerHand);
     }
 
     @Test
@@ -40,8 +43,14 @@ public class playerHandModeltest {
         TicketModel ticket1 = new TicketModel("a", "Test", "model", 123, false);
         ticketDeckModel.ticketDeck.add(ticket1);
 
-        playerHandModel.ticketHand.add(TicketDeckModel.ticketDeck.remove(0));
+        playerHandModel.ticketHand.add(ticketDeckModel.ticketDeck.remove(0));
 
-
+        for (TicketModel ticketModel : ticketDeckModel.ticketDeck){
+            ticketModel.getType();
+            ticketModel.getBegin_Destination();
+            ticketModel.getEnd_Destination();
+            ticketModel.getRewardPoints();
+            ticketModel.isCompleted();
+        }
     }
 }

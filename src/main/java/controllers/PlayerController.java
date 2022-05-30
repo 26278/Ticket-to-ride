@@ -2,6 +2,7 @@ package controllers;
 
 import models.PlayerHandModel;
 import models.TicketDeckModel;
+import models.TrainCardDeckModel;
 
 
 public class PlayerController {
@@ -9,7 +10,7 @@ public class PlayerController {
     private PlayerHandModel playerHandModel;
     private TicketDeckModel ticketDeckModel;
 
-    private TrainCardDeckController trainCardDeckController;
+    private TrainCardDeckModel trainCardDeckModel;
 
 
     private void updatePlayerHand(){
@@ -18,7 +19,7 @@ public class PlayerController {
 
     private void pullTrainCard(){
         for (int i = 0; i < 3; i++){
-            playerHandModel.playerHand.add(String.valueOf(trainCardDeckController.TrainDeck.remove(0)));
+            playerHandModel.playerHand.add(String.valueOf(trainCardDeckModel.TrainDeck.remove(0)));
 
 
             System.out.println(playerHandModel.playerHand.get(0));
