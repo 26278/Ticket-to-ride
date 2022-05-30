@@ -51,6 +51,14 @@ public class playerHandModeltest {
             ticketModel.getEnd_Destination();
             ticketModel.getRewardPoints();
             ticketModel.isCompleted();
+
+            assertEquals("a", playerHandModel.ticketHand.get(0));
+            assertEquals("Test", playerHandModel.ticketHand.get(1));
+            assertEquals("model", playerHandModel.ticketHand.get(2));
+            assertEquals(123, playerHandModel.ticketHand.get(3));
+            assertEquals(false, playerHandModel.ticketHand.get(4));
+
+
         }
     }
 }
