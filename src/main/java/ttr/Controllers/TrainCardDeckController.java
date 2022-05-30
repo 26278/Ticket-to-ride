@@ -39,6 +39,11 @@ public class TrainCardDeckController {
         return trainCardCheckboxes;
     }
 
+
+import javafx.fxml.FXML;
+
+public class TrainCardDeckController {
+
     public void SelectCards(int amount, String color) {
 //        Open SelectCards view with form
 
@@ -49,8 +54,6 @@ public class TrainCardDeckController {
 
         }
     }
-
-
 
     @FXML
     protected void confirmSelectedCards() {
