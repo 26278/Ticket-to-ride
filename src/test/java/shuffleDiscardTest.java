@@ -17,7 +17,9 @@ public class shuffleDiscardTest {
         int handSize;
 
         // act
-        player.pullCardTester(1);
+        for (int i = 0; i< 30; i++){
+            player.pullCard();
+        }
         testHand = player.getPlayerHand();
         handSize = testHand.size();
 

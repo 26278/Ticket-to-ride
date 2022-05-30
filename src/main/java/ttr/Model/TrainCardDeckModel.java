@@ -33,21 +33,27 @@ public class TrainCardDeckModel implements Observable {
     }
 
 
+    public void shuffleDiscardPileIntoDeck(){
+        Collections.shuffle(discardTrainDeck);
+        trainCardDeck.addAll(discardTrainDeck);
+        discardTrainDeck.clear();
+    }
+
     public ArrayList<TrainCardModel> pullCards() {
         ArrayList<TrainCardModel> returnHand = new ArrayList<>();
+        if (trainCardDeck.size() <= 2){
+            shuffleDiscardPileIntoDeck();
+        }
         if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)) {
             returnHand.add(trainCardDeck.get(0));
-            discardTrainDeck.add(trainCardDeck.get(0));
-            trainCardDeck.remove(0);
+            discardTrainDeck.add(trainCardDeck.get(1));
             //firebase remove card!
         } else {
             returnHand.add(trainCardDeck.get(1));
             returnHand.add(trainCardDeck.get(0));
-            discardTrainDeck.add(trainCardDeck.get(0));
-            discardTrainDeck.add(trainCardDeck.get(1));
-            trainCardDeck.remove(1);
-            trainCardDeck.remove(0);
         }
+        trainCardDeck.remove(1);
+        trainCardDeck.remove(0);
         return returnHand;
     }
 
