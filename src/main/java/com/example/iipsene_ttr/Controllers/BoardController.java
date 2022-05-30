@@ -4,6 +4,7 @@ package com.example.iipsene_ttr.Controllers;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.effect.Glow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class BoardController {
 
-    public Rectangle Edinburgh_London_R1;
+    //public Rectangle Edinburgh_London_R1;
     public Rectangle Edinburgh_London_R2;
     public Rectangle Edinburgh_London_R3;
     public Rectangle Edinburgh_London_R4;
@@ -20,16 +21,20 @@ public class BoardController {
 
 
     @FXML
-    public void highlight() {
+    public void highlight(MouseEvent event) {
         // functie om het geselecteerde vakje te highlighten
-        route.add(Edinburgh_London_R1);
+        String id = event.getPickResult().getIntersectedNode().getId();
+        //route.add(Edinburgh_London_R1);
         route.add(Edinburgh_London_R2);
         route.add(Edinburgh_London_R3);
         route.add(Edinburgh_London_R4);
         Glow glow = new Glow();
         glow.setLevel(1);
         for (int i = 0; i < route.size(); i++) {
+            if (route.get(i).getId() == id){
                 route.get(i).setEffect(glow);
+            }
+
         }
     }
 
