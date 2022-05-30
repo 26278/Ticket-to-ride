@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TrainCardDeckController {
-    ArrayList<String> TrainDeck = new ArrayList<>();
+    public ArrayList<String> TrainDeck = new ArrayList<>();
 
     public ArrayList<String> getTrainDeck() {
         return TrainDeck;

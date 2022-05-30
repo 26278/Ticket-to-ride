@@ -3,11 +3,13 @@ package controllers;
 import models.PlayerHandModel;
 import models.TicketDeckModel;
 
-import static controllers.test.trainCardDeckController;
 
 public class PlayerController {
 
     private PlayerHandModel playerHandModel;
+    private TicketDeckModel ticketDeckModel;
+
+    private TrainCardDeckController trainCardDeckController;
 
 
     private void updatePlayerHand(){
@@ -26,9 +28,7 @@ public class PlayerController {
     }
 
     private void pullTicketCard(){
-        for (int i = 0; i < 3; i++) {
-            playerHandModel.ticketHand.add(TicketDeckModel.ticketDeck.remove(0));
-        }
+            playerHandModel.ticketHand.add(ticketDeckModel.ticketDeck.remove(0));
     }
 
     private void placeTrain(){
