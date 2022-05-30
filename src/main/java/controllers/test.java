@@ -1,10 +1,14 @@
 package controllers;
 
 import models.PlayerHandModel;
+import models.TicketDeckModel;
+import models.TicketModel;
 
 public class test {
     public static TrainCardDeckController trainCardDeckController = new TrainCardDeckController();
     private static PlayerHandModel playerHandModel;
+
+    public TicketDeckModel ticketDeckModel;
     public static void main(String[] args){
         for (int i = 0; i < 12; i++) {
             trainCardDeckController.TrainDeck.add("red");
@@ -17,24 +21,23 @@ public class test {
             trainCardDeckController.TrainDeck.add("green");
             trainCardDeckController.TrainDeck.add("rainbow");
         }
+
+        TicketModel ticket1 = new TicketModel("a", "java", "sa", 100, false);
+        TicketDeckModel.ticketDeck.add(ticket1);
+        TicketModel ticket2 = new TicketModel("a", "java", "sa", 100, false);
+        TicketDeckModel.ticketDeck.add(ticket2);
+
+        for (TicketModel ticketModel: TicketDeckModel.ticketDeck){
+            System.out.println(ticketModel.getRewardPoints());
+        }
+
         trainCardDeckController.Shuffle();
 
         //Dit zal een button mouseEvent zijn
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                //System.out.println(trainCardDeckController.TrainDeck.get(0));
-                //trainCardDeckController.TrainDeck.remove(0);
-                playerHandModel.playerHand.add(trainCardDeckController.TrainDeck.remove(0));
-                System.out.println(playerHandModel.playerHand.get(0));
-                playerHandModel.playerHand.remove(0);
-            }
+            playerHandModel.playerHand.add(trainCardDeckController.TrainDeck.remove(0));
+            //System.out.println(playerHandModel.playerHand.get(0));
+            playerHandModel.playerHand.remove(0);
         }
-
-        //System.out.println(trainDeck.get(i));
-
-
-
-
-
     }
 }
