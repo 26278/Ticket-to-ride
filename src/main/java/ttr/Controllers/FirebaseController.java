@@ -15,11 +15,7 @@ public class FirebaseController implements Controller {
 
     @Override
     public void update(DocumentSnapshot ds) {
-        Map<String, Object> currentMap = ds.getData();
-        HashMap td = (HashMap) ds.get("TraincardDeck");
-        td.put("black", 5);
-        currentMap.put("TraincardDeck", td);
-        fs.set(cc.getID(), currentMap);
+        //voorbeeld
     }
 }
 

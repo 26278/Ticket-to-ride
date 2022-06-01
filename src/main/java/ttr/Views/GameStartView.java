@@ -18,6 +18,7 @@ import ttr.Controllers.Controller;
 import ttr.Controllers.GameStartController;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class GameStartView implements Controller {
 
@@ -28,6 +29,26 @@ public class GameStartView implements Controller {
 
     @FXML
     protected TextField nameField;
+
+    @FXML
+    protected TextField tokenTextField;
+
+    @FXML
+    protected void setGameToken(MouseEvent event) throws IOException {
+        String token = tokenTextField.getText().toUpperCase(Locale.ROOT);
+        System.out.println(token.length());
+        if (token.length() == 6) {
+            gsc.joinGame(token);
+
+            Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/game_start.fxml"));
+
+            this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            this.scene = new Scene(root, 1000, 800);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+    }
 
     @FXML
     protected void playerSelect() {

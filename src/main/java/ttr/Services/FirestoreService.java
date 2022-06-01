@@ -1,6 +1,8 @@
 package ttr.Services;
 
 import com.google.cloud.firestore.Firestore;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -11,6 +13,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 
 import ttr.Config.Database;
+import ttr.Constants.ClientConstants;
 import ttr.Controllers.Controller;
 
 
@@ -18,6 +21,7 @@ public class FirestoreService {
     private Firestore firestore;
 
     private static final String GAMES_PATH = "games";
+    private ClientConstants cc = new ClientConstants();
     private CollectionReference colRef;
 
 
@@ -73,6 +77,19 @@ public class FirestoreService {
         }
         return null;
     }
+
+    //update specific field
+    public void updateField(String field, String key, String value) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        Map<String, Object> currentMap = ds.getData();
+
+        HashMap td = (HashMap) ds.get(field);
+        td.put(key, value);
+        currentMap.put(field, td);
+        this.set(cc.getID(), currentMap);
+    }
+
 
     public void delete(String documentId) {
         ApiFuture<WriteResult> writeResult = this.colRef.document(documentId).delete();

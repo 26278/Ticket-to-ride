@@ -17,19 +17,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/game_login.fxml"));
         stage.setTitle("TTR!");
         stage.setScene(new Scene(root, cc.getScreenX(), cc.getScreenY()));
         stage.show();
 
-        listen();
+//        listen();
     }
 
-
-
-    private void listen() throws IOException, InterruptedException {
-        new App();
-    }
+//    public void listen() {
+//        new App();
+//    }
 
     public static void main(String[] args) {
         launch(args);

@@ -7,10 +7,14 @@ RoutesOwned = Arraylist van Routes
 
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import ttr.Services.FirestoreService;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlayerModel implements Observable {
+    private FirestoreService fs = new FirestoreService();
+
     private String playerColor;
     private int playerNumber;
     private String playerName;
@@ -49,6 +53,10 @@ public class PlayerModel implements Observable {
         return playerColor;
     }
 
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+
     public void setPlayerColor(String playerColor) {
         this.playerColor = playerColor;
     }
@@ -59,6 +67,7 @@ public class PlayerModel implements Observable {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+        fs.updateField("players", ("player_" + this.playerNumber), playerName);
     }
 
     public boolean isPlayerTurn() {

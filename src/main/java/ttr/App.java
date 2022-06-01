@@ -28,12 +28,6 @@ public class App {
     Controller firebaseController = new FirebaseController();
 
     public App() {
-
-        Database setup = new Database();
-        Firestore db = setup.getDb();
-
-        DocumentReference docRef = db.collection("games").document(gameIdentifier);
-
         // create hashmap with traincardDeck
         Map trainCardDeck = new HashMap<String, String>();
         trainCardDeck.put("red", 12);
@@ -49,11 +43,12 @@ public class App {
         Map ticketDeck = new HashMap<String, String>();
         ticketDeck.put("1", "Barcelona_Munchen");
 
-        // combine hashmaps
+        // combine hashmaps or add necessary empty fields
         Map dataForFirebase = new HashMap<String, Object>();
         dataForFirebase.put("TraincardDeck", trainCardDeck);
         dataForFirebase.put("TicketDeck", ticketDeck);
         dataForFirebase.put("current_player", 1);
+        dataForFirebase.put("players", new HashMap<String, String>());
 
         //add data to firebase
         FirestoreService fbService = new FirestoreService();

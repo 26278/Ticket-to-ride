@@ -22,19 +22,19 @@
         <ToggleGroup fx:id="group" />
     </fx:define>
 
-    <RadioButton fx:id="player_1" text="red" toggleGroup="$group">
+    <RadioButton fx:id="1" text="red" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_2" text="blue" toggleGroup="$group">
+    <RadioButton fx:id="2" text="blue" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_3" text="green" toggleGroup="$group">
+    <RadioButton fx:id="3" text="green" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_4" text="yellow" toggleGroup="$group">
+    <RadioButton fx:id="4" text="yellow" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="player_5" text="black" toggleGroup="$group">
+    <RadioButton fx:id="5" text="black" toggleGroup="$group">
     </RadioButton>
 
 

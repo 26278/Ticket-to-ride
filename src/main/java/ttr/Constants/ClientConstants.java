@@ -1,10 +1,9 @@
 package ttr.Constants;
 
-public class ClientConstants {
-    String ID = "ABCDEG";
-    String localPlayer;
-    int screenX = 800;
-    int screenY = 800;
+public class ClientConstants{
+    String ID = new Token().getToken();
+    int screenX = 1006;
+    int screenY = 670;
 
 
     public String getID() {
@@ -22,4 +21,5 @@ public class ClientConstants {
     public int getScreenY() {
         return screenY;
     }
+
 }
