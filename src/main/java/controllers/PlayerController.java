@@ -1,7 +1,9 @@
 package controllers;
 
+import javafx.scene.image.Image;
 import models.PlayerHandModel;
 import models.TicketDeckModel;
+import models.TicketModel;
 import models.TrainCardDeckModel;
 
 
@@ -11,6 +13,8 @@ public class PlayerController {
     private TicketDeckModel ticketDeckModel;
 
     private TrainCardDeckModel trainCardDeckModel;
+
+    private Image image;
 
 
     private void updatePlayerHand(){
@@ -29,7 +33,10 @@ public class PlayerController {
     }
 
     private void pullTicketCard(){
-            playerHandModel.ticketHand.add(ticketDeckModel.ticketDeck.remove(0));
+        playerHandModel.ticketHand.add(ticketDeckModel.ticketDeck.get(0));
+        for (TicketModel ticketModel : playerHandModel.ticketHand) {
+            image = new Image(ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png");
+        }
     }
 
     private void placeTrain(){
