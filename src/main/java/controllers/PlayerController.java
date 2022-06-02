@@ -35,6 +35,8 @@ public class PlayerController {
     private void pullTicketCard(){
         playerHandModel.ticketHand.add(ticketDeckModel.ticketDeck.get(0));
         for (TicketModel ticketModel : playerHandModel.ticketHand) {
+            //InputStream stream = new FileInputStream("D:/Hier ticket folder/" + ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png"");
+            //Image image = new Image(stream);
             image = new Image(ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png");
         }
     }
