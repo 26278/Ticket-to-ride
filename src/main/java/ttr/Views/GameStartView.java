@@ -19,6 +19,8 @@ import ttr.Model.GameStartModel;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.Locale;
+import java.util.Objects;
 
 public class GameStartView implements GameStartObserver {
 
@@ -95,6 +97,21 @@ public class GameStartView implements GameStartObserver {
             }
         }
     }
+
+    @FXML
+    public void chooseCard(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/selectCardsScreen.fxml"));
+        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        this.scene = new Scene(root, 1000, 800);
+        scene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/ttr/stylesheets/chooseCards.css"))
+                        .toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private Stage stage;
+    private Scene scene;
 
     @FXML
     protected void startGame(MouseEvent event) throws IOException {

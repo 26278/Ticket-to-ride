@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?xml-stylesheet type="text/css" href="mytest.css"?>
+
+
+<!-- There should be a 'cancel' button for in case the user doesn't have enough cards. -->
+<!-- If the action is cancelled, the user should come back to the map screen with other possibilities. -->
+<!-- This is also a solution for in case the user wants to double-check his/her strategy with TrainCards serperation. -->
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ttr.Views.SelectTrainCardView">
+    <top>
+        <Button onAction="#cancelSelectedCards" text="Cancel"/>
+        <TextField fx:id="RequirementTextField"></TextField>
+    </top>
+    <center>
+    </center>
+    <center>
+        <ListView fx:id="ListView" layoutX="0" layoutY="30" prefWidth="600" prefHeight="300">
+        </ListView>
+    </center>
+    <bottom>
+        <Button BorderPane.alignment="CENTER"
+                onMouseClicked="#confirmSelectedCards"
+                disable="true"
+        >Bevestig</Button>
+    </bottom>
+</BorderPane>
