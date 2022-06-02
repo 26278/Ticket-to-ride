@@ -33,7 +33,7 @@ public class TrainCardDeckModel implements Observable {
     }
 
 
-    public void shuffleDiscardPileIntoDeck(){
+    public void shuffleDiscardPileIntoDeck() {
         Collections.shuffle(discardTrainDeck);
         trainCardDeck.addAll(discardTrainDeck);
         discardTrainDeck.clear();
@@ -41,7 +41,7 @@ public class TrainCardDeckModel implements Observable {
 
     public ArrayList<TrainCardModel> pullCards() {
         ArrayList<TrainCardModel> returnHand = new ArrayList<>();
-        if (trainCardDeck.size() <= 2){
+        if (trainCardDeck.size() <= 2) {
             shuffleDiscardPileIntoDeck();
         }
         if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)) {
@@ -55,18 +55,6 @@ public class TrainCardDeckModel implements Observable {
         trainCardDeck.remove(1);
         trainCardDeck.remove(0);
         return returnHand;
-    }
-
-    public ArrayList<TrainCardModel> pullCardsTester(int Choice) {
-        ArrayList<TrainCardModel> hulpTestHand = new ArrayList<>();
-        if (Choice == 1) {
-            trainCardDeck.add(1, new TrainCardModel(COLOR_BLACK));
-            hulpTestHand = pullCards();
-        } else if (Choice == 2) {
-            trainCardDeck.add(1, new TrainCardModel(COLOR_RAINBOW));
-            hulpTestHand = pullCards();
-        }
-        return hulpTestHand;
     }
 
 

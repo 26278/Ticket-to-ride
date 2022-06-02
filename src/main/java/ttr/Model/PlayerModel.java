@@ -38,12 +38,6 @@ public class PlayerModel implements Observable {
         notifyObservers();
     }
 
-    public void pullCardTester(int Choice) {
-        ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCardsTester(Choice);
-        playerHand.addAll(hulpList);
-        notifyObservers();
-    }
-
 
     public ArrayList<TrainCardModel> getPlayerHand() {
         return playerHand;
@@ -82,8 +76,7 @@ public class PlayerModel implements Observable {
         int current_Player = (int) ds.get("current_player");
         if (current_Player == playerNumber) {
             setPlayerTurn(true);
-        }
-        else {
+        } else {
             setPlayerTurn(false);
         }
     }
