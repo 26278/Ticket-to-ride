@@ -44,11 +44,13 @@ public class TrainCardDeckModel implements Observable {
         if (trainCardDeck.size() <= 2) {
             shuffleDiscardPileIntoDeck();
         }
+
         if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)) {
             returnHand.add(trainCardDeck.get(0));
             discardTrainDeck.add(trainCardDeck.get(1));
             //firebase remove card!
-        } else {
+        }
+        else {
             returnHand.add(trainCardDeck.get(1));
             returnHand.add(trainCardDeck.get(0));
         }

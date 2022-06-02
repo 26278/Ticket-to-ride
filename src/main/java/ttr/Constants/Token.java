@@ -28,7 +28,6 @@ public class Token {
             checkToken();
         }
         catch (IOException ignored) {
-
         }
     }
 

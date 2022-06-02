@@ -47,7 +47,6 @@ public class GameStartView implements Controller {
             stage.setScene(scene);
             stage.show();
         }
-
     }
 
     @FXML
@@ -60,12 +59,8 @@ public class GameStartView implements Controller {
         gsc.playerNameSubmit(nameField);
     }
 
-
-
-
     @Override
     public void update(DocumentSnapshot ds) {
-
     }
 
     private Stage stage;

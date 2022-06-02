@@ -1,6 +1,7 @@
 package ttr.Views;
 
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
@@ -142,7 +143,6 @@ public class BoardView implements PlayerObserver {
     public Rectangle Essen_Berlin_2;
 
 
-
     @FXML
     public void highlight(MouseEvent event) {
         // light up event source
@@ -158,7 +158,8 @@ public class BoardView implements PlayerObserver {
     }
 
     @FXML
-    public void place_train_or_station() {
+    public void place_train_or_station(MouseEvent event) {
+        String routeID = ((Shape) event.getSource()).getParent().getId();
 
     }
 
