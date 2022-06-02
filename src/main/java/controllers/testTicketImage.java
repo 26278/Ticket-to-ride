@@ -39,7 +39,7 @@ public class testTicketImage extends Application {
         root.getChildren().add(box);
 
         stage.setTitle("ImageTicket");
-        stage.setWidth(415);
+        stage.setWidth(400);
         stage.setHeight(200);
         stage.setScene(scene);
         stage.sizeToScene();
