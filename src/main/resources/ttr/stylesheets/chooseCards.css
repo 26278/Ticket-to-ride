@@ -1,0 +1,28 @@
+.check-box>.box {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.check-box>.box>.mark {
+    -fx-background-image: url("../images/test.png");
+    -fx-background-position: center;
+    -fx-background-repeat: stretch;
+    -fx-shape: none;
+}
+
+.check-box:selected>.box>.mark{
+    -fx-background-color: transparent;
+    /*-fx-background-image: url("../images/test2.png");*/
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-transition: .3s ease;
+
+}
+
+.check-box > .box {
+    -fx-padding: 30px;
+}
+
+.check-box > .box > .mark {
+    -fx-padding: 30px;
+}

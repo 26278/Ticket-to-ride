@@ -19,6 +19,7 @@ import ttr.Controllers.GameStartController;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 
 public class GameStartView implements Controller {
 
@@ -66,6 +67,18 @@ public class GameStartView implements Controller {
     @Override
     public void update(DocumentSnapshot ds) {
 
+    }
+
+    @FXML
+    public void chooseCard(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/selectCardsScreen.fxml"));
+        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        this.scene = new Scene(root, 1000, 800);
+        scene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/ttr/stylesheets/chooseCards.css"))
+                        .toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
     private Stage stage;
