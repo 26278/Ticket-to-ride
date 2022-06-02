@@ -1,42 +1,66 @@
 package ttr.Views;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import ttr.Controllers.TrainCardDeckController;
-import ttr.Main;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ttr.Controllers.TrainCardDeckController;
+import ttr.Main;
+import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class SelectTrainCardView {
 
     @FXML
     public javafx.scene.control.ListView ListView;
+    public javafx.scene.control.TextField RequirementTextField;
 
     TrainCardDeckController trainCardDeckController;
+    private Stage stage;
+    private Scene scene;
 
     @FXML
     protected void initialize() {
         this.trainCardDeckController = TrainCardDeckController.getInstance();
         this.createCardsListView();
+        this.createRequirementMessage("blauw", 4, false);
         //        ArrayList<CheckBox> trainCardCheckboxes = this.trainCardDeckController.showPlayerTrainCards();
+    }
+
+    private void createRequirementMessage(String trainCardColor, int trainCardCount,  boolean isTunnelBoolean) {
+        String requirement;
+        if (trainCardColor == "") {
+            requirement = "Om deze rails te bouwen heb je " + String.valueOf(trainCardCount) + " kaarten van" +
+                    " dezelfde kleur nodig.";
+        } else {
+            requirement = "Om deze rails te bouwen heb je " + String.valueOf(trainCardCount) + " kaarten van de kleur " +
+                    trainCardColor + " nodig.";
+        }
+
+        if (isTunnelBoolean) {
+            requirement += " Pas op, dit is een tunnel.";
+        }
+        RequirementTextField.setText(requirement);
     }
 
     private void createCardsListView() {
         for (CheckBox trainCardCheckbox : trainCardDeckController.trainCardCheckboxes()) {
+            trainCardCheckbox.applyCss();
             ListView.getItems().add(trainCardCheckbox);
         }
+    }
+
+    private void showRequirement() {
+
     }
 
 
@@ -64,8 +88,11 @@ public class SelectTrainCardView {
     }
 
     @FXML
-    protected void cancelSelectedCards(MouseEvent mouseEvent) {
-//      reset choices
-
+    protected void cancelSelectedCards(MouseEvent mouseEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/view.fxml"));
+        this.stage = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
+        this.scene = new Scene(root, 1000, 800);
+        stage.setScene(scene);
+        stage.show();
     }
 }

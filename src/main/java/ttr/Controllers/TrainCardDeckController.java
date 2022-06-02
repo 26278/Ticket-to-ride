@@ -19,6 +19,7 @@ public class TrainCardDeckController {
         return trainCardDeckController;
     }
 
+//    Verplaats naar PlayerHand als deze af is
     public ArrayList<CheckBox> trainCardCheckboxes() {
         //        ArrayList<TrainCard> trainCards = new ArrayList<>();
         trainCards.add("Green");
