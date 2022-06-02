@@ -35,4 +35,8 @@ public class TicketModel {
     public boolean getCompleted() {
         return completed;
     }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 }

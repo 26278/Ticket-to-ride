@@ -13,16 +13,19 @@ import models.TicketModel;
 import models.TrainCardDeckModel;
 
 
-public class test2 extends Application {
+public class testTicketImage extends Application {
     private static TrainCardDeckModel trainCardDeckModel = new TrainCardDeckModel();
     TicketDeckModel ticketDeckModel;
     private PlayerHandModel playerHandModel;
     private Image image;
 
     @Override public void start(Stage stage) {
+
         TicketModel ticket1 = new TicketModel("eu", "amsterdam", "pamplona", 100, false);
         TicketDeckModel.ticketDeck.add(ticket1);
+
         playerHandModel.ticketHand.add(ticketDeckModel.ticketDeck.get(0));
+
         for (TicketModel ticketModel : playerHandModel.ticketHand) {
             image = new Image(ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png");
         }
@@ -35,7 +38,7 @@ public class test2 extends Application {
         box.getChildren().add(iv1);
         root.getChildren().add(box);
 
-        stage.setTitle("ImageView");
+        stage.setTitle("ImageTicket");
         stage.setWidth(415);
         stage.setHeight(200);
         stage.setScene(scene);
