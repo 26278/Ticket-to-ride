@@ -367,7 +367,7 @@
       </ImageView>
       <ImageView fx:id="Card2" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="134.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@eu_WagonCard_purple.png" />
+            <Image url="@eu_WagonCard_pink.png" />
          </image>
       </ImageView>
       <ImageView fx:id="Card3" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="268.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">

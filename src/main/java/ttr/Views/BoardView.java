@@ -8,10 +8,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape;
 import ttr.Controllers.BoardController;
 import ttr.Model.PlayerModel;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import ttr.Controllers.TrainCardDeckController;
 
 
 public class BoardView implements PlayerObserver {
@@ -19,8 +19,9 @@ public class BoardView implements PlayerObserver {
     public ImageView Card2;
     public ImageView Card3;
     public ImageView Card4;
-    public ImageView Card5;
+    public ImageView Card5;;
     BoardController bc;
+    TrainCardDeckController deck;
     ArrayList<ImageView> Open_cards = new ArrayList<>();
 
 
@@ -51,11 +52,19 @@ public class BoardView implements PlayerObserver {
         Open_cards.add(Card3);
         Open_cards.add(Card4);
         Open_cards.add(Card5);
-        Image black = new Image(new FileInputStream("ttr/fxml/eu_WagonCard_black.png"));
+        Image pink = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_pink.png"));
+        Image black = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_black.png"));
+        Image orange = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_orange.png"));
+        Image green = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_green.png"));
+        Image loco = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_loco.png"));
+        Image blue = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_blue.png"));
+        Image red = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_red.png"));
+        Image white = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_white.png"));
+        Image yellow = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_yellow.png"));
         String id = event.getPickResult().getIntersectedNode().getId();
         for (int i = 0; i < Open_cards.size(); i++) {
             if (id == Open_cards.get(i).getId()){
-                Open_cards.get(i).setImage(black);
+                Open_cards.get(i).setImage(pink);
             }
 
         }
