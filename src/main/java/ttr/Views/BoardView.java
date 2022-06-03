@@ -8,6 +8,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape;
 import ttr.Controllers.BoardController;
 import ttr.Model.PlayerModel;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -42,21 +45,20 @@ public class BoardView implements PlayerObserver {
 
     }
     @FXML
-    public void Put_in_hand_and_replace(MouseEvent event){
+    public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
         Open_cards.add(Card1);
         Open_cards.add(Card2);
         Open_cards.add(Card3);
         Open_cards.add(Card4);
         Open_cards.add(Card5);
-        Image black = new Image("eu_WagonCard_black.png");
+        Image black = new Image(new FileInputStream("ttr/fxml/eu_WagonCard_black.png"));
         String id = event.getPickResult().getIntersectedNode().getId();
-        Card1.setImage(black);
-        //for (int i = 0; i < Open_cards.size(); i++) {
-          //  if (id == Open_cards.get(i).getId()){
-            //    Open_cards.get(i).setImage(black);
-            //}
+        for (int i = 0; i < Open_cards.size(); i++) {
+            if (id == Open_cards.get(i).getId()){
+                Open_cards.get(i).setImage(black);
+            }
 
-        //}
+        }
 
     }
 
