@@ -23,12 +23,12 @@ public class FirestoreService {
     private static final String GAMES_PATH = "games";
     private ClientConstants cc = new ClientConstants();
     private CollectionReference colRef;
+    private Controller controller;
 
 
     public FirestoreService() {
         Database db = new Database();
         this.firestore = db.getDb();
-
         this.colRef = this.firestore.collection(GAMES_PATH);
     }
 

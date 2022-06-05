@@ -8,11 +8,13 @@ RoutesOwned = Arraylist van Routes
 
 import com.google.cloud.firestore.DocumentSnapshot;
 import ttr.Services.FirestoreService;
+import ttr.Shared.PlayerObservable;
+import ttr.Views.PlayerObserver;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PlayerModel implements Observable {
+public class PlayerModel implements PlayerObservable {
     private FirestoreService fs = new FirestoreService();
 
     private String playerColor;
@@ -21,11 +23,15 @@ public class PlayerModel implements Observable {
     private int score;
     private int trainCount = 45;
     private int stationCount = 45;
+
     //    private PlayerHandModel playerHand;
     private ArrayList<TrainCardModel> playerHand;
     private TrainCardDeckModel trainCardDeck;
+
     //RoutesOwned
     private boolean playerTurn;
+
+    private List<PlayerObserver> observers = new ArrayList<PlayerObserver>();
 
     public PlayerModel() {
         trainCardDeck = new TrainCardDeckModel();
@@ -87,16 +93,19 @@ public class PlayerModel implements Observable {
 
     @Override
     public void notifyObservers() {
+        for (PlayerObserver observer: this.observers){
+            observer.update(this);
+        }
 
     }
 
     @Override
-    public void addObserver() {
+    public void addObserver(PlayerObserver observer) {
 
     }
 
     @Override
-    public void removeObserver() {
+    public void removeObserver(PlayerObserver observer) {
 
     }
 }

@@ -8,39 +8,41 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
+<?import javafx.scene.Group?>
 <VBox fx:id="list" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="ttr.Views.GameStartView">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <Label fx:id="playerLabel"/>
-    <Button text="Select player!" onAction="#playerSelect"/>
+    <Label fx:id="playerCountLabel">Current Players:</Label>
+    <Button fx:id="selectPlayer" text="Select player!" onAction="#playerSelect"/>
 
 
     <fx:define>
         <ToggleGroup fx:id="group" />
     </fx:define>
 
-    <RadioButton fx:id="1" text="red" toggleGroup="$group">
+
+    <RadioButton fx:id="player_1" text="red (host)" toggleGroup="$group" >
     </RadioButton>
 
-    <RadioButton fx:id="2" text="blue" toggleGroup="$group">
+    <RadioButton fx:id="player_2" text="blue" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="3" text="green" toggleGroup="$group">
+    <RadioButton fx:id="player_3" text="green" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="4" text="yellow" toggleGroup="$group">
+    <RadioButton fx:id="player_4" text="yellow" toggleGroup="$group">
     </RadioButton>
 
-    <RadioButton fx:id="5" text="black" toggleGroup="$group">
+    <RadioButton fx:id="player_5" text="black" toggleGroup="$group">
     </RadioButton>
 
 
 
     <TextField fx:id="nameField"/>
-    <Button fx:id="p2b" text="submit name!" onAction="#playerNameSubmit"/>
+    <Button fx:id="nameSubmit" text="submit name!" onAction="#playerNameSubmit"/>
 
     <Button fx:id="startGame" text="Start Game!" onMouseClicked="#startGame"/>
 

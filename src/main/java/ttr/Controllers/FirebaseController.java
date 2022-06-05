@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FirebaseController implements Controller {
-    FirestoreService fs = new FirestoreService();
-    ClientConstants cc = new ClientConstants();
 
     @Override
     public void update(DocumentSnapshot ds) {
         //voorbeeld
+        GameStartController.getInstance().update(ds);
+
     }
 }
 
