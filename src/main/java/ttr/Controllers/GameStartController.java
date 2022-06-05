@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import ttr.App;
 import ttr.Constants.ClientConstants;
 import ttr.Model.GameStartModel;
 import ttr.Model.PlayerModel;
@@ -19,6 +20,7 @@ import ttr.Views.GameStartObserver;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameStartController implements Controller {
     private PlayerModel player = new PlayerModel();
@@ -34,8 +36,8 @@ public class GameStartController implements Controller {
         fs = FirestoreService.getInstance();
     }
 
-    public static GameStartController getInstance(){
-        if (gsc == null){
+    public static GameStartController getInstance() {
+        if (gsc == null) {
             gsc = new GameStartController();
         }
         return gsc;
@@ -75,9 +77,9 @@ public class GameStartController implements Controller {
     }
 
 
-
     public void startGame(MouseEvent event) throws IOException {
         //change fxml file if following conditions are met: min 3 players with name, player starting is player 1 (red)
+
         Map playerMap = playerMap();
         int playerCount = playerMap.size();
 
@@ -85,6 +87,7 @@ public class GameStartController implements Controller {
             return;
         }
         if (player.getPlayerColor().equals("red") && playerCount >= 3) {
+            new App();
             //load file
             loadFile(event, "game_interface.fxml");
         }
@@ -92,9 +95,9 @@ public class GameStartController implements Controller {
 
 
     public void loadFile(MouseEvent event, String file) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/" + file));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ttr/fxml/" + file)));
 
-        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
         stage.setScene(scene);
         stage.show();

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class BoardController implements Controller {
     FirebaseModel fbm = new FirebaseModel();
-    FirestoreService fs  = new FirestoreService();
+    FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
     private static BoardController boardController;
 
