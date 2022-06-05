@@ -24,11 +24,15 @@ public class GameStartController implements Controller {
     private PlayerModel player = new PlayerModel();
     private GameStartModel gsm = new GameStartModel();
     private ClientConstants cc = new ClientConstants();
-    private FirestoreService fs = new FirestoreService();
+    private FirestoreService fs;
     public static GameStartController gsc;
 
     private Stage stage;
     private Scene scene;
+
+    private GameStartController() {
+        fs = FirestoreService.getInstance();
+    }
 
     public static GameStartController getInstance(){
         if (gsc == null){
@@ -91,7 +95,7 @@ public class GameStartController implements Controller {
         Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/" + file));
 
         this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        this.scene = new Scene(root, 1000, 800);
+        this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
         stage.setScene(scene);
         stage.show();
     }

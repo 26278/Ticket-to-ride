@@ -144,6 +144,11 @@ public class BoardView implements PlayerObserver {
 
 
     @FXML
+    protected void initialize(){
+        this.bc = BoardController.getInstance();
+    }
+
+    @FXML
     public void highlight(MouseEvent event) {
         // light up event source
         Shape glowRec = (Shape) event.getSource();

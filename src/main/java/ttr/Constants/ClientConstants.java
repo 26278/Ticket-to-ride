@@ -2,8 +2,8 @@ package ttr.Constants;
 
 public class ClientConstants{
     String ID = new Token().getToken();
-    int screenX = 1006;
-    int screenY = 670;
+    static int screenX = 1280;
+    static int screenY = 720;
 
 
     public String getID() {

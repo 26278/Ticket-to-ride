@@ -15,9 +15,10 @@ public class App {
     ClientConstants cc = new ClientConstants();
     String gameIdentifier = cc.getID();
     Controller firebaseController = new FirebaseController();
-    FirestoreService fbService = new FirestoreService();
+    FirestoreService fbService;
 
     public App() {
+        this.fbService = FirestoreService.getInstance();
 
         if (fbService.get(gameIdentifier) == null) {
 

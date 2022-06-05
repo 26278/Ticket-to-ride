@@ -15,7 +15,7 @@ public class FirebaseController implements Controller {
     public void update(DocumentSnapshot ds) {
         //voorbeeld
         GameStartController.getInstance().update(ds);
-
+        BoardController.getInstance().update(ds);
     }
 }
 

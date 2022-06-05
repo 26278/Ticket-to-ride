@@ -24,7 +24,7 @@
     </fx:define>
 
 
-    <RadioButton fx:id="player_1" text="red (host)" toggleGroup="$group" >
+    <RadioButton fx:id="player_1" text="red" toggleGroup="$group" >
     </RadioButton>
 
     <RadioButton fx:id="player_2" text="blue" toggleGroup="$group">

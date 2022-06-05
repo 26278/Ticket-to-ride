@@ -17,7 +17,6 @@ public class GameLoginView {
     @FXML
     protected void setGameToken(MouseEvent event) throws IOException {
         String token = tokenTextField.getText().toUpperCase(Locale.ROOT);
-        System.out.println(token.length());
 
         if (token.length() == 6) {
             glc.joinGame(token, event);

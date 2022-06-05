@@ -7,6 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ttr.Views.BoardView">
    <children>
@@ -15,6 +16,8 @@
             <Image url="@euMap.jpg" />
          </image>
       </ImageView>
+
+      <Button onMouseClicked="#endTurn"/>
 
       <Group fx:id="Edinburgh_London_R">
       <Rectangle fx:id="Edinburgh_London_R1" arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="36.0" layoutX="159.0" layoutY="35.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-22.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />

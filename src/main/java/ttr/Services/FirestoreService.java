@@ -23,8 +23,15 @@ public class FirestoreService {
     private static final String GAMES_PATH = "games";
     private ClientConstants cc = new ClientConstants();
     private CollectionReference colRef;
-    private Controller controller;
 
+    static FirestoreService firebaseService;
+
+    public static FirestoreService getInstance(){
+        if (firebaseService == null){
+            firebaseService = new FirestoreService();
+        }
+        return firebaseService;
+    }
 
     public FirestoreService() {
         Database db = new Database();
