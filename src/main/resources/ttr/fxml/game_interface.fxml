@@ -6,8 +6,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ttr.Views.BoardView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1219.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ttr.Views.BoardView">
    <children>
       <ImageView fitHeight="670.0" fitWidth="1006.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -361,5 +360,30 @@
       <Rectangle fx:id="Bucuresti_Constantinople_1" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="36.0" layoutX="757.0" layoutY="447.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-22.2" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="Bucuresti_Constantinople_11" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="36.0" layoutX="771.0" layoutY="482.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-19.5" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="Bucuresti_Constantinople_12" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="36.0" layoutX="786.0" layoutY="517.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-21.5" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <ImageView fx:id="Card1" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@eu_WagonCard_loco.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Card2" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="134.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@eu_WagonCard_pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Card3" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="268.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@eu_WagonCard_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Card4" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="402.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@eu_WagonCard_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Card5" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="536.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@eu_WagonCard_black.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
