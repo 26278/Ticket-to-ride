@@ -4,6 +4,7 @@ package ttr.Controllers;
 import com.google.cloud.firestore.DocumentSnapshot;
 import ttr.Constants.ClientConstants;
 import ttr.Model.FirebaseModel;
+import ttr.Model.PlayerModel;
 import ttr.Services.FirestoreService;
 import ttr.Views.PlayerObserver;
 
@@ -13,6 +14,7 @@ public class BoardController implements Controller {
     FirebaseModel fbm = new FirebaseModel();
     FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
+    PlayerModel player;
     private static BoardController boardController;
 
     private int currentPlayer;
@@ -33,6 +35,10 @@ public class BoardController implements Controller {
     public void place_train_or_station() {
     }
 
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+        checkPlayerTurn();
+    }
 
     public void setCurrentPlayer(int currentPlayer) {
         this.currentPlayer = currentPlayer;
@@ -46,15 +52,31 @@ public class BoardController implements Controller {
 
         currentPlayer += 1;
 
-        if (currentPlayer == (playerCount + 2)) {
+        if (currentPlayer == (playerCount + 1)) {
             currentPlayer = 1;
         }
 
         fbm.setCurrentPlayer(currentPlayer);
+        checkPlayerTurn();
+    }
+
+    public void checkPlayerTurn() {
+        if (this.player.getPlayerNumber() == currentPlayer) {
+            this.player.setPlayerTurn(true);
+        }
+        if (this.player.getPlayerNumber() != currentPlayer) {
+            this.player.setPlayerTurn(false);
+        }
+    }
+
+
+    public void registerPlayerObserver(PlayerObserver boardView) {
+        this.player.addObserver(boardView);
     }
 
     public void update(DocumentSnapshot ds) {
-        setCurrentPlayer((Integer) ds.get("current_player"));
         updatePlayerCount((Map) ds.get("players"));
+        setCurrentPlayer((Integer) ds.get("current_player"));
+        checkPlayerTurn();
     }
 }

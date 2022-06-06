@@ -22,9 +22,9 @@ import java.util.*;
 
 public class GameStartView implements GameStartObserver {
 
+    GameStartController gsc;
     @FXML
     public VBox list;
-    GameStartController gsc;
 
     @FXML
     protected ToggleGroup group;

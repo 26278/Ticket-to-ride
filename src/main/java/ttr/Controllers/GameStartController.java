@@ -9,6 +9,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ttr.App;
 import ttr.Constants.ClientConstants;
@@ -44,7 +45,7 @@ public class GameStartController implements Controller {
     }
 
     private Map playerMap() {
-        return (HashMap) fs.get(cc.getID()).get("players");
+        return (Map) fs.get(cc.getID()).get("players");
     }
 
     public void firstPlayerCheck() {
@@ -76,20 +77,19 @@ public class GameStartController implements Controller {
         return Integer.parseInt(parts[1]);
     }
 
-
     public void startGame(MouseEvent event) throws IOException {
         //change fxml file if following conditions are met: min 3 players with name, player starting is player 1 (red)
 
         Map playerMap = playerMap();
         int playerCount = playerMap.size();
 
-        if (player.getPlayerColor() == null) {
-            return;
-        }
-        if (player.getPlayerColor().equals("red") && playerCount >= 3) {
-            new App();
+        if (this.player.getPlayerColor() != null && playerCount >= 3) {
             //load file
+            BoardController bc = BoardController.getInstance();
+            bc.setPlayer(this.player);
             loadFile(event, "game_interface.fxml");
+            new App();
+
         }
     }
 
@@ -99,7 +99,7 @@ public class GameStartController implements Controller {
 
         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
-        stage.setScene(scene);
+        this.stage.setScene(scene);
         stage.show();
     }
 
@@ -110,7 +110,6 @@ public class GameStartController implements Controller {
     @Override
     public void update(DocumentSnapshot ds) {
         gsm.setPlayerCount((Map) ds.get("players"));
-
     }
 
 

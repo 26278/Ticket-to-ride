@@ -146,6 +146,8 @@ public class BoardView implements PlayerObserver {
     @FXML
     protected void initialize(){
         this.bc = BoardController.getInstance();
+        this.bc.registerPlayerObserver(this);
+
     }
 
     @FXML
@@ -165,7 +167,8 @@ public class BoardView implements PlayerObserver {
     @FXML
     public void place_train_or_station(MouseEvent event) {
         String routeID = ((Shape) event.getSource()).getParent().getId();
-
+        Rectangle r = (Rectangle) event.getSource();
+        System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
     }
 
 
