@@ -1,5 +1,3 @@
 package ttr.Constants;
 
-public enum CardColorTypes {WHITE, BROWN, BLUE, BLACK, YELLOW, RED, PURPLE, GREEN, LOCO}
-
-
+public enum CardColorTypes { WHITE, ORANGE, BLUE, BLACK, YELLOW, RED, PINK, GREEN, LOCO }

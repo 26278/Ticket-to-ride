@@ -32,32 +32,32 @@ public class TrainCardDeckController {
     }
 
     public static TrainCardDeckController getInstance() {
-        if (trainCardDeckController == null){
+        if (trainCardDeckController == null) {
             trainCardDeckController = new TrainCardDeckController();
         }
         return trainCardDeckController;
     }
 
     //    Verplaats naar PlayerHand als deze af is
-    public ArrayList<CheckBox> trainCardCheckboxes() {
-        //        ArrayList<TrainCard> trainCards = new ArrayList<>();
-        trainCards.add("Green");
-        trainCards.add("Blue");
-        trainCards.add("Pink");
-        trainCards.add("Yellow");
-        trainCards.add("Green");
-        trainCards.add("Green");
-
-        for (String trainCard : trainCards) {
-            CheckBox card = new CheckBox();
-//            card.setText(trainCard.getColor());
-//            card.setGraphic(trainCard.getGraphic());
-            card.setText(trainCard);
-            trainCardCheckboxes.add(card);
-        }
-
-        return trainCardCheckboxes;
-    }
+//    public ArrayList<CheckBox> trainCardCheckboxes() {
+//        //        ArrayList<TrainCard> trainCards = new ArrayList<>();
+//        trainCards.add("Green");
+//        trainCards.add("Blue");
+//        trainCards.add("Pink");
+//        trainCards.add("Yellow");
+//        trainCards.add("Green");
+//        trainCards.add("Green");
+//
+//        for (String trainCard : trainCards) {
+//            CheckBox card = new CheckBox();
+////            card.setText(trainCard.getColor());
+////            card.setGraphic(trainCard.getGraphic());
+//            card.setText(trainCard);
+//            trainCardCheckboxes.add(card);
+//        }
+//
+//        return trainCardCheckboxes;
+//    }
 
     @FXML
     protected void confirmSelectedCards() {
