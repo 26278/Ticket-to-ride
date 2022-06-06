@@ -1,4 +1,4 @@
-package models;
+package ttr.Model;
 
 public interface Observable {
 

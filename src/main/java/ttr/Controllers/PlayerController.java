@@ -1,4 +1,4 @@
-package controllers;
+package ttr.Controllers;
 
 public class PlayerController {
 
