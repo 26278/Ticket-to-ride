@@ -2,7 +2,9 @@ package ttr.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import ttr.Constants.CardColorTypes;
 import ttr.Model.TrainCardDeckModel;
+import ttr.Model.TrainCardModel;
 import ttr.Services.FirestoreService;
 
 import java.util.ArrayList;
@@ -20,47 +22,30 @@ public class TrainCardDeckController {
     }
 
 
-    public void Shuffle(){
+    public void Shuffle() {
         Collections.shuffle(trainDeck.getTrainCardDeck());
     }
 
     public static TrainCardDeckController getInstance() {
-        if (trainCardDeckController == null){
+        if (trainCardDeckController == null) {
             trainCardDeckController = new TrainCardDeckController();
         }
         return trainCardDeckController;
     }
 
-    //    Verplaats naar PlayerHand als deze af is
-    public ArrayList<CheckBox> trainCardCheckboxes() {
-        //        ArrayList<TrainCard> trainCards = new ArrayList<>();
-        trainCards.add("Green");
-        trainCards.add("Blue");
-        trainCards.add("Pink");
-        trainCards.add("Yellow");
-        trainCards.add("Green");
-        trainCards.add("Green");
+    //    Instantie maken van TrainCardDeck, kaarten toevoegen
+//    public ArrayList<CardColorTypes> getTrainCardsFromUserCards() {
+//        TrainCardDeckModel trainCardDeckObject = new TrainCardDeckModel();
+//        TrainCardModel kaart1 = new TrainCardModel(CardColorTypes.BLUE);
+//        TrainCardModel kaart2 = new TrainCardModel(CardColorTypes.YELLOW);
+//        TrainCardModel kaart3 = new TrainCardModel(CardColorTypes.WHITE);
+//        TrainCardModel kaart4 = new TrainCardModel(CardColorTypes.ORANGE);
+//        TrainCardModel kaart5 = new TrainCardModel(CardColorTypes.BLUE);
 
-        for (String trainCard : trainCards) {
-            CheckBox card = new CheckBox();
-//            card.setText(trainCard.getColor());
-//            card.setGraphic(trainCard.getGraphic());
-            card.setText(trainCard);
-            trainCardCheckboxes.add(card);
-        }
+//        trainCardDeckObject
+//        return ;
 
-        return trainCardCheckboxes;
-    }
-
-    @FXML
-    protected void confirmSelectedCards() {
-
-    }
-
-    @FXML
-    protected void cancelSelectedCards() {
-
-    }
+//    }
 
 }
 
