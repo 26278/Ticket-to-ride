@@ -1,8 +1,12 @@
 package com.example.iipsene_ttr.Controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -138,6 +142,7 @@ public class BoardController {
     public Rectangle Frankfurt_Berlin_T3;
     public Rectangle Essen_Berlin_1;
     public Rectangle Essen_Berlin_2;
+    public AnchorPane test_anchor;
 
     @FXML
     public void highlight(MouseEvent event) {
@@ -155,10 +160,19 @@ public class BoardController {
     }
 
     @FXML
-    public void place_train_or_station() {
+    public void place_train_or_station(ActionEvent event) {
         // functie om een trein of station te bouwen
 
-        System.out.println("place");
+            String routeID = ((Shape) event.getSource()).getParent().getId();
+            Rectangle r = (Rectangle) event.getSource();
+        System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
+            Circle test1;
+            test1 = new Circle(200,200,30, Color.BLACK);
+
+            test_anchor.getChildren().add(test1);
+
+        }
+       // System.out.println("place");
     }
 
-}
+
