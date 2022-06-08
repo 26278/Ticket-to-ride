@@ -7,6 +7,7 @@ RoutesOwned = Arraylist van Routes
 
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.scene.image.Image;
 import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
@@ -24,6 +25,7 @@ public class PlayerModel implements PlayerObservable {
     private int score;
     private int trainCount = 45;
     private int stationCount = 45;
+
     private ArrayList<TrainCardModel> playerHand;
     private TrainCardDeckModel trainCardDeck;
     private boolean playerTurn;
@@ -89,6 +91,12 @@ public class PlayerModel implements PlayerObservable {
         } else {
             setPlayerTurn(false);
         }
+    }
+    public void placeTrain(){
+        // eerst firebase hier stop ik trein;
+        // daarna een update naar de view;
+        //
+
     }
 
     private int getScore() {

@@ -168,7 +168,10 @@ public class BoardView implements PlayerObserver {
     public void place_train_or_station(MouseEvent event) {
         String routeID = ((Shape) event.getSource()).getParent().getId();
         Rectangle r = (Rectangle) event.getSource();
-        System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
+       r.getLayoutX();
+       r.getLayoutY();
+       r.getRotate();
+
     }
 
 

@@ -2,6 +2,7 @@ package ttr.Controllers;
 
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.scene.shape.Rectangle;
 import ttr.Constants.ClientConstants;
 import ttr.Model.FirebaseModel;
 import ttr.Model.PlayerModel;
@@ -11,6 +12,7 @@ import ttr.Views.PlayerObserver;
 import java.util.Map;
 
 public class BoardController implements Controller {
+
     FirebaseModel fbm = new FirebaseModel();
     FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
@@ -68,7 +70,11 @@ public class BoardController implements Controller {
             this.player.setPlayerTurn(false);
         }
     }
+        public void placeTrain(Rectangle rect){
+        this.player.placeTrain();
 
+
+        }
 
     public void registerPlayerObserver(PlayerObserver boardView) {
         this.player.addObserver(boardView);
