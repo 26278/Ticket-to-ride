@@ -1,16 +1,21 @@
 package ttr.Views;
 
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+import ttr.Constants.*;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import ttr.Constants.CardColorTypes;
+import ttr.Constants.ClientConstants;
 import ttr.Controllers.BoardController;
 import ttr.Controllers.TrainCardDeckController;
 import ttr.Model.PlayerModel;
@@ -156,18 +161,23 @@ public class BoardView implements PlayerObserver {
 
     @FXML
     private void createPlayerHandHBox() {
-//        for (TrainCardModel card: Player.getPlayerHand()){
-//
-//        }
-        ArrayList<CardColorTypes> cardColorTypes = new ArrayList<CardColorTypes>(Arrays.asList(WHITE, ORANGE, BLUE,
-                BLACK, YELLOW, RED, PINK, GREEN, LOCO));
+        ArrayList<CardColorTypes> cardColorTypes = new ArrayList<CardColorTypes>(Arrays.asList(WHITE, BLUE,
+                BLACK, YELLOW, RED, PURPLE, GREEN, LOCO, BROWN));
         for (CardColorTypes colorTypes : cardColorTypes) {
             String cardColorString = colorTypes.toString().toLowerCase();
-            String url = "eu_WagonCard_" + cardColorString + ".png";
+            String url = "/ttr/cards/eu_WagonCard_" + cardColorString + ".png";
             System.out.println(url);
             Image cardImg = new Image(getClass().getResourceAsStream(url));
             ImageView cardImageView = new ImageView(cardImg);
-            VBox cardBox = new VBox(cardImageView);
+            cardImageView.setFitWidth(100);
+            cardImageView.setFitHeight(200);
+            Label cardCounter = new Label();
+            cardCounter.setFont(new Font(20));
+            VBox cardBox = new VBox();
+            cardBox.getChildren().add(cardCounter);
+            cardBox.getChildren().add(cardImageView);
+            cardBox.setStyle("-fx-border-color: blue;");
+            PlayerHandHbox.getChildren().add(cardBox);
         }
     }
 
