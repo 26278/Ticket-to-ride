@@ -55,7 +55,7 @@ public class GameStartView implements GameStartObserver {
     private ArrayList<RadioButton> playerButtons = new ArrayList<>();
 
     @FXML
-    protected void initialize(){
+    protected void initialize() {
         this.gsc = GameStartController.getInstance();
         this.gsc.addGameStartObserver(this);
         this.gsc.firstPlayerCheck();
@@ -91,7 +91,7 @@ public class GameStartView implements GameStartObserver {
     private void hideSelectedPlayers(Map playerMap) {
         for (int i = 0; i < playerButtons.size(); i++) {
             if (playerMap.get(playerButtons.get(i).getId()) != null) {
-                playerButtons.get(i).setVisible(false);
+                playerButtons.get(i).setVisible(true);
             }
         }
     }

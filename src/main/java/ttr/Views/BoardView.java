@@ -3,17 +3,29 @@ package ttr.Views;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import ttr.Constants.CardColorTypes;
 import ttr.Controllers.BoardController;
+import ttr.Controllers.TrainCardDeckController;
 import ttr.Model.PlayerModel;
+import ttr.Model.TrainCardModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Objects;
+
+import static ttr.Constants.CardColorTypes.*;
 
 public class BoardView implements PlayerObserver {
+    public HBox PlayerHandHbox;
     BoardController bc;
-
     public Rectangle Edinburgh_London_R1;
     public Rectangle Edinburgh_London_R2;
     public Rectangle Edinburgh_London_R3;
@@ -142,12 +154,28 @@ public class BoardView implements PlayerObserver {
     public Rectangle Essen_Berlin_1;
     public Rectangle Essen_Berlin_2;
 
+    @FXML
+    private void createPlayerHandHBox() {
+//        for (TrainCardModel card: Player.getPlayerHand()){
+//
+//        }
+        ArrayList<CardColorTypes> cardColorTypes = new ArrayList<CardColorTypes>(Arrays.asList(WHITE, ORANGE, BLUE,
+                BLACK, YELLOW, RED, PINK, GREEN, LOCO));
+        for (CardColorTypes colorTypes : cardColorTypes) {
+            String cardColorString = colorTypes.toString().toLowerCase();
+            String url = "eu_WagonCard_" + cardColorString + ".png";
+            System.out.println(url);
+            Image cardImg = new Image(getClass().getResourceAsStream(url));
+            ImageView cardImageView = new ImageView(cardImg);
+            VBox cardBox = new VBox(cardImageView);
+        }
+    }
 
     @FXML
-    protected void initialize(){
+    protected void initialize() {
         this.bc = BoardController.getInstance();
         this.bc.registerPlayerObserver(this);
-
+        createPlayerHandHBox();
     }
 
     @FXML
