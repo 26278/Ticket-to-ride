@@ -36,6 +36,8 @@ public class TrainCardDeckModel implements Observable {
             trainCardDeck.add(new TrainCardModel(COLOR_YELLOW));
             trainCardDeck.add(new TrainCardModel(COLOR_GREEN));
             trainCardDeck.add(new TrainCardModel(COLOR_RAINBOW));
+            trainCardDeck.add(new TrainCardModel(COLOR_BROWN));
+            trainCardDeck.add(new TrainCardModel(COLOR_PURPLE));
         }
     }
 

@@ -1,5 +1,6 @@
 package ttr.Views;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import ttr.Constants.*;
@@ -159,33 +160,45 @@ public class BoardView implements PlayerObserver {
     public Rectangle Essen_Berlin_1;
     public Rectangle Essen_Berlin_2;
 
+
+
     @FXML
-    private void createPlayerHandHBox() {
+    protected void initialize() {
+        this.bc = BoardController.getInstance();
+        this.bc.registerPlayerObserver(this);
+    }
+
+    @FXML
+    private void createPlayerHandHBox(PlayerModel player) {
+        System.out.println(player.getPlayerHand());
+        PlayerHandHbox.getChildren().clear();
+        ArrayList<TrainCardModel> playerHand = player.getPlayerHand();
         ArrayList<CardColorTypes> cardColorTypes = new ArrayList<CardColorTypes>(Arrays.asList(WHITE, BLUE,
                 BLACK, YELLOW, RED, PURPLE, GREEN, LOCO, BROWN));
         for (CardColorTypes colorTypes : cardColorTypes) {
+            int cardCount = 0;
             String cardColorString = colorTypes.toString().toLowerCase();
             String url = "/ttr/cards/eu_WagonCard_" + cardColorString + ".png";
-            System.out.println(url);
             Image cardImg = new Image(getClass().getResourceAsStream(url));
             ImageView cardImageView = new ImageView(cardImg);
             cardImageView.setFitWidth(100);
             cardImageView.setFitHeight(200);
             Label cardCounter = new Label();
             cardCounter.setFont(new Font(20));
+            for (TrainCardModel card: playerHand){
+                System.out.println(card.getCardColor());
+                System.out.println(cardColorString);
+                if (Objects.equals(card.getCardColor(), cardColorString)){
+                    cardCount++;
+                }
+            }
+            cardCounter.setText("Amount: " + cardCount);
             VBox cardBox = new VBox();
             cardBox.getChildren().add(cardCounter);
             cardBox.getChildren().add(cardImageView);
             cardBox.setStyle("-fx-border-color: blue;");
             PlayerHandHbox.getChildren().add(cardBox);
         }
-    }
-
-    @FXML
-    protected void initialize() {
-        this.bc = BoardController.getInstance();
-        this.bc.registerPlayerObserver(this);
-        createPlayerHandHBox();
     }
 
     @FXML
@@ -206,16 +219,23 @@ public class BoardView implements PlayerObserver {
     public void place_train_or_station(MouseEvent event) {
         String routeID = ((Shape) event.getSource()).getParent().getId();
         Rectangle r = (Rectangle) event.getSource();
-        System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
+    }
+
+    @FXML
+    public void pullcards(ActionEvent actionEvent) {
+        bc.pullCards();
     }
 
 
     @Override
     public void update(PlayerModel playerModel) {
+        createPlayerHandHBox(playerModel);
     }
 
     @FXML
     protected void endTurn() {
         bc.endTurn();
     }
+
+
 }

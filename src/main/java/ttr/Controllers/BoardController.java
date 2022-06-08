@@ -33,6 +33,7 @@ public class BoardController implements Controller {
 
 
     public void place_train_or_station() {
+
     }
 
     public void setPlayer(PlayerModel player) {
@@ -68,6 +69,11 @@ public class BoardController implements Controller {
             this.player.setPlayerTurn(false);
         }
     }
+
+    public void pullCards(){
+        this.player.pullCard();
+    }
+
 
 
     public void registerPlayerObserver(PlayerObserver boardView) {

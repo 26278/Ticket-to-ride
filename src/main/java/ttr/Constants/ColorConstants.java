@@ -7,5 +7,7 @@ public class ColorConstants {
     public static final String COLOR_YELLOW = "yellow";
     public static final String COLOR_WHITE = "white";
     public static final String COLOR_BLACK = "black";
-    public static final String COLOR_RAINBOW = "rainbow";
+    public static final String COLOR_RAINBOW = "loco";
+    public static final String COLOR_BROWN = "brown";
+    public static final String COLOR_PURPLE= "purple";
 }

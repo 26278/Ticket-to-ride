@@ -10,6 +10,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
+import ttr.Views.BoardView;
 import ttr.Views.PlayerObserver;
 
 import java.util.ArrayList;
@@ -105,7 +106,8 @@ public class PlayerModel implements PlayerObservable {
 
     @Override
     public void addObserver(PlayerObserver observer) {
-
+        this.observers.add(observer);
+        this.notifyObservers();
     }
 
     @Override
