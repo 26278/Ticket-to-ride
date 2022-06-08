@@ -35,6 +35,6 @@
 <!--        </GridPane>-->
     </center>
     <bottom>
-        <Button disable="true" onMouseClicked="#confirmSelectedCards" BorderPane.alignment="CENTER">Bevestig</Button>
+        <Button fx:id="confirmButton" disable="true" onMouseClicked="#confirmSelectedCards" BorderPane.alignment="CENTER">Bevestig</Button>
     </bottom>
 </BorderPane>

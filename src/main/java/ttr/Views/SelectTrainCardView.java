@@ -31,7 +31,6 @@ public class SelectTrainCardView {
 
     @FXML
     public javafx.scene.control.ListView ListView;
-    public GridPane cardGrid;
     public BorderPane borderPane;
 
     TrainCardDeckController trainCardDeckController;
@@ -67,24 +66,23 @@ public class SelectTrainCardView {
 //  Making dynamic cards for the view based on the CardColorTyped enum and user's TrainCardDeck
     private void createCardsListView() {
         GridPane gridPane = new GridPane();
-        CardColorTypes cardColorTypes[] = CardColorTypes.values();
-        ArrayList<VBox> cardVboxes = new ArrayList<>();
+        CardColorTypes cardColorTypes[] = this.trainCardDeckController.getCardColorTypes();
         int i = 0;
 
         for (CardColorTypes cardColorType : cardColorTypes) {
-
             String cardColorString = cardColorType.toString().toLowerCase(Locale.ROOT);
             String url = "/ttr/fxml/eu_WagonCard_" + cardColorString + ".png";
             int userAmountOfCards = 0; //Replace 0 with dynamic user amount of cards
-            int selectAmountOfCards = 0; //Replace 0 with dynamic selected amount of cards
+            int selectAmountOfCards = 3; //Replace 0 with dynamic selected amount of cards
 
             Text userAmountOfCardsText = new Text("Aantal kaarten: " + String.valueOf(userAmountOfCards));
             Text selectAmountOfCardsText = new Text(String.valueOf(selectAmountOfCards));
+            selectAmountOfCardsText.setId(cardColorString);
             TextFlow centerAlignUserAmountOfCardsText = new TextFlow(userAmountOfCardsText);
             Button selectPlusOneCard = new Button("+1");
             Button selectMinusOneCard = new Button("-1");
-            selectPlusOneCard.setOnAction(plusOne(cardColorString));
-            selectMinusOneCard.setOnAction(minusOne(cardColorString));
+            selectPlusOneCard.setOnAction(event -> plusOne(cardColorString));
+            selectMinusOneCard.setOnAction(event -> minusOne(cardColorString));
             HBox selectAmountOfCardsHBox = new HBox(selectMinusOneCard, selectAmountOfCardsText, selectPlusOneCard);
             selectAmountOfCardsHBox.setAlignment(Pos.CENTER);
             centerAlignUserAmountOfCardsText.setTextAlignment(TextAlignment.CENTER);
@@ -107,31 +105,15 @@ public class SelectTrainCardView {
             }
             i++;
         }
-
-//        Tried to spread the cards over GridPane with for loops, but didn't work
-//        for (VBox cardVbox : cardVboxes) {
-//            System.out.println("Test");
-//            gridPane.add(cardVbox, 0, 0);
-////            for(int y = 0; y < 1; y++) {
-////                for(int x = 0; x < 3; x++) {
-////                    System.out.println("Plaats CardVBox op coordinaat: Y=" + y + "  en X=" + x);
-////                    gridPane.getChildren().add(cardVbox);
-////                }
-////            }
-//        }
-
         borderPane.setCenter(gridPane);
     }
 
-//    Not working properly yet
-    private EventHandler<ActionEvent> minusOne(String cardColorString) {
-        System.out.println(cardColorString + " -1");
-        return null;
+    private void plusOne(String cardColorString) {
+        this.trainCardDeckController.plusOne(cardColorString, borderPane);
     }
 
-    private EventHandler<ActionEvent> plusOne(String cardColorString) {
-        System.out.println(cardColorString + " +1");
-        return null;
+    private void minusOne(String cardColorString) {
+        this.trainCardDeckController.minusOne(cardColorString, borderPane);
     }
 
     public void confirmSelectedCards(MouseEvent mouseEvent) {
