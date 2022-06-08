@@ -3,7 +3,9 @@ package ttr.Views;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import ttr.Controllers.BoardController;
@@ -11,7 +13,7 @@ import ttr.Model.PlayerModel;
 
 import java.util.ArrayList;
 
-public class BoardView implements PlayerObserver {
+public class BoardView implements PlayerObserver, TrainObserver {
     BoardController bc;
 
     public Rectangle Edinburgh_London_R1;
@@ -166,21 +168,37 @@ public class BoardView implements PlayerObserver {
 
     @FXML
     public void place_train_or_station(MouseEvent event) {
-        String routeID = ((Shape) event.getSource()).getParent().getId();
         Rectangle r = (Rectangle) event.getSource();
-       r.getLayoutX();
-       r.getLayoutY();
-       r.getRotate();
+        bc.placeTrain(r);
+
+
+    }
+    @FXML
+    public void paintTrain(Rectangle rect,PlayerModel player){
+
+        Image train = new Image("/ttr/trains/train/"+player.getPlayerColor()+".png");
+        rect.setFill(new ImagePattern(train));
+
 
     }
 
 
     @Override
     public void update(PlayerModel playerModel) {
+
     }
+
+
+
+
 
     @FXML
     protected void endTurn() {
         bc.endTurn();
+    }
+
+    @Override
+    public void update(Rectangle rect, PlayerModel player) {
+        paintTrain(rect, player);
     }
 }

@@ -6,13 +6,14 @@ import javafx.scene.shape.Rectangle;
 import ttr.Constants.ClientConstants;
 import ttr.Model.FirebaseModel;
 import ttr.Model.PlayerModel;
+import ttr.Model.TrainModel;
 import ttr.Services.FirestoreService;
 import ttr.Views.PlayerObserver;
 
 import java.util.Map;
 
 public class BoardController implements Controller {
-
+    TrainModel tm = new TrainModel();
     FirebaseModel fbm = new FirebaseModel();
     FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
@@ -71,7 +72,7 @@ public class BoardController implements Controller {
         }
     }
         public void placeTrain(Rectangle rect){
-        this.player.placeTrain();
+        this.tm.placeTrain(rect);
 
 
         }

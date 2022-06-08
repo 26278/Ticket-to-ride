@@ -8,6 +8,7 @@ RoutesOwned = Arraylist van Routes
 
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
@@ -92,12 +93,7 @@ public class PlayerModel implements PlayerObservable {
             setPlayerTurn(false);
         }
     }
-    public void placeTrain(){
-        // eerst firebase hier stop ik trein;
-        // daarna een update naar de view;
-        //
 
-    }
 
     private int getScore() {
         return score;

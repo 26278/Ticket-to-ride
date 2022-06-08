@@ -7,6 +7,7 @@ ROTATION
 */
 
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 
 public class TrainModel implements Observable{
     public Image getGreen() {
@@ -40,10 +41,20 @@ public class TrainModel implements Observable{
 
 
 
+    public void placeTrain(Rectangle rect){
+        // eerst firebase hier stop ik trein;
+        // daarna een update naar de view;
+        this.notifyObservers();
 
+    }
 
     @Override
     public void notifyObservers() {
+
+    }
+
+    @Override
+    public void notifyObservers(Rectangle rect, PlayerModel player) {
 
     }
 
