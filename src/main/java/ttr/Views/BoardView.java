@@ -24,10 +24,19 @@ public class BoardView implements PlayerObserver {
     public ImageView Card4;
     public ImageView Card5;
     BoardController bc;
-    TrainCardDeckController deck;
     HashMap<ImageView, String> Open_cards = new HashMap<>();
     ArrayList<String> taken_card = new ArrayList<>();
     ArrayList<String> decktest = new ArrayList<>();
+
+    @FXML
+    protected void initialize(){
+        Open_cards.put(Card1, "loco");
+        Open_cards.put(Card2, "pink");
+        Open_cards.put(Card3, "green");
+        Open_cards.put(Card4, "white");
+        Open_cards.put(Card5, "black");
+    }
+
 
 
 
@@ -52,11 +61,6 @@ public class BoardView implements PlayerObserver {
     }
     @FXML
     public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
-        Open_cards.put(Card1, "loco");
-        Open_cards.put(Card2, "pink");
-        Open_cards.put(Card3, "green");
-        Open_cards.put(Card4, "white");
-        Open_cards.put(Card5, "black");
         decktest.add("pink");
         decktest.add("green");
         decktest.add("orange");
@@ -72,22 +76,24 @@ public class BoardView implements PlayerObserver {
                     String url = "/ttr/fxml/eu_WagonCard_" + decktest.get(0).toString() + ".png";
                     i.setImage(new Image(getClass().getResourceAsStream(url)));
                     break;
-                }
-                    if (taken_card.size() == 1) {
-                        taken_card.add(color);
-                        decktest.remove(Open_cards.get(i));
-                        Open_cards.remove(i);
-                        Open_cards.put(i, decktest.get(0));
-                        String url = "/ttr/fxml/eu_WagonCard_" + decktest.get(0).toString() + ".png";
-                        i.setImage(new Image(getClass().getResourceAsStream(url)));
 
-                    }
                 }
-                if (taken_card.size() == 2) {
-                    System.out.println("volgende beurt");
-                    System.out.println(taken_card);
-                    break;
+                if (taken_card.size() == 1) {
+                    taken_card.add(color);
+                    decktest.remove(Open_cards.get(i));
+                    Open_cards.remove(i);
+                    Open_cards.put(i, decktest.get(0));
+                    String url = "/ttr/fxml/eu_WagonCard_" + decktest.get(0).toString() + ".png";
+                    i.setImage(new Image(getClass().getResourceAsStream(url)));
+
                 }
+
+            }
+            if (taken_card.size() == 2 ) {
+                System.out.println("volgende beurt");
+                System.out.println(taken_card);
+                break;
+            }
             }
         }
 
