@@ -37,27 +37,29 @@ public class BoardController implements Controller {
 
     public void setPlayer(PlayerModel player) {
         this.player = player;
-        checkPlayerTurn();
+        //checkPlayerTurn();
     }
 
-    public void setCurrentPlayer(int currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    public void setCurrentPlayer(DocumentSnapshot ds) {
+        String value = ds.get("current_player").toString();
+        this.currentPlayer = Integer.parseInt(value);
     }
 
     public void updatePlayerCount(Map playerMap) {
         playerCount = playerMap.size();
+        return;
     }
 
     public void endTurn() {
+        if (this.player.isPlayerTurn()) {
+            currentPlayer += 1;
 
-        currentPlayer += 1;
+            if (currentPlayer == (playerCount + 1)) {
+                currentPlayer = 1;
+            }
 
-        if (currentPlayer == (playerCount + 1)) {
-            currentPlayer = 1;
+            fbm.setCurrentPlayer(currentPlayer);
         }
-
-        fbm.setCurrentPlayer(currentPlayer);
-        checkPlayerTurn();
     }
 
     public void checkPlayerTurn() {
@@ -67,6 +69,7 @@ public class BoardController implements Controller {
         if (this.player.getPlayerNumber() != currentPlayer) {
             this.player.setPlayerTurn(false);
         }
+
     }
 
 
@@ -76,7 +79,7 @@ public class BoardController implements Controller {
 
     public void update(DocumentSnapshot ds) {
         updatePlayerCount((Map) ds.get("players"));
-        setCurrentPlayer((Integer) ds.get("current_player"));
+        setCurrentPlayer(ds);
         checkPlayerTurn();
     }
 }
