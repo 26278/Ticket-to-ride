@@ -1509,7 +1509,7 @@
         </children>
     </AnchorPane>
     <HBox>
-        <Rectangle width="80" height="210"></Rectangle>
+        <VBox fx:id="PlayerInfoVbox"></VBox>
         <HBox fx:id="PlayerHandHbox"></HBox>
         <Button onAction="#pullcards"></Button>
     </HBox>

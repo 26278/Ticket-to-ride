@@ -45,6 +45,13 @@ public class PlayerModel implements PlayerObservable {
         notifyObservers();
     }
 
+    public int getTrainCount() {
+        return trainCount;
+    }
+
+    public int getStationCount() {
+        return stationCount;
+    }
 
     public ArrayList<TrainCardModel> getPlayerHand() {
         return playerHand;
