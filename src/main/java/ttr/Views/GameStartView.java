@@ -13,9 +13,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import ttr.Constants.ClientConstants;
 import ttr.Controllers.Controller;
 import ttr.Controllers.GameStartController;
 import ttr.Model.GameStartModel;
+import ttr.Model.RequirementModel;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,6 +26,8 @@ import java.util.Objects;
 
 public class GameStartView implements GameStartObserver {
 
+    GameStartController gsc = new GameStartController();
+    ClientConstants cc = new ClientConstants();
     GameStartController gsc;
     @FXML
     public VBox list;
@@ -99,15 +103,17 @@ public class GameStartView implements GameStartObserver {
     }
 
     @FXML
-    public void chooseCard(MouseEvent event) throws IOException {
+//    public void chooseCard(MouseEvent event) throws IOException {
+    public void chooseCard(MouseEvent event, String trainCardColor, int trainCardCount,  boolean isTunnelBoolean) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/selectCardsScreen.fxml"));
         this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        this.scene = new Scene(root, 1000, 800);
+        this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
 //        scene.getStylesheets().add(
 //                Objects.requireNonNull(getClass().getResource("/ttr/stylesheets/chooseCards.css"))
 //                        .toExternalForm());
         stage.setScene(scene);
         stage.show();
+        RequirementModel requirement = new RequirementModel(trainCardColor, trainCardCount, isTunnelBoolean);
     }
 
     private Stage stage;
