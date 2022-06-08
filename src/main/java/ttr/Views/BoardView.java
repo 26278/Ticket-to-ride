@@ -168,16 +168,18 @@ public class BoardView implements PlayerObserver {
     public void place_train_or_station(MouseEvent event) {
         String routeID = ((Shape) event.getSource()).getParent().getId();
         Rectangle r = (Rectangle) event.getSource();
-        System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
+        //System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
     }
 
 
     @Override
     public void update(PlayerModel playerModel) {
+
     }
 
     @FXML
     protected void endTurn() {
         bc.endTurn();
     }
+
 }
