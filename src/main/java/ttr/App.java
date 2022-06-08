@@ -36,7 +36,7 @@ public class App {
         trainCardDeck.put("orange", 12);
         trainCardDeck.put("white", 12);
         trainCardDeck.put("black", 12);
-        trainCardDeck.put("rainbow", 12);
+        trainCardDeck.put("rainbow", 14);
         trainCardDeck.put("green", 12);
 
         //create hasmap with ticketDeck

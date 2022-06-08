@@ -11,7 +11,10 @@ import ttr.Model.PlayerModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import ttr.Controllers.TrainCardDeckController;
+
 
 
 public class BoardView implements PlayerObserver {
@@ -19,10 +22,12 @@ public class BoardView implements PlayerObserver {
     public ImageView Card2;
     public ImageView Card3;
     public ImageView Card4;
-    public ImageView Card5;;
+    public ImageView Card5;
     BoardController bc;
     TrainCardDeckController deck;
-    ArrayList<ImageView> Open_cards = new ArrayList<>();
+    HashMap<ImageView, String> Open_cards = new HashMap<>();
+    ArrayList<String> taken_card = new ArrayList<>();
+    ArrayList<String> decktest = new ArrayList<>();
 
 
 
@@ -47,29 +52,46 @@ public class BoardView implements PlayerObserver {
     }
     @FXML
     public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
-        Open_cards.add(Card1);
-        Open_cards.add(Card2);
-        Open_cards.add(Card3);
-        Open_cards.add(Card4);
-        Open_cards.add(Card5);
-        Image pink = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_pink.png"));
-        Image black = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_black.png"));
-        Image orange = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_orange.png"));
-        Image green = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_green.png"));
-        Image loco = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_loco.png"));
-        Image blue = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_blue.png"));
-        Image red = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_red.png"));
-        Image white = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_white.png"));
-        Image yellow = new Image(getClass().getResourceAsStream("/ttr/fxml/eu_WagonCard_yellow.png"));
+        Open_cards.put(Card1, "loco");
+        Open_cards.put(Card2, "pink");
+        Open_cards.put(Card3, "green");
+        Open_cards.put(Card4, "white");
+        Open_cards.put(Card5, "black");
+        decktest.add("pink");
+        decktest.add("green");
+        decktest.add("orange");
+        decktest.add("loco");
         String id = event.getPickResult().getIntersectedNode().getId();
-        for (int i = 0; i < Open_cards.size(); i++) {
-            if (id == Open_cards.get(i).getId()){
-                Open_cards.get(i).setImage(pink);
-            }
+        for (ImageView i : Open_cards.keySet()) {
+            String color = Open_cards.get(i);
+            if (id == i.getId().toString() && taken_card.size() < 3) {
+                if (taken_card.size() == 0) {
+                    taken_card.add(color);
+                    Open_cards.remove(i);
+                    Open_cards.put(i, decktest.get(0));
+                    String url = "/ttr/fxml/eu_WagonCard_" + decktest.get(0).toString() + ".png";
+                    i.setImage(new Image(getClass().getResourceAsStream(url)));
+                    break;
+                }
+                    if (taken_card.size() == 1) {
+                        taken_card.add(color);
+                        decktest.remove(Open_cards.get(i));
+                        Open_cards.remove(i);
+                        Open_cards.put(i, decktest.get(0));
+                        String url = "/ttr/fxml/eu_WagonCard_" + decktest.get(0).toString() + ".png";
+                        i.setImage(new Image(getClass().getResourceAsStream(url)));
 
+                    }
+                }
+                if (taken_card.size() == 2) {
+                    System.out.println("volgende beurt");
+                    System.out.println(taken_card);
+                    break;
+                }
+            }
         }
 
-    }
+
 
 
     @Override
