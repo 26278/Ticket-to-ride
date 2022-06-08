@@ -2,6 +2,8 @@ package ttr.Views;
 
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -12,8 +14,10 @@ import ttr.Controllers.BoardController;
 import ttr.Model.PlayerModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BoardView implements PlayerObserver, TrainObserver {
+    public Group Edinburgh_London_R;
     BoardController bc;
 
     public Rectangle Edinburgh_London_R1;
@@ -149,7 +153,7 @@ public class BoardView implements PlayerObserver, TrainObserver {
     protected void initialize(){
         this.bc = BoardController.getInstance();
         this.bc.registerPlayerObserver(this);
-
+        this.bc.registerTrainObserver(this);
     }
 
     @FXML
@@ -170,16 +174,16 @@ public class BoardView implements PlayerObserver, TrainObserver {
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
         bc.placeTrain(r);
-
-
     }
     @FXML
     public void paintTrain(Rectangle rect,PlayerModel player){
-
-        Image train = new Image("/ttr/trains/train/"+player.getPlayerColor()+".png");
-        rect.setFill(new ImagePattern(train));
-
-
+        String url = "/ttr/trains/train-" + player.getPlayerColor() + "-Claimed.png";
+        Image train = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+        Group group = (Group) rect.getParent();
+        for (Node node: group.getChildren()){
+            Rectangle rec = (Rectangle) node;
+            rec.setFill(new ImagePattern(train));
+        }
     }
 
 
@@ -187,9 +191,6 @@ public class BoardView implements PlayerObserver, TrainObserver {
     public void update(PlayerModel playerModel) {
 
     }
-
-
-
 
 
     @FXML

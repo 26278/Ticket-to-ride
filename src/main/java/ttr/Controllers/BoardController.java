@@ -9,6 +9,7 @@ import ttr.Model.PlayerModel;
 import ttr.Model.TrainModel;
 import ttr.Services.FirestoreService;
 import ttr.Views.PlayerObserver;
+import ttr.Views.TrainObserver;
 
 import java.util.Map;
 
@@ -72,13 +73,16 @@ public class BoardController implements Controller {
         }
     }
         public void placeTrain(Rectangle rect){
-        this.tm.placeTrain(rect);
+        this.tm.placeTrain(rect,this.player);
 
 
         }
 
     public void registerPlayerObserver(PlayerObserver boardView) {
         this.player.addObserver(boardView);
+    }
+    public void registerTrainObserver(TrainObserver boardView){
+        this.tm.addObserver(boardView);
     }
 
     public void update(DocumentSnapshot ds) {

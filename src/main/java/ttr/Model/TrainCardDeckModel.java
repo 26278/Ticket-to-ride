@@ -1,5 +1,7 @@
 package ttr.Model;
 
+import javafx.scene.shape.Rectangle;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;

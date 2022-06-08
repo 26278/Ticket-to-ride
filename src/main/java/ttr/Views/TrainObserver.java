@@ -5,5 +5,4 @@ import ttr.Model.PlayerModel;
 
 public interface TrainObserver {
     void update(Rectangle rect, PlayerModel player);
-
 }

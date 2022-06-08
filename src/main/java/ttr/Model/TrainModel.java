@@ -6,66 +6,39 @@ ROTATION
 
 */
 
-import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import ttr.Shared.trainObservable;
+import ttr.Views.TrainObserver;
 
-public class TrainModel implements Observable{
-    public Image getGreen() {
-        return green;
-    }
-    public Image getBlue() {
-        return blue;
-    }
+import java.util.ArrayList;
+import java.util.List;
 
-    private Image red = new Image("src/main/resources/ttr/images/train-Red.png");
-    private Image blue = new Image("src/main/resources/ttr/images/train-Blue.png");
-
-    public Image getRed() {
-        return red;
-    }
-
-    private Image green = new Image("src/main/resources/ttr/images/train-Green.png");
-
-    public Image getPurple() {
-        return purple;
-    }
-
-    private Image purple = new Image("src/main/resources/ttr/images/train-Purple.png");
-
-    public Image getYellow() {
-        return yellow;
-    }
-
-    private Image yellow = new Image("src/main/resources/ttr/images/train-Yellow.png");
+public class TrainModel implements trainObservable {
+    private List<TrainObserver> observers = new ArrayList<TrainObserver>();
 
 
-
-
-    public void placeTrain(Rectangle rect){
+    public void placeTrain(Rectangle rect, PlayerModel player){
         // eerst firebase hier stop ik trein;
         // daarna een update naar de view;
-        this.notifyObservers();
-
-    }
-
-    @Override
-    public void notifyObservers() {
+        this.notifyObservers(rect, player);
 
     }
 
     @Override
     public void notifyObservers(Rectangle rect, PlayerModel player) {
-
+        for (TrainObserver observer: this.observers){
+            observer.update(rect, player);
+        }
     }
 
     @Override
-    public void addObserver() {
-
+    public void addObserver(TrainObserver observer) {
+        observers.add(observer);
     }
 
     @Override
-    public void removeObserver() {
-
+    public void removeObserver(TrainObserver observer) {
+        observers.remove(observer);
     }
 
 
