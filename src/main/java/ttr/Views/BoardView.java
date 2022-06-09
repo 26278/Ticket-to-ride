@@ -75,10 +75,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
             public void handle(MouseEvent mouseEvent) {
                 bc.pullCards();
             }
-        });
+        });//On mouse click event
         trainDeckImageView.setFitWidth(150);
         TrainTicketDecksHbox.getChildren().add(trainDeckImageView);
-    }
+    }//Creates an image of the TrainCardDeck, which can be pressed to draw cards from the TrainCardDeck
+
 
     public String chooseDeckImage(int deckSize) {
         if (deckSize > 70) {
@@ -90,14 +91,13 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         } else {
             return "10";
         }
-    }
+    }//Helper function to decide what image to use for the deck
+
 
     @FXML
     private void createPlayerInfoVbox(PlayerModel player) {
         HBox stationHBox = new HBox();
         HBox trainHBox = new HBox();
-        stationHBox.setAlignment(Pos.CENTER);
-        trainHBox.setAlignment(Pos.CENTER);
         Label stationLabel = new Label(" X " + player.getStationCount());
         stationLabel.setFont(new Font(20));
         Label trainLabel = new Label(" X " + player.getTrainCount());
@@ -114,8 +114,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         stationHBox.getChildren().add(stationLabel);
         trainHBox.getChildren().add(trainImageView);
         trainHBox.getChildren().add(trainLabel);
+        stationHBox.setAlignment(Pos.CENTER);
+        trainHBox.setAlignment(Pos.CENTER);
         PlayerInfoVbox.getChildren().addAll(stationHBox, trainHBox);
-    }
+    }//dynamically creates the view of amount of Stations and Trains the player has left
+
 
     @FXML
     private void createPlayerHandHBox(PlayerModel player) {
@@ -134,21 +137,25 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
             cardImageView.setFitWidth(100);
             cardImageView.setFitHeight(200);
             cardCounter.setFont(new Font(20));
+
             for (TrainCardModel card : player.getPlayerHand()) {
                 if (Objects.equals(card.getCardColor(), cardColorString)) {
                     cardCount++;
                 }
-            }
+            }//goes through playerHand and counts how many cards there are of the color
+
             if (cardCount == 0) {
                 cardImageView.setEffect(greyOut);
             }
+
             cardBox.getChildren().add(cardCounter);
             cardBox.getChildren().add(cardImageView);
             giveHoverEffect(cardImageView, cardBox, cardCounter);
             cardCounter.setText("X " + cardCount);
             PlayerHandHbox.getChildren().add(cardBox);
         }
-    }
+    }//dynamically creates the view of the playerHand
+
 
     public void giveHoverEffect(ImageView cardImageView, VBox cardBox, Label cardCounter) {
         cardImageView.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -164,7 +171,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
                 cardBox.getChildren().add(0, cardCounter);
             }
         });
-    }
+    }//removes label from cardBox, to create a visual effect when hovering over a card
 
     @FXML
     public void highlight(MouseEvent event) {
