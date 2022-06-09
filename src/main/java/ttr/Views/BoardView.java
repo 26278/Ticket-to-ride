@@ -69,6 +69,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc.setopencards();
         this.bc.registerPlayerObserver(this);
         this.bc.registerTrainObserver(this);
+
     }
 
     public void clickoncard(MouseEvent event) {
@@ -244,6 +245,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
                 Group group = (Group) groups.get(i);
                 for (Node node : group.getChildren()) {
                     Rectangle rec = (Rectangle) node;
+                    if (!(rec.getFill() instanceof ImagePattern))
                     rec.setFill(new ImagePattern(train));
 
                 }
