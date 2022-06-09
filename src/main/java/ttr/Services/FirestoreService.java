@@ -15,8 +15,7 @@ import ttr.Config.Database;
 import ttr.Constants.ClientConstants;
 import ttr.Controllers.Controller;
 
-import static ttr.Constants.ClientConstants.BOARD_STATE;
-import static ttr.Constants.ClientConstants.TRAIN;
+import static ttr.Constants.ClientConstants.*;
 
 
 public class FirestoreService {
@@ -61,11 +60,6 @@ public class FirestoreService {
     public void set(String documentId, Map<String, Object> docData) {
         ApiFuture<WriteResult> future = this.colRef.document(documentId).set(docData);
 
-        try {
-            System.out.println("Update time : " + future.get().getUpdateTime());
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -108,7 +102,7 @@ public class FirestoreService {
 
         HashMap<String, String> tosMap = new HashMap<>();
         tosMap.put(TRAIN, null);
-        tosMap.put(TRAIN, null);
+        tosMap.put(STATION, null);
         tosMap.put(trainOrStation, color);
 
         td.put(route, tosMap);
@@ -116,29 +110,13 @@ public class FirestoreService {
         this.set(cc.getID(), currentMap);
     }
 
-    public List getBoardStateRoutes() {
+
+    public HashMap<Object, HashMap> getBoardState() {
         DocumentSnapshot ds = this.get(cc.getID());
-        HashMap td = (HashMap) ds.get(BOARD_STATE);
+        HashMap<Object, HashMap> td = (HashMap) ds.get(BOARD_STATE);
 
-        ArrayList<String> routes = new ArrayList<>(td.entrySet());
-
-        for (int i = 0; i < routes.size(); i++) {
-            String[] parts = routes.get(i).split("=");
-            System.out.println(parts);
-        }
-        return routes;
+        return td;
     }
-
-    public List getBoardStateValues() {
-        DocumentSnapshot ds = this.get(cc.getID());
-        HashMap td = (HashMap) ds.get(BOARD_STATE);
-
-        ArrayList<HashMap> values = new ArrayList<>(td.values());
-        return values;
-    }
-
-
-
 
 
     public void delete(String documentId) {

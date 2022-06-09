@@ -79,18 +79,19 @@ public class BoardController implements Controller {
     }
 
     public void placeTrain(String id){
-        this.tm.placeTrain(id,this.player.getPlayerColor());
+        this.tm.placeTrain(id, this.player.getPlayerColor());
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
     }
 
     public void checkBoardState(){
-        List routes = fs.getBoardStateRoutes();
-        List<HashMap> values = fs.getBoardStateValues();
-        for (int i = 0; i < values.size(); i++) {
-            if (values.get(i).get(TRAIN) != null) {
-                String route = (String) routes.get(i);
-                String color = (String) values.get(i).get(TRAIN);
-                this.tm.placeTrain(route, color);
+        HashMap<Object, HashMap> boardState = fs.getBoardState();
+
+        for(Map.Entry<Object, HashMap> entry: boardState.entrySet()) {
+            String key = (String) entry.getKey();
+            HashMap map = entry.getValue();
+
+            if (map.get(TRAIN) != null) {
+                this.tm.placeTrain(key, map.get(TRAIN).toString());
             }
         }
     }
@@ -103,10 +104,9 @@ public class BoardController implements Controller {
     }
 
     public void update(DocumentSnapshot ds) {
-//        updatePlayerCount((Map) ds.get("players"));
-//        setCurrentPlayer((Integer) ds.get("current_player"));
-//        checkPlayerTurn();
         checkBoardState();
-
+        updatePlayerCount((Map) ds.get("players"));
+        setCurrentPlayer((Integer) ds.get("current_player"));
+        checkPlayerTurn();
     }
 }
