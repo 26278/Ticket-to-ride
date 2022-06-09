@@ -133,6 +133,7 @@ public class BoardView implements PlayerObserver, TrainObserver {
         this.bc = BoardController.getInstance();
         this.bc.registerPlayerObserver(this);
         this.bc.registerTrainObserver(this);
+
     }
 
     @FXML
@@ -164,6 +165,7 @@ public class BoardView implements PlayerObserver, TrainObserver {
                 Group group = (Group) groups.get(i);
                 for (Node node : group.getChildren()) {
                     Rectangle rec = (Rectangle) node;
+                    if (!(rec.getFill() instanceof ImagePattern))
                     rec.setFill(new ImagePattern(train));
 
                 }

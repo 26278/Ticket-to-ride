@@ -79,7 +79,7 @@ public class BoardController implements Controller {
     }
 
     public void placeTrain(String id){
-        this.tm.placeTrain(id, this.player.getPlayerColor());
+        //this.tm.placeTrain(id, this.player.getPlayerColor());
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
     }
 
