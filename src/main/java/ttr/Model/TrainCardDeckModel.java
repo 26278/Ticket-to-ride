@@ -60,18 +60,6 @@ public class TrainCardDeckModel implements Observable {
         return returnHand;
     }
 
-    public ArrayList<TrainCardModel> pullCardsTester(int Choice) {
-        ArrayList<TrainCardModel> hulpTestHand = new ArrayList<>();
-        if (Choice == 1) {
-            trainCardDeck.add(1, new TrainCardModel(COLOR_BLACK));
-            hulpTestHand = pullCards();
-        } else if (Choice == 2) {
-            trainCardDeck.add(1, new TrainCardModel(COLOR_RAINBOW));
-            hulpTestHand = pullCards();
-        }
-        return hulpTestHand;
-    }
-
 
     @Override
     public void notifyObservers() {

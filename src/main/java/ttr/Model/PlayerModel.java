@@ -38,12 +38,9 @@ public class PlayerModel implements Observable {
         notifyObservers();
     }
 
-    public void pullCardTester(int Choice) {
-        ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCardsTester(Choice);
-        playerHand.addAll(hulpList);
-        notifyObservers();
+    public TrainCardDeckModel getTrainCardDeck() {
+        return trainCardDeck;
     }
-
 
     public ArrayList<TrainCardModel> getPlayerHand() {
         return playerHand;
