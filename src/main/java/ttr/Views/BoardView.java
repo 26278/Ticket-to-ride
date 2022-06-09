@@ -11,35 +11,36 @@ import ttr.Model.PlayerModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import ttr.Controllers.TrainCardDeckController;
+import ttr.Model.SelectOpenCardModel;
 
 
-
-public class BoardView implements PlayerObserver {
-    public ImageView Card1;
-    public ImageView Card2;
-    public ImageView Card3;
-    public ImageView Card4;
-    public ImageView Card5;
+public class BoardView implements PlayerObserver, OpenCardObserver {
+    public ImageView Card_1;
+    public ImageView Card_2;
+    public ImageView Card_3;
+    public ImageView Card_4;
+    public ImageView Card_5;
     BoardController bc;
-    HashMap<ImageView, String> Open_cards = new HashMap<>();
-    ArrayList<String> taken_card = new ArrayList<>();
-    ArrayList<String> decktest = new ArrayList<>();
+    ArrayList<ImageView> imageview = new ArrayList();
+
+
 
     @FXML
     protected void initialize(){
-        Open_cards.put(Card1, "loco");
-        Open_cards.put(Card2, "pink");
-        Open_cards.put(Card3, "green");
-        Open_cards.put(Card4, "white");
-        Open_cards.put(Card5, "black");
+        this.bc = BoardController.getInstance();
+        Collections.addAll(imageview,Card_1, Card_2, Card_3, Card_4, Card_5);
+        this.bc.register_open_card_observer(this);
+        this.bc.setopencards();
+
+
     }
-
-
-
-
+    public void clickoncard(MouseEvent event){
+        bc.click_card(event);
+    }
 
     @FXML
     public void highlight(MouseEvent event) {
@@ -56,47 +57,20 @@ public class BoardView implements PlayerObserver {
     }
 
     @FXML
-    public void place_train_or_station() {
+    public void place_train_or_station(MouseEvent event) {
+    }
+    @FXML
+    public void Change_Image(ArrayList arrayList){
+        for (int i = 0; i < arrayList.size(); i++) {
+            String url = "/ttr/fxml/eu_WagonCard_" + arrayList.get(i).toString() + ".png";
+            imageview.get(i).setImage(new Image(getClass().getResourceAsStream(url)));
+        }
 
     }
     @FXML
     public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
-        decktest.add("pink");
-        decktest.add("green");
-        decktest.add("orange");
-        decktest.add("loco");
-        String id = event.getPickResult().getIntersectedNode().getId();
-        for (ImageView i : Open_cards.keySet()) {
-            String color = Open_cards.get(i);
-            if (id == i.getId().toString() && taken_card.size() < 3) {
-                if (taken_card.size() == 0) {
-                    taken_card.add(color);
-                    Open_cards.remove(i);
-                    Open_cards.put(i, decktest.get(0));
-                    String url = "/ttr/fxml/eu_WagonCard_" + decktest.get(0).toString() + ".png";
-                    i.setImage(new Image(getClass().getResourceAsStream(url)));
-                    break;
-
-                }
-                if (taken_card.size() == 1) {
-                    taken_card.add(color);
-                    decktest.remove(Open_cards.get(i));
-                    Open_cards.remove(i);
-                    Open_cards.put(i, decktest.get(0));
-                    String url = "/ttr/fxml/eu_WagonCard_" + decktest.get(0).toString() + ".png";
-                    i.setImage(new Image(getClass().getResourceAsStream(url)));
-
-                }
-
-            }
-            if (taken_card.size() == 2 ) {
-                System.out.println("volgende beurt");
-                System.out.println(taken_card);
-                break;
-            }
-            }
+        bc.click_card(event);
         }
-
 
 
 
@@ -107,5 +81,10 @@ public class BoardView implements PlayerObserver {
     @FXML
     protected void endTurn() {
         bc.endTurn();
+    }
+
+    @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        Change_Image(openCardModel.getOpen_cards());
     }
 }
