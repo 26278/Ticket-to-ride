@@ -44,6 +44,9 @@ public class PlayerModel implements PlayerObservable {
         notifyObservers();
     }
 
+    public ArrayList<TrainCardModel> getTrainCardDeck() {
+        return trainCardDeck.getTrainCardDeck();
+    }
 
     public ArrayList<TrainCardModel> getPlayerHand() {
         return playerHand;

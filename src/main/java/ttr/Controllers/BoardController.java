@@ -1,6 +1,3 @@
-package ttr.Controllers;
-
-
 import com.google.cloud.firestore.DocumentSnapshot;
 import ttr.Constants.ClientConstants;
 import ttr.Model.FirebaseModel;
@@ -31,6 +28,13 @@ public class BoardController implements Controller {
         return boardController;
     }
 
+    public static BoardController getInstance() {
+        if (boardController == null) {
+            boardController = new BoardController();
+        }
+        return boardController;
+    }
+
 
     public void place_train_or_station() {
     }
@@ -39,6 +43,27 @@ public class BoardController implements Controller {
         this.player = player;
         checkPlayerTurn();
     }
+
+    public void Put_in_hand_and_replace() {
+
+
+    }
+    public void click_card(MouseEvent event){
+        ImageView image = (ImageView) event.getSource();
+        String id = image.getId();
+        som.Put_in_hand_and_replace(id, pm.getTrainCardDeck(), pm.getPlayerHand());
+    }
+
+    public void setopencards(){
+        ArrayList<String> col = new ArrayList<>();
+        while (col.size() != 5){
+            col.add(pm.getTrainCardDeck().get(0).getCardColor());
+            pm.getTrainCardDeck().remove(0);
+
+        }
+        som.setOpen_cards(col);
+    }
+
 
     public void setCurrentPlayer(int currentPlayer) {
         this.currentPlayer = currentPlayer;
@@ -78,5 +103,10 @@ public class BoardController implements Controller {
         updatePlayerCount((Map) ds.get("players"));
         setCurrentPlayer((Integer) ds.get("current_player"));
         checkPlayerTurn();
+    }
+
+    public void register_open_card_observer(OpenCardObserver boardview){
+        this.som.addObserver(boardview);
+
     }
 }
