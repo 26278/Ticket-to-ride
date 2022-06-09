@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import static ttr.Constants.CardColorTypes.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -40,6 +41,10 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     public ImageView Card_3;
     public ImageView Card_4;
     public ImageView Card_5;
+    public HBox PlayerHandHbox;
+    public VBox PlayerInfoVbox;
+    public HBox PlayerHandInfoHbox;
+    public HBox TrainTicketDecksHbox;
     BoardController bc;
     ArrayList<ImageView> imageview = new ArrayList();
 
@@ -56,26 +61,125 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         bc.click_card(event);
     }
 
-        @FXML
-        public void highlight (MouseEvent event){
-            // light up event source
-            Shape glowRec = (Shape) event.getSource();
-            glowRec.setEffect(new Glow(1));
-        }
+    @FXML
+    private void createTrainCardDeckView(PlayerModel player) {
+        TrainTicketDecksHbox.getChildren().clear();
+        int deckSize = player.getDeckSize();
+        String imageUrl = "/ttr/decks/trainDeck/deck-cardLevel-" + chooseDeckImage(deckSize) + ".png";
+        Image trainDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imageUrl)));
+        ImageView trainDeckImageView = new ImageView(trainDeckImage);
+        trainDeckImageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                bc.pullCards();
+            }
+        });
+        trainDeckImageView.setFitWidth(150);
+        TrainTicketDecksHbox.getChildren().add(trainDeckImageView);
+    }
 
-        @FXML
-        public void no_highlight (MouseEvent event){
-            // removes event source effect
-            Shape glowRec = (Shape) event.getSource();
-            glowRec.setEffect(null);
+    public String chooseDeckImage(int deckSize) {
+        if (deckSize > 70) {
+            return "100";
+        } else if (deckSize > 40) {
+            return "70";
+        } else if (deckSize > 10) {
+            return "40";
+        } else {
+            return "10";
         }
+    }
 
-        @FXML
-        public void place_train_or_station (MouseEvent event){
-            String routeID = ((Shape) event.getSource()).getParent().getId();
-            Rectangle r = (Rectangle) event.getSource();
-            System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
+    @FXML
+    private void createPlayerInfoVbox(PlayerModel player) {
+        HBox stationHBox = new HBox();
+        HBox trainHBox = new HBox();
+        stationHBox.setAlignment(Pos.CENTER);
+        trainHBox.setAlignment(Pos.CENTER);
+        Label stationLabel = new Label(" X " + player.getStationCount());
+        stationLabel.setFont(new Font(20));
+        Label trainLabel = new Label(" X " + player.getTrainCount());
+        trainLabel.setFont(new Font(20));
+        PlayerInfoVbox.getChildren().clear();
+        String stationUrl = "/ttr/station/station-" + player.getPlayerColor() + ".png";
+        Image stationImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(stationUrl)));
+        ImageView stationImageView = new ImageView(stationImage);
+        String trainUrl = "/ttr/trains/train-" + player.getPlayerColor() + "-Claimed.png";
+        Image trainImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(trainUrl)));
+        ImageView trainImageView = new ImageView(trainImage);
+        trainImageView.setFitWidth(50);
+        stationHBox.getChildren().add(stationImageView);
+        stationHBox.getChildren().add(stationLabel);
+        trainHBox.getChildren().add(trainImageView);
+        trainHBox.getChildren().add(trainLabel);
+        PlayerInfoVbox.getChildren().addAll(stationHBox, trainHBox);
+    }
+
+    @FXML
+    private void createPlayerHandHBox(PlayerModel player) {
+        ColorAdjust greyOut = new ColorAdjust();
+        greyOut.setSaturation(-1);
+        PlayerHandHbox.getChildren().clear();
+        ArrayList<CardColorTypes> cardColorTypes = new ArrayList<CardColorTypes>(Arrays.asList(WHITE, BLUE,
+                BLACK, YELLOW, RED, PURPLE, GREEN, LOCO, BROWN));
+        for (CardColorTypes colorTypes : cardColorTypes) {
+            VBox cardBox = new VBox();
+            Label cardCounter = new Label();
+            int cardCount = 0;
+            String cardColorString = colorTypes.toString().toLowerCase();
+            String url = "/ttr/cards/eu_WagonCard_" + cardColorString + ".png";
+            Image cardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+            ImageView cardImageView = new ImageView(cardImg);
+            cardImageView.setFitWidth(100);
+            cardImageView.setFitHeight(200);
+            cardCounter.setFont(new Font(20));
+            for (TrainCardModel card : player.getPlayerHand()) {
+                if (Objects.equals(card.getCardColor(), cardColorString)) {
+                    cardCount++;
+                }
+            }
+            if (cardCount == 0) {
+                cardImageView.setEffect(greyOut);
+            }
+            cardBox.getChildren().add(cardCounter);
+            cardBox.getChildren().add(cardImageView);
+            giveHoverEffect(cardImageView, cardBox, cardCounter);
+            cardCounter.setText("X " + cardCount);
+            PlayerHandHbox.getChildren().add(cardBox);
         }
+    }
+
+    public void giveHoverEffect(ImageView cardImageView, VBox cardBox, Label cardCounter) {
+        cardImageView.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardBox.getChildren().remove(cardCounter);
+            }
+        });
+
+        cardImageView.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardBox.getChildren().add(0, cardCounter);
+            }
+        });
+    }
+
+    @FXML
+    public void highlight(MouseEvent event) {
+        // light up event source
+        Shape glowRec = (Shape) event.getSource();
+        glowRec.setEffect(new Glow(1));
+    }
+
+    @FXML
+    public void no_highlight(MouseEvent event) {
+        // removes event source effect
+        Shape glowRec = (Shape) event.getSource();
+        glowRec.setEffect(null);
+    }
+
+
     @FXML
     public void place_train_or_station(MouseEvent event) {
         String routeID = ((Shape) event.getSource()).getParent().getId();
@@ -91,28 +195,26 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     public void pullTickerCards(ActionEvent actionEvent) {
     }
 
-        @FXML
-        public void change_OpenCardImage (ArrayList arrayList) {
-            for (int i = 0; i < arrayList.size(); i++) {
-                String url = "/ttr/fxml/eu_WagonCard_" + arrayList.get(i).toString() + ".png";
-                imageview.get(i).setImage(new Image(getClass().getResourceAsStream(url)));
-            }
+    @FXML
+    public void change_OpenCardImage(ArrayList arrayList) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            String url = "/ttr/cards/eu_WagonCard_" + arrayList.get(i).toString() + ".png";
+            imageview.get(i).setImage(new Image(getClass().getResourceAsStream(url)));
         }
+    }
 
 
-            @FXML
-            public void Put_in_hand_and_replace (MouseEvent event) throws FileNotFoundException {
-                bc.click_card(event);
-            }
+    @FXML
+    public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
+        bc.click_card(event);
+    }
 
-            @Override
-            public void update (SelectOpenCardModel openCardModel){
-                change_OpenCardImage(openCardModel.getOpen_cards());
-            }
+    @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        change_OpenCardImage(openCardModel.getOpen_cards());
+    }
 
-            @Override
-            public void update (PlayerModel playerModel){
-            }
+
     @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
@@ -125,10 +227,4 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         bc.endTurn();
     }
 
-
 }
-            @FXML
-            protected void endTurn () {
-                bc.endTurn();
-            }
-        }

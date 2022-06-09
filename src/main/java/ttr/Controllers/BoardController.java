@@ -2,6 +2,7 @@ package ttr.Controllers;
 
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import ttr.Constants.ClientConstants;
 import ttr.Controllers.Controller;
@@ -40,7 +41,6 @@ public class BoardController implements Controller {
     }
 
 
-
     public void place_train_or_station() {
 
     }
@@ -54,15 +54,16 @@ public class BoardController implements Controller {
 
 
     }
-    public void click_card(MouseEvent event){
+
+    public void click_card(MouseEvent event) {
         ImageView image = (ImageView) event.getSource();
         String id = image.getId();
         som.Put_in_hand_and_replace(id, player.getTrainCardDeck(), player.getPlayerHand());
     }
 
-    public void setopencards(){
+    public void setopencards() {
         ArrayList<String> col = new ArrayList<>();
-        while (col.size() != 5){
+        while (col.size() != 5) {
             col.add(player.getTrainCardDeck().get(0).getCardColor());
             player.getTrainCardDeck().remove(0);
 
@@ -100,10 +101,9 @@ public class BoardController implements Controller {
         }
     }
 
-    public void pullCards(){
+    public void pullCards() {
         this.player.pullCard();
     }
-
 
 
     public void registerPlayerObserver(PlayerObserver boardView) {
@@ -116,7 +116,7 @@ public class BoardController implements Controller {
         checkPlayerTurn();
     }
 
-    public void register_open_card_observer(OpenCardObserver boardview){
+    public void register_open_card_observer(OpenCardObserver boardview) {
         this.som.addObserver(boardview);
     }
 }

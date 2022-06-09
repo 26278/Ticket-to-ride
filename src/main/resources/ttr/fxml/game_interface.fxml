@@ -1412,6 +1412,23 @@
                            strokeType="INSIDE" width="12.0"/>
             </Group>
 
+            <ImageView fx:id="Card_1" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0"
+                       onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="Card_2" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="134.0"
+                       onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="Card_3" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="268.0"
+                       onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="Card_4" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="402.0"
+                       onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="Card_5" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="536.0"
+                       onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+
+
             <Circle fx:id="Edinburgh" fill="DODGERBLUE" layoutX="144.0" layoutY="34.0" onMouseEntered="#highlight"
                     onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE"/>
             <Circle fx:id="Brest" fill="DODGERBLUE" layoutX="109.0" layoutY="315.0" onMouseEntered="#highlight"
@@ -1509,8 +1526,8 @@
         </children>
     </AnchorPane>
     <HBox fx:id="PlayerHandInfoHbox">
-        <VBox fx:id="PlayerInfoVbox"></VBox>
-        <HBox fx:id="PlayerHandHbox"></HBox>
-        <HBox fx:id="TrainTicketDecksHbox"></HBox>
+        <VBox fx:id="PlayerInfoVbox"/>
+        <HBox fx:id="PlayerHandHbox"/>
+        <HBox fx:id="TrainTicketDecksHbox"/>
     </HBox>
 </VBox>
