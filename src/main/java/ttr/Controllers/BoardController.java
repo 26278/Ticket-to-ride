@@ -60,6 +60,8 @@ public class BoardController implements Controller {
     public void setCurrentPlayer(DocumentSnapshot ds) {
         String value = ds.get("current_player").toString();
         this.currentPlayer = Integer.parseInt(value);
+    }
+
     public void Put_in_hand_and_replace() {
 
 
@@ -105,8 +107,8 @@ public class BoardController implements Controller {
             }
 
             if (!players.contains(currentPlayer)) {
-               currentPlayer += 1;
-           }
+                currentPlayer += 1;
+            }
 
             fbm.setCurrentPlayer(currentPlayer);
         }
