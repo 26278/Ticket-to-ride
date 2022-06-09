@@ -8,9 +8,9 @@ public class TicketController {
     private TicketModel ticketModel;
     public void isCompleted(){
         //conditie moet uiteindelijk veranderd worden.
-        if(true){
+        //if(//road is completed){
             ticketModel.setCompleted(true);
             //completed = !completed;
-        }
+        //}
     }
 }

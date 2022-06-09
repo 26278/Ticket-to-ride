@@ -6,6 +6,8 @@ import models.TicketDeckModel;
 import models.TicketModel;
 import models.TrainCardDeckModel;
 
+import java.util.Objects;
+
 
 public class PlayerController {
 
@@ -37,9 +39,8 @@ public class PlayerController {
     private void pullTicketCard(){
         playerHandModel.ticketHand.add(ticketDeckModel.ticketDeck.get(0));
         for (TicketModel ticketModel : playerHandModel.ticketHand) {
-            //InputStream stream = new FileInputStream("D:/Hier ticket folder/" + ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png"");
-            //Image image = new Image(stream);
-            image = new Image(ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png");
+            String imageUrl = "ttr/tickets"+ ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png";
+            Image ticketImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imageUrl)));
             firestoreService.updateField("TicketDeck", ticketModel.getFirst_Destination()+"_"+ticketModel.getSecond_Destination(), 0);
         }
     }
