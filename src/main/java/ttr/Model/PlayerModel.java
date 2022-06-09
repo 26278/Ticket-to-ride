@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
+import ttr.Views.BoardView;
 import ttr.Views.PlayerObserver;
 
 import java.util.ArrayList;
@@ -47,6 +48,20 @@ public class PlayerModel implements PlayerObservable {
         notifyObservers();
     }
 
+    public ArrayList<TrainCardModel> getTrainCardDeck() {
+        return trainCardDeck.getTrainCardDeck();
+    }
+    public int getDeckSize(){
+        return trainCardDeck.getDeckCount();
+    }
+
+    public int getTrainCount() {
+        return trainCount;
+    }
+
+    public int getStationCount() {
+        return stationCount;
+    }
 
     public ArrayList<TrainCardModel> getPlayerHand() {
         return playerHand;
@@ -109,7 +124,8 @@ public class PlayerModel implements PlayerObservable {
 
     @Override
     public void addObserver(PlayerObserver observer) {
-
+        this.observers.add(observer);
+        this.notifyObservers();
     }
 
     @Override

@@ -3,22 +3,30 @@ package ttr.Controllers;
 
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import ttr.Constants.ClientConstants;
+import ttr.Controllers.Controller;
 import ttr.Model.FirebaseModel;
 import ttr.Model.PlayerModel;
 import ttr.Model.TrainModel;
+import ttr.Model.SelectOpenCardModel;
 import ttr.Services.FirestoreService;
+import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import static ttr.Constants.ClientConstants.TRAIN;
 
 public class BoardController implements Controller {
+    SelectOpenCardModel som = new SelectOpenCardModel();
     TrainModel tm = new TrainModel();
     FirebaseModel fbm = new FirebaseModel();
     FirestoreService fs = new FirestoreService();
@@ -33,6 +41,7 @@ public class BoardController implements Controller {
         updatePlayerCount((Map) fs.get(cc.getID()).get("players"));
     }
 
+
     public static BoardController getInstance() {
         if (boardController == null) {
             boardController = new BoardController();
@@ -42,12 +51,35 @@ public class BoardController implements Controller {
 
 
     public void place_train_or_station() {
+
     }
 
     public void setPlayer(PlayerModel player) {
         this.player = player;
         checkPlayerTurn();
     }
+
+    public void Put_in_hand_and_replace() {
+
+
+    }
+
+    public void click_card(MouseEvent event) {
+        ImageView image = (ImageView) event.getSource();
+        String id = image.getId();
+        som.Put_in_hand_and_replace(id, player.getTrainCardDeck(), player.getPlayerHand());
+    }
+
+    public void setopencards() {
+        ArrayList<String> col = new ArrayList<>();
+        while (col.size() != 5) {
+            col.add(player.getTrainCardDeck().get(0).getCardColor());
+            player.getTrainCardDeck().remove(0);
+
+        }
+        som.setOpen_cards(col);
+    }
+
 
     public void setCurrentPlayer(int currentPlayer) {
         this.currentPlayer = currentPlayer;
@@ -76,6 +108,10 @@ public class BoardController implements Controller {
         if (this.player.getPlayerNumber() != currentPlayer) {
             this.player.setPlayerTurn(false);
         }
+    }
+
+    public void pullCards() {
+        this.player.pullCard();
     }
 
     public void placeTrain(String id){
@@ -108,5 +144,9 @@ public class BoardController implements Controller {
         updatePlayerCount((Map) ds.get("players"));
         setCurrentPlayer((Integer) ds.get("current_player"));
         checkPlayerTurn();
+    }
+
+    public void register_open_card_observer(OpenCardObserver boardview) {
+        this.som.addObserver(boardview);
     }
 }

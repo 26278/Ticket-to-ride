@@ -55,7 +55,7 @@ public class GameStartView implements GameStartObserver {
     private ArrayList<RadioButton> playerButtons = new ArrayList<>();
 
     @FXML
-    protected void initialize(){
+    protected void initialize() {
         this.gsc = GameStartController.getInstance();
         this.gsc.addGameStartObserver(this);
         this.gsc.firstPlayerCheck();

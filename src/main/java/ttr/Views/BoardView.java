@@ -1,5 +1,11 @@
 package ttr.Views;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.text.Font;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -10,130 +16,173 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import ttr.Constants.CardColorTypes;
+import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.PlayerModel;
 import ttr.Model.TrainModel;
+import ttr.Model.TrainCardModel;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Arrays;
+import java.util.Objects;
 
-public class BoardView implements PlayerObserver, TrainObserver {
-    public Group Edinburgh_London_R;
-    public Group Edinburgh_London_L;
-    public Group Brest_Diepe;
-    public Group Brest_Paris;
-    public Group Diepe_Bruxelles;
-    public Group Amsterdam_Bruxelles;
-    public Group London_Diepe_L;
-    public Group London_Diepe_R;
-    public Group London_Amsterdam;
-    public Group Bruxelles_Paris_R;
-    public Group Bruxelles_Paris_L;
-    public Group Brest_Pamplona;
-    public Group Paris_Pamplona_R;
-    public Group Paris_Pamplona_L;
-    public Group Pamplona_Marseille;
-    public Group Paris_Marseille;
-    public Group Barcelona_Marseille;
-    public Group Pamplona_Barcelona;
-    public Group Madrid_Barcelona;
-    public Group Pamplona_Madrid_R;
-    public Group Pamplona_Madrid_L;
-    public Group Lisboa_Madrid;
-    public Group Cadiz_Madrid;
-    public Group Lisboa_Cadiz;
-    public Group Amsterdam_Essen;
-    public Group Paris_Zurich;
-    public Group Zurich_Marseille;
-    public Group Bruxelles_Frankfurt;
-    public Group Amsterdam_Frankfurt;
-    public Group Paris_Frankfurt_T;
-    public Group Paris_Frankfurt_B;
-    public Group Frankfurt_Essen;
-    public Group Frankfurt_Munchen;
-    public Group Munchen_Zurich;
-    public Group Zurich_Venezia;
-    public Group Munchen_Venezia;
-    public Group Venezia_Rome;
-    public Group Marseille_Roma;
-    public Group Roma_Palermo;
-    public Group Brindisi_Palermo;
-    public Group Roma_Brindisi;
-    public Group Venezia_Zagrab;
-    public Group Wien_Zagrab;
-    public Group Munchen_Wien;
-    public Group Frankfurt_Berlin_B;
-    public Group Frankfurt_Berlin_T;
-    public Group Essen_Berlin;
-    public Group Essen_KObenhavn_L;
-    public Group Essen_Kobenhavn_R;
-    public Group Kobenhavn_Stockholm_L;
-    public Group Kobenhavn_Stockholm_R;
-    public Group Stockholm_Petrograd;
-    public Group Berlin_Danzig;
-    public Group Danzig_Waszawa;
-    public Group Berlin_Warszawa_T;
-    public Group Berlin_Warszawa_B;
-    public Group Berlin_Wien;
-    public Group Wien_Budapest_T;
-    public Group Wien_Budapest_B;
-    public Group Budapest_Zagrab;
-    public Group Zagrab_Sarajevo;
-    public Group Budapest_Sarajevo;
-    public Group Warszawa_Wien;
-    public Group Sarajevo_Athina;
-    public Group Brindisi_Athina;
-    public Group Palermo_Smyrna;
-    public Group Athina_Smyrna;
-    public Group Sofia_Athina;
-    public Group Sarajevo_Sofia;
-    public Group Danzig_Riga;
-    public Group Riga_Petrograd;
-    public Group Riga_Wilno;
-    public Group Warszawa_Wilno;
-    public Group Petrograd_Wilno;
-    public Group Petrograd_Moskva;
-    public Group Wilno_Smolensk;
-    public Group Smolensk_Moskva;
-    public Group Moskva_Kharkov;
-    public Group Kyiv_Kharkov;
-    public Group Wilno_Kyiv;
-    public Group Warszawa_Kyiv;
-    public Group Smolensk_Kyiv;
-    public Group Kyiv_Budapest;
-    public Group Kyiv_Bucuresti;
-    public Group Budapest_Bucuresti;
-    public Group Bucuresti_Sofia;
-    public Group Kharkov_Rostov;
-    public Group Rostov_Sochi;
-    public Group Rostov_Sevastopol;
-    public Group Sevastopol_Sochi;
-    public Group Bucuresti_Sevastopol;
-    public Group Angora_Erzurum;
-    public Group Contantinople_Smyrna;
-    public Group Contantinople_Angora;
-    public Group Sevastopol_Erzurum;
-    public Group Sevastopol_Constantinople;
-    public Group Smyrna_Angora;
-    public Group Sochi_Erzurum;
-    public Group Sofia_Constantinople;
-    public Group Bucuresti_Constantinople;
+import static ttr.Constants.CardColorTypes.*;
 
-    @FXML
-    public AnchorPane boardPane;
-    private ArrayList<Node> groups;
+import java.util.Collections;
+import java.util.HashMap;
+
+import ttr.Controllers.TrainCardDeckController;
+import ttr.Model.SelectOpenCardModel;
+
+
+public class BoardView implements PlayerObserver, OpenCardObserver {
+    public ImageView Card_1;
+    public ImageView Card_2;
+    public ImageView Card_3;
+    public ImageView Card_4;
+    public ImageView Card_5;
+    public HBox PlayerHandHbox;
+    public VBox PlayerInfoVbox;
+    public HBox PlayerHandInfoHbox;
+    public HBox TrainTicketDecksHbox;
     BoardController bc;
+    ArrayList<ImageView> imageview = new ArrayList();
+
 
 
     @FXML
     protected void initialize() {
         this.groups = new ArrayList<>(boardPane.getChildren());
         this.bc = BoardController.getInstance();
+        Collections.addAll(imageview, Card_1, Card_2, Card_3, Card_4, Card_5);
+        this.bc.register_open_card_observer(this);
+        this.bc.setopencards();
         this.bc.registerPlayerObserver(this);
         this.bc.registerTrainObserver(this);
     }
+
+    public void clickoncard(MouseEvent event) {
+        bc.click_card(event);
+
+    }
+
+    @FXML
+    private void createTrainCardDeckView(PlayerModel player) {
+        TrainTicketDecksHbox.getChildren().clear();
+        int deckSize = player.getDeckSize();
+        String imageUrl = "/ttr/decks/trainDeck/deck-cardLevel-" + chooseDeckImage(deckSize) + ".png";
+        Image trainDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imageUrl)));
+        ImageView trainDeckImageView = new ImageView(trainDeckImage);
+        trainDeckImageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                bc.pullCards();
+            }
+        });//On mouse click event
+        trainDeckImageView.setFitWidth(150);
+        TrainTicketDecksHbox.getChildren().add(trainDeckImageView);
+    }//Creates an image of the TrainCardDeck, which can be pressed to draw cards from the TrainCardDeck
+
+
+    public String chooseDeckImage(int deckSize) {
+        if (deckSize > 70) {
+            return "100";
+        } else if (deckSize > 40) {
+            return "70";
+        } else if (deckSize > 10) {
+            return "40";
+        } else {
+            return "10";
+        }
+    }//Helper function to decide what image to use for the deck
+
+
+    @FXML
+    private void createPlayerInfoVbox(PlayerModel player) {
+        HBox stationHBox = new HBox();
+        HBox trainHBox = new HBox();
+        Label stationLabel = new Label(" X " + player.getStationCount());
+        stationLabel.setFont(new Font(20));
+        Label trainLabel = new Label(" X " + player.getTrainCount());
+        trainLabel.setFont(new Font(20));
+        PlayerInfoVbox.getChildren().clear();
+        String stationUrl = "/ttr/station/station-" + player.getPlayerColor() + ".png";
+        Image stationImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(stationUrl)));
+        ImageView stationImageView = new ImageView(stationImage);
+        String trainUrl = "/ttr/trains/train-" + player.getPlayerColor() + "-Claimed.png";
+        Image trainImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(trainUrl)));
+        ImageView trainImageView = new ImageView(trainImage);
+        trainImageView.setFitWidth(50);
+        stationHBox.getChildren().add(stationImageView);
+        stationHBox.getChildren().add(stationLabel);
+        trainHBox.getChildren().add(trainImageView);
+        trainHBox.getChildren().add(trainLabel);
+        stationHBox.setAlignment(Pos.CENTER);
+        trainHBox.setAlignment(Pos.CENTER);
+        PlayerInfoVbox.getChildren().addAll(stationHBox, trainHBox);
+    }//dynamically creates the view of amount of Stations and Trains the player has left
+
+
+    @FXML
+    private void createPlayerHandHBox(PlayerModel player) {
+        ColorAdjust greyOut = new ColorAdjust();
+        greyOut.setSaturation(-1);
+        PlayerHandHbox.getChildren().clear();
+        ArrayList<String> colors = ColorConstants.getColors();
+        for (String colorTypes : colors) {
+            VBox cardBox = new VBox();
+            Label cardCounter = new Label();
+            int cardCount = 0;
+            String cardColorString = colorTypes.toLowerCase();
+            String url = "/ttr/cards/vertical/eu_WagonCard_" + cardColorString + ".png";
+            Image cardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+            ImageView cardImageView = new ImageView(cardImg);
+            cardImageView.setFitWidth(100);
+            cardImageView.setFitHeight(200);
+            cardCounter.setFont(new Font(20));
+
+            for (TrainCardModel card : player.getPlayerHand()) {
+                if (Objects.equals(card.getCardColor(), cardColorString)) {
+                    cardCount++;
+                }
+            }//goes through playerHand and counts how many cards there are of the color
+
+            if (cardCount == 0) {
+                cardImageView.setEffect(greyOut);
+            }
+
+            cardBox.getChildren().add(cardCounter);
+            cardBox.getChildren().add(cardImageView);
+            giveHoverEffect(cardImageView, cardBox, cardCounter);
+            cardCounter.setText("X " + cardCount);
+            PlayerHandHbox.getChildren().add(cardBox);
+        }
+    }//dynamically creates the view of the playerHand
+
+
+    public void giveHoverEffect(ImageView cardImageView, VBox cardBox, Label cardCounter) {
+        cardImageView.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardBox.getChildren().remove(cardCounter);
+            }
+        });
+
+        cardImageView.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardBox.getChildren().add(0, cardCounter);
+            }
+        });
+    }//removes label from cardBox, to create a visual effect when hovering over a card
 
     @FXML
     public void highlight(MouseEvent event) {
@@ -149,9 +198,38 @@ public class BoardView implements PlayerObserver, TrainObserver {
         glowRec.setEffect(null);
     }
 
+
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
+    }
+
+    @FXML
+    public void pullTrainCards(ActionEvent actionEvent) {
+        bc.pullCards();
+    }
+
+    @FXML
+    public void pullTickerCards(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void change_OpenCardImage(ArrayList arrayList) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            String url = "/ttr/cards/horizontal/eu_WagonCard_" + arrayList.get(i).toString() + ".png";
+            imageview.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(url))));
+        }
+    }
+
+
+    @FXML
+    public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
+        bc.click_card(event);
+    }
+
+    @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        change_OpenCardImage(openCardModel.getOpen_cards());
         bc.placeTrain(r.getParent().getId());
     }
 
@@ -174,6 +252,9 @@ public class BoardView implements PlayerObserver, TrainObserver {
     @Override
     public void update(PlayerModel playerModel) {
 
+        createPlayerInfoVbox(playerModel);
+        createPlayerHandHBox(playerModel);
+        createTrainCardDeckView(playerModel);
     }
 
 
@@ -186,4 +267,5 @@ public class BoardView implements PlayerObserver, TrainObserver {
     public void update(TrainModel trainModel) {
         paintTrain(trainModel.getGroupName(), trainModel.getColor());
     }
+
 }
