@@ -16,18 +16,31 @@ import java.util.List;
 public class TrainModel implements trainObservable {
     private List<TrainObserver> observers = new ArrayList<TrainObserver>();
 
+    private String color;
+    private String groupName;
 
-    public void placeTrain(Rectangle rect, PlayerModel player){
+    public String getColor() {
+        return color;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void placeTrain(String rectangleGroupName, String trainColor){
         // eerst firebase hier stop ik trein;
+        this.color = trainColor;
+        this.groupName = rectangleGroupName;
+
         // daarna een update naar de view;
-        this.notifyObservers(rect, player);
+        this.notifyObservers();
 
     }
 
     @Override
-    public void notifyObservers(Rectangle rect, PlayerModel player) {
+    public void notifyObservers() {
         for (TrainObserver observer: this.observers){
-            observer.update(rect, player);
+            observer.update(this);
         }
     }
 

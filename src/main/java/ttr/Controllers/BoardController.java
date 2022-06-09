@@ -11,7 +11,12 @@ import ttr.Services.FirestoreService;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static ttr.Constants.ClientConstants.TRAIN;
 
 public class BoardController implements Controller {
     TrainModel tm = new TrainModel();
@@ -72,11 +77,23 @@ public class BoardController implements Controller {
             this.player.setPlayerTurn(false);
         }
     }
-        public void placeTrain(Rectangle rect){
-        this.tm.placeTrain(rect,this.player);
 
+    public void placeTrain(String id){
+        this.tm.placeTrain(id,this.player.getPlayerColor());
+        this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
+    }
 
+    public void checkBoardState(){
+        List routes = fs.getBoardStateRoutes();
+        List<HashMap> values = fs.getBoardStateValues();
+        for (int i = 0; i < values.size(); i++) {
+            if (values.get(i).get(TRAIN) != null) {
+                String route = (String) routes.get(i);
+                String color = (String) values.get(i).get(TRAIN);
+                this.tm.placeTrain(route, color);
+            }
         }
+    }
 
     public void registerPlayerObserver(PlayerObserver boardView) {
         this.player.addObserver(boardView);
@@ -86,8 +103,10 @@ public class BoardController implements Controller {
     }
 
     public void update(DocumentSnapshot ds) {
-        updatePlayerCount((Map) ds.get("players"));
-        setCurrentPlayer((Integer) ds.get("current_player"));
-        checkPlayerTurn();
+//        updatePlayerCount((Map) ds.get("players"));
+//        setCurrentPlayer((Integer) ds.get("current_player"));
+//        checkPlayerTurn();
+        checkBoardState();
+
     }
 }

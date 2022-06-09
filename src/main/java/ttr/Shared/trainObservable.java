@@ -2,11 +2,12 @@ package ttr.Shared;
 
 import javafx.scene.shape.Rectangle;
 import ttr.Model.PlayerModel;
+import ttr.Model.TrainModel;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
 
 public interface trainObservable {
-    void notifyObservers(Rectangle rect, PlayerModel player);
+    void notifyObservers();
 
     void addObserver(TrainObserver observer);
 

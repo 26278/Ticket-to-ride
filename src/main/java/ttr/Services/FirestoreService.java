@@ -2,8 +2,7 @@ package ttr.Services;
 
 import com.google.cloud.firestore.Firestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
@@ -16,6 +15,9 @@ import ttr.Config.Database;
 import ttr.Constants.ClientConstants;
 import ttr.Controllers.Controller;
 
+import static ttr.Constants.ClientConstants.BOARD_STATE;
+import static ttr.Constants.ClientConstants.TRAIN;
+
 
 public class FirestoreService {
     private Firestore firestore;
@@ -26,8 +28,8 @@ public class FirestoreService {
 
     static FirestoreService firebaseService;
 
-    public static FirestoreService getInstance(){
-        if (firebaseService == null){
+    public static FirestoreService getInstance() {
+        if (firebaseService == null) {
             firebaseService = new FirestoreService();
         }
         return firebaseService;
@@ -78,8 +80,7 @@ public class FirestoreService {
             if (document.exists()) {
                 return document;
             }
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return null;
@@ -96,6 +97,48 @@ public class FirestoreService {
         currentMap.put(field, td);
         this.set(cc.getID(), currentMap);
     }
+
+
+    public void updateTrainOrStation(String route, String trainOrStation, String color) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        Map<String, Object> currentMap = ds.getData();
+
+        HashMap<String, Object> td = (HashMap) ds.get(BOARD_STATE);
+
+        HashMap<String, String> tosMap = new HashMap<>();
+        tosMap.put(TRAIN, null);
+        tosMap.put(TRAIN, null);
+        tosMap.put(trainOrStation, color);
+
+        td.put(route, tosMap);
+        currentMap.put(BOARD_STATE, td);
+        this.set(cc.getID(), currentMap);
+    }
+
+    public List getBoardStateRoutes() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap td = (HashMap) ds.get(BOARD_STATE);
+
+        ArrayList<String> routes = new ArrayList<>(td.entrySet());
+
+        for (int i = 0; i < routes.size(); i++) {
+            String[] parts = routes.get(i).split("=");
+            System.out.println(parts);
+        }
+        return routes;
+    }
+
+    public List getBoardStateValues() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap td = (HashMap) ds.get(BOARD_STATE);
+
+        ArrayList<HashMap> values = new ArrayList<>(td.values());
+        return values;
+    }
+
+
+
 
 
     public void delete(String documentId) {

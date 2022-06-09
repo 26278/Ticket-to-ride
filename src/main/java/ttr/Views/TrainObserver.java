@@ -2,7 +2,8 @@ package ttr.Views;
 
 import javafx.scene.shape.Rectangle;
 import ttr.Model.PlayerModel;
+import ttr.Model.TrainModel;
 
 public interface TrainObserver {
-    void update(Rectangle rect, PlayerModel player);
+    void update(TrainModel trainModel);
 }

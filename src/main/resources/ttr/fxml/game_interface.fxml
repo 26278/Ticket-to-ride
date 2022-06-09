@@ -8,9 +8,8 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="boardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ttr.Views.BoardView">
-   <children>
       <ImageView fitHeight="670.0" fitWidth="1006.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@euMap.jpg" />
@@ -569,5 +568,4 @@
       <Circle fx:id="Erzurum" fill="DODGERBLUE" layoutX="963.0" layoutY="601.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="Sochi" fill="DODGERBLUE" layoutX="982.0" layoutY="469.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="Rostov" fill="DODGERBLUE" layoutX="987.0" layoutY="374.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
-   </children>
 </AnchorPane>

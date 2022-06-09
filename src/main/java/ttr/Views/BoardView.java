@@ -6,151 +6,130 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import ttr.Controllers.BoardController;
 import ttr.Model.PlayerModel;
+import ttr.Model.TrainModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class BoardView implements PlayerObserver, TrainObserver {
     public Group Edinburgh_London_R;
-    BoardController bc;
+    public Group Edinburgh_London_L;
+    public Group Brest_Diepe;
+    public Group Brest_Paris;
+    public Group Diepe_Bruxelles;
+    public Group Amsterdam_Bruxelles;
+    public Group London_Diepe_L;
+    public Group London_Diepe_R;
+    public Group London_Amsterdam;
+    public Group Bruxelles_Paris_R;
+    public Group Bruxelles_Paris_L;
+    public Group Brest_Pamplona;
+    public Group Paris_Pamplona_R;
+    public Group Paris_Pamplona_L;
+    public Group Pamplona_Marseille;
+    public Group Paris_Marseille;
+    public Group Barcelona_Marseille;
+    public Group Pamplona_Barcelona;
+    public Group Madrid_Barcelona;
+    public Group Pamplona_Madrid_R;
+    public Group Pamplona_Madrid_L;
+    public Group Lisboa_Madrid;
+    public Group Cadiz_Madrid;
+    public Group Lisboa_Cadiz;
+    public Group Amsterdam_Essen;
+    public Group Paris_Zurich;
+    public Group Zurich_Marseille;
+    public Group Bruxelles_Frankfurt;
+    public Group Amsterdam_Frankfurt;
+    public Group Paris_Frankfurt_T;
+    public Group Paris_Frankfurt_B;
+    public Group Frankfurt_Essen;
+    public Group Frankfurt_Munchen;
+    public Group Munchen_Zurich;
+    public Group Zurich_Venezia;
+    public Group Munchen_Venezia;
+    public Group Venezia_Rome;
+    public Group Marseille_Roma;
+    public Group Roma_Palermo;
+    public Group Brindisi_Palermo;
+    public Group Roma_Brindisi;
+    public Group Venezia_Zagrab;
+    public Group Wien_Zagrab;
+    public Group Munchen_Wien;
+    public Group Frankfurt_Berlin_B;
+    public Group Frankfurt_Berlin_T;
+    public Group Essen_Berlin;
+    public Group Essen_KObenhavn_L;
+    public Group Essen_Kobenhavn_R;
+    public Group Kobenhavn_Stockholm_L;
+    public Group Kobenhavn_Stockholm_R;
+    public Group Stockholm_Petrograd;
+    public Group Berlin_Danzig;
+    public Group Danzig_Waszawa;
+    public Group Berlin_Warszawa_T;
+    public Group Berlin_Warszawa_B;
+    public Group Berlin_Wien;
+    public Group Wien_Budapest_T;
+    public Group Wien_Budapest_B;
+    public Group Budapest_Zagrab;
+    public Group Zagrab_Sarajevo;
+    public Group Budapest_Sarajevo;
+    public Group Warszawa_Wien;
+    public Group Sarajevo_Athina;
+    public Group Brindisi_Athina;
+    public Group Palermo_Smyrna;
+    public Group Athina_Smyrna;
+    public Group Sofia_Athina;
+    public Group Sarajevo_Sofia;
+    public Group Danzig_Riga;
+    public Group Riga_Petrograd;
+    public Group Riga_Wilno;
+    public Group Warszawa_Wilno;
+    public Group Petrograd_Wilno;
+    public Group Petrograd_Moskva;
+    public Group Wilno_Smolensk;
+    public Group Smolensk_Moskva;
+    public Group Moskva_Kharkov;
+    public Group Kyiv_Kharkov;
+    public Group Wilno_Kyiv;
+    public Group Warszawa_Kyiv;
+    public Group Smolensk_Kyiv;
+    public Group Kyiv_Budapest;
+    public Group Kyiv_Bucuresti;
+    public Group Budapest_Bucuresti;
+    public Group Bucuresti_Sofia;
+    public Group Kharkov_Rostov;
+    public Group Rostov_Sochi;
+    public Group Rostov_Sevastopol;
+    public Group Sevastopol_Sochi;
+    public Group Bucuresti_Sevastopol;
+    public Group Angora_Erzurum;
+    public Group Contantinople_Smyrna;
+    public Group Contantinople_Angora;
+    public Group Sevastopol_Erzurum;
+    public Group Sevastopol_Constantinople;
+    public Group Smyrna_Angora;
+    public Group Sochi_Erzurum;
+    public Group Sofia_Constantinople;
+    public Group Bucuresti_Constantinople;
 
-    public Rectangle Edinburgh_London_R1;
-    public Rectangle Edinburgh_London_R2;
-    public Rectangle Edinburgh_London_R3;
-    public Rectangle Edinburgh_London_R4;
-    public Rectangle Edinburgh_London_L1;
-    public Rectangle Edinburgh_London_L2;
-    public Rectangle Edinburgh_London_L3;
-    public Rectangle Edinburgh_London_L4;
-    public Rectangle Brest_Diepe_1;
-    public Rectangle Brest_Diepe_2;
-    public Rectangle Diepe_Paris_1;
-    public Rectangle Brest_Paris_1;
-    public Rectangle Brest_Paris_2;
-    public Rectangle Brest_Paris_3;
-    public Rectangle Diepe_Bruxelles_2;
-    public Rectangle Diepe_Bruxelles_1;
-    public Rectangle Amsterdam_Bruxelles_1;
-    public Rectangle London_Diepe_L2;
-    public Rectangle London_Diepe_R2;
-    public Rectangle London_Amsterdam_1;
-    public Rectangle London_Amsterdam_2;
-    public Rectangle London_Diepe_L1;
-    public Rectangle London_Diepe_R1;
-    public Rectangle Bruxelles_Paris_R1;
-    public Rectangle Bruxelles_Paris_R2;
-    public Rectangle Bruxelles_Paris_L1;
-    public Rectangle Bruxelles_Paris_L2;
-    public Rectangle Brest_Pamplona_4;
-    public Rectangle Brest_Pamplona_3;
-    public Rectangle Brest_Pamplona_2;
-    public Rectangle Brest_Pamplona_1;
-    public Rectangle Paris_Pamplona_L1;
-    public Rectangle Paris_Pamplona_L2;
-    public Rectangle Paris_Pamplona_L3;
-    public Rectangle Paris_Pamplona_L4;
-    public Rectangle Paris_Pamplona_R1;
-    public Rectangle Paris_Pamplona_R2;
-    public Rectangle Paris_Pamplona_R3;
-    public Rectangle Paris_Pamplona_R4;
-    public Rectangle Pamplona_Marseille_1;
-    public Rectangle Pamplona_Marseille_2;
-    public Rectangle Pamplona_Marseille_3;
-    public Rectangle Pamplona_Marseille_4;
-    public Rectangle Paris_Marseille_1;
-    public Rectangle Paris_Marseille_2;
-    public Rectangle Paris_Marseille_3;
-    public Rectangle Paris_Marseille_4;
-    public Rectangle Barcelona_Marseille_4;
-    public Rectangle Barcelona_Marseille_3;
-    public Rectangle Barcelona_Marseille_2;
-    public Rectangle Barcelona_Marseille_1;
-    public Rectangle Pamplona_Barcelona_1;
-    public Rectangle Pamplona_Barcelona_2;
-    public Rectangle Madrid_Barcelona_2;
-    public Rectangle Madrid_Barcelona_1;
-    public Rectangle Pamplona_Madrid_R1;
-    public Rectangle Pamplona_Madrid_R2;
-    public Rectangle Pamplona_Madrid_R3;
-    public Rectangle Pamplona_Madrid_L1;
-    public Rectangle Pamplona_Madrid_L2;
-    public Rectangle Pamplona_Madrid_L3;
-    public Rectangle Lisboa_Madrid_1;
-    public Rectangle Lisboa_Madrid_2;
-    public Rectangle Lisboa_Madrid_3;
-    public Rectangle Cadiz_Madrid_3;
-    public Rectangle Cadiz_Madrid_2;
-    public Rectangle Cadiz_Madrid_1;
-    public Rectangle Lisboa_Cadiz_1;
-    public Rectangle Lisboa_Cadiz_2;
-    public Rectangle Amsterdam_Essen_2;
-    public Rectangle Amsterdam_Essen_3;
-    public Rectangle Amsterdam_Essen_1;
-    public Rectangle Paris_Zurich_2;
-    public Rectangle Paris_Zurich_3;
-    public Rectangle Paris_Zurich_1;
-    public Rectangle Zurich_Marseille_2;
-    public Rectangle Zurich_Marseille_1;
-    public Rectangle Bruxelles_Frankfurt_1;
-    public Rectangle Bruxelles_Frankfurt_2;
-    public Rectangle Amsterdam_Frankfurt_1;
-    public Rectangle Amsterdam_Frankfurt_2;
-    public Rectangle Paris_Frankfurt_T1;
-    public Rectangle Paris_Frankfurt_T2;
-    public Rectangle Paris_Frankfurt_T3;
-    public Rectangle Paris_Frankfurt_B1;
-    public Rectangle Paris_Frankfurt_B2;
-    public Rectangle Paris_Frankfurt_B3;
-    public Rectangle Frankfurt_Essen_2;
-    public Rectangle Frankfurt_Essen_1;
-    public Rectangle Frankfurt_Munchen_1;
-    public Rectangle Frankfurt_Munchen_2;
-    public Rectangle Munchen_Zurich_1;
-    public Rectangle Munchen_Zurich_2;
-    public Rectangle Zurich_Venezia_1;
-    public Rectangle Zurich_Venezia_2;
-    public Rectangle Munchen_Venezia_1;
-    public Rectangle Munchen_Venezia_2;
-    public Rectangle Venezia_Rome_1;
-    public Rectangle Venezia_Rome_2;
-    public Rectangle Marseille_Roma_1;
-    public Rectangle Marseille_Roma_2;
-    public Rectangle Marseille_Roma_3;
-    public Rectangle Marseille_Roma_4;
-    public Rectangle Roma_Palermo_1;
-    public Rectangle Roma_Palermo_2;
-    public Rectangle Roma_Palermo_3;
-    public Rectangle Roma_Palermo_4;
-    public Rectangle Brindisi_Palermo_1;
-    public Rectangle Brindisi_Palermo_2;
-    public Rectangle Brindisi_Palermo_3;
-    public Rectangle Roma_Brindisi_1;
-    public Rectangle Roma_Brindisi_2;
-    public Rectangle Venezia_Zagrab_1;
-    public Rectangle Venezia_Zagrab_2;
-    public Rectangle Wien_Zagrab_1;
-    public Rectangle Wien_Zagrab_2;
-    public Rectangle Munchen_Wien_1;
-    public Rectangle Munchen_Wien_2;
-    public Rectangle Munchen_Wien_3;
-    public Rectangle Frankfurt_Berlin_B1;
-    public Rectangle Frankfurt_Berlin_B2;
-    public Rectangle Frankfurt_Berlin_B3;
-    public Rectangle Frankfurt_Berlin_T1;
-    public Rectangle Frankfurt_Berlin_T2;
-    public Rectangle Frankfurt_Berlin_T3;
-    public Rectangle Essen_Berlin_1;
-    public Rectangle Essen_Berlin_2;
+    @FXML
+    public AnchorPane boardPane;
+    private ArrayList<Node> groups;
+    BoardController bc;
 
 
     @FXML
-    protected void initialize(){
+    protected void initialize() {
+        this.groups = new ArrayList<>(boardPane.getChildren());
         this.bc = BoardController.getInstance();
         this.bc.registerPlayerObserver(this);
         this.bc.registerTrainObserver(this);
@@ -173,19 +152,24 @@ public class BoardView implements PlayerObserver, TrainObserver {
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
-        bc.placeTrain(r);
-    }
-    @FXML
-    public void paintTrain(Rectangle rect,PlayerModel player){
-        String url = "/ttr/trains/train-" + player.getPlayerColor() + "-Claimed.png";
-        Image train = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
-        Group group = (Group) rect.getParent();
-        for (Node node: group.getChildren()){
-            Rectangle rec = (Rectangle) node;
-            rec.setFill(new ImagePattern(train));
-        }
+        bc.placeTrain(r.getParent().getId());
     }
 
+    @FXML
+    public void paintTrain(String groupName, String color) {
+        String url = "/ttr/trains/train-" + color + "-Claimed.png";
+        Image train = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+        for (int i = 0; i < groups.size(); i++) {
+            if (Objects.equals(groups.get(i).getId(), groupName)) {
+                Group group = (Group) groups.get(i);
+                for (Node node : group.getChildren()) {
+                    Rectangle rec = (Rectangle) node;
+                    rec.setFill(new ImagePattern(train));
+
+                }
+            }
+        }
+    }
 
     @Override
     public void update(PlayerModel playerModel) {
@@ -199,7 +183,7 @@ public class BoardView implements PlayerObserver, TrainObserver {
     }
 
     @Override
-    public void update(Rectangle rect, PlayerModel player) {
-        paintTrain(rect, player);
+    public void update(TrainModel trainModel) {
+        paintTrain(trainModel.getGroupName(), trainModel.getColor());
     }
 }
