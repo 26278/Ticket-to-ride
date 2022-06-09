@@ -1,6 +1,7 @@
 package ttr.Views;
 
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,11 +37,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         this.bc.register_open_card_observer(this);
         this.bc.setopencards();
 
-
     }
     public void clickoncard(MouseEvent event){
         bc.click_card(event);
-    }
 
     @FXML
     public void highlight(MouseEvent event) {
@@ -58,6 +57,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
 
     @FXML
     public void place_train_or_station(MouseEvent event) {
+        String routeID = ((Shape) event.getSource()).getParent().getId();
+        Rectangle r = (Rectangle) event.getSource();
+        System.out.println("x: " + r.getLayoutX() + "y: " + r.getLayoutY() + "rotat: " + r.getRotate());
     }
     @FXML
     public void change_OpenCardImage(ArrayList arrayList){
@@ -66,7 +68,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
             imageview.get(i).setImage(new Image(getClass().getResourceAsStream(url)));
         }
 
-    }
+        
     @FXML
     public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
         bc.click_card(event);
@@ -85,6 +87,5 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     protected void endTurn() {
         bc.endTurn();
     }
-
 
 }

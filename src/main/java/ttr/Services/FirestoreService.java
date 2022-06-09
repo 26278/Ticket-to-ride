@@ -24,11 +24,18 @@ public class FirestoreService {
     private ClientConstants cc = new ClientConstants();
     private CollectionReference colRef;
 
+    static FirestoreService firebaseService;
+
+    public static FirestoreService getInstance(){
+        if (firebaseService == null){
+            firebaseService = new FirestoreService();
+        }
+        return firebaseService;
+    }
 
     public FirestoreService() {
         Database db = new Database();
         this.firestore = db.getDb();
-
         this.colRef = this.firestore.collection(GAMES_PATH);
     }
 
