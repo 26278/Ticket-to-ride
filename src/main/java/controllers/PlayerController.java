@@ -16,7 +16,7 @@ public class PlayerController {
 
     private Image image;
 
-
+    private TicketModel ticketModel;
     private void updatePlayerHand(){
 
     }
@@ -38,6 +38,7 @@ public class PlayerController {
             //InputStream stream = new FileInputStream("D:/Hier ticket folder/" + ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png"");
             //Image image = new Image(stream);
             image = new Image(ticketModel.getType() + "-" + ticketModel.getFirst_Destination() + "-" + ticketModel.getSecond_Destination()+".png");
+            firestoreService.updateField("TicketDeck", ticketModel.getFirst_Destination()+"_"+ticketModel.getSecond_Destination(), 0);
         }
     }
 
