@@ -7,6 +7,8 @@
 <?import javafx.scene.shape.Rectangle?>
 
 
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1219.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ttr.Views.BoardView">
    <children>
       <ImageView fitHeight="670.0" fitWidth="1006.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
@@ -518,7 +520,6 @@
       <Rectangle fx:id="Bucuresti_Constantinople_1" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="36.0" layoutX="757.0" layoutY="447.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-22.2" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="Bucuresti_Constantinople_11" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="36.0" layoutX="771.0" layoutY="482.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-19.5" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="Bucuresti_Constantinople_12" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="36.0" layoutX="786.0" layoutY="517.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-21.5" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-<<<<<<< src/main/resources/ttr/fxml/game_interface.fxml
       <ImageView fx:id="Card_1" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
       </ImageView>
       <ImageView fx:id="Card_2" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="134.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
@@ -529,7 +530,6 @@
       </ImageView>
       <ImageView fx:id="Card_5" fitHeight="134.0" fitWidth="248.0" layoutX="1007.0" layoutY="536.0" onMouseClicked="#Put_in_hand_and_replace" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-=======
       </Group>
 
       <Circle fx:id="Edinburgh" fill="DODGERBLUE" layoutX="144.0" layoutY="34.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
