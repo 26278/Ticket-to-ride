@@ -37,12 +37,17 @@ public class PlayerModel implements PlayerObservable {
         playerHand = new ArrayList<TrainCardModel>();
     }
 
+
+
     public void pullCard() {
         ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCards();
         playerHand.addAll(hulpList);
         notifyObservers();
     }
 
+    public ArrayList<TrainCardModel> getTrainCardDeck() {
+        return trainCardDeck.getTrainCardDeck();
+    }
     public int getDeckSize(){
         return trainCardDeck.getDeckCount();
     }

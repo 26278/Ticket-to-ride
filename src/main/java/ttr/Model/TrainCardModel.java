@@ -11,3 +11,4 @@ public class TrainCardModel {
         return cardColor;
     }
 }
+
