@@ -37,13 +37,13 @@ public class BoardController {
     public void click_card(MouseEvent event){
         ImageView image = (ImageView) event.getSource();
         String id = image.getId();
-        som.Put_in_hand_and_replace(id, pm.getTrainCardDeck().getTrainCardDeck(), pm.getPlayerHand());
+        som.Put_in_hand_and_replace(id, pm.getTrainCardDeck(), pm.getPlayerHand());
     }
     public void setopencards(){
         ArrayList<String> col = new ArrayList<>();
         while (col.size() != 5){
-            col.add(pm.getTrainCardDeck().getTrainCardDeck().get(0).getCardColor());
-            pm.getTrainCardDeck().getTrainCardDeck().remove(0);
+            col.add(pm.getTrainCardDeck().get(0).getCardColor());
+            pm.getTrainCardDeck().remove(0);
 
         }
         som.setOpen_cards(col);

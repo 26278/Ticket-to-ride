@@ -38,8 +38,8 @@ public class PlayerModel implements Observable {
         notifyObservers();
     }
 
-    public TrainCardDeckModel getTrainCardDeck() {
-        return trainCardDeck;
+    public ArrayList<TrainCardModel> getTrainCardDeck() {
+        return trainCardDeck.getTrainCardDeck();
     }
 
     public ArrayList<TrainCardModel> getPlayerHand() {

@@ -60,7 +60,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     public void place_train_or_station(MouseEvent event) {
     }
     @FXML
-    public void Change_Image(ArrayList arrayList){
+    public void change_OpenCardImage(ArrayList arrayList){
         for (int i = 0; i < arrayList.size(); i++) {
             String url = "/ttr/fxml/eu_WagonCard_" + arrayList.get(i).toString() + ".png";
             imageview.get(i).setImage(new Image(getClass().getResourceAsStream(url)));
@@ -72,7 +72,10 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         bc.click_card(event);
         }
 
-
+    @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        change_OpenCardImage(openCardModel.getOpen_cards());
+    }
 
     @Override
     public void update(PlayerModel playerModel) {
@@ -83,8 +86,5 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         bc.endTurn();
     }
 
-    @Override
-    public void update(SelectOpenCardModel openCardModel) {
-        Change_Image(openCardModel.getOpen_cards());
-    }
+
 }
