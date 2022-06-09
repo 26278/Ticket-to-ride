@@ -205,7 +205,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
-        bc.placeTrain(r.getParent().getId());
+        bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
     }
 
     @FXML
@@ -246,7 +246,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
                 for (Node node : group.getChildren()) {
                     Rectangle rec = (Rectangle) node;
                     if (!(rec.getFill() instanceof ImagePattern))
-                    rec.setFill(new ImagePattern(train));
+                        rec.setFill(new ImagePattern(train));
 
                 }
             }

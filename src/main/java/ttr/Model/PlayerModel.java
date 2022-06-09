@@ -41,17 +41,23 @@ public class PlayerModel implements PlayerObservable {
     }
 
 
-
     public void pullCard() {
         ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCards();
         playerHand.addAll(hulpList);
         notifyObservers();
     }
 
+    public void reduceTrainCount(int trainAmount) {
+        trainCount = trainCount - trainAmount;
+        System.out.println(trainCount);
+        notifyObservers();
+    }
+
     public ArrayList<TrainCardModel> getTrainCardDeck() {
         return trainCardDeck.getTrainCardDeck();
     }
-    public int getDeckSize(){
+
+    public int getDeckSize() {
         return trainCardDeck.getDeckCount();
     }
 
@@ -116,7 +122,7 @@ public class PlayerModel implements PlayerObservable {
 
     @Override
     public void notifyObservers() {
-        for (PlayerObserver observer: this.observers){
+        for (PlayerObserver observer : this.observers) {
             observer.update(this);
         }
 
