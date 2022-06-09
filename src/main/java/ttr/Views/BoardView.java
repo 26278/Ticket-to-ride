@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import ttr.Constants.CardColorTypes;
+import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.PlayerModel;
 import ttr.Model.TrainCardModel;
@@ -55,6 +56,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         Collections.addAll(imageview, Card_1, Card_2, Card_3, Card_4, Card_5);
         this.bc.register_open_card_observer(this);
         this.bc.setopencards();
+        this.bc.registerPlayerObserver(this);
     }
 
     public void clickoncard(MouseEvent event) {
@@ -120,14 +122,13 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         ColorAdjust greyOut = new ColorAdjust();
         greyOut.setSaturation(-1);
         PlayerHandHbox.getChildren().clear();
-        ArrayList<CardColorTypes> cardColorTypes = new ArrayList<CardColorTypes>(Arrays.asList(WHITE, BLUE,
-                BLACK, YELLOW, RED, PURPLE, GREEN, LOCO, BROWN));
-        for (CardColorTypes colorTypes : cardColorTypes) {
+        ArrayList<String> colors = ColorConstants.getColors();
+        for (String colorTypes : colors) {
             VBox cardBox = new VBox();
             Label cardCounter = new Label();
             int cardCount = 0;
-            String cardColorString = colorTypes.toString().toLowerCase();
-            String url = "/ttr/cards/eu_WagonCard_" + cardColorString + ".png";
+            String cardColorString = colorTypes.toLowerCase();
+            String url = "/ttr/cards/vertical/eu_WagonCard_" + cardColorString + ".png";
             Image cardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
             ImageView cardImageView = new ImageView(cardImg);
             cardImageView.setFitWidth(100);
@@ -198,8 +199,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     @FXML
     public void change_OpenCardImage(ArrayList arrayList) {
         for (int i = 0; i < arrayList.size(); i++) {
-            String url = "/ttr/cards/eu_WagonCard_" + arrayList.get(i).toString() + ".png";
-            imageview.get(i).setImage(new Image(getClass().getResourceAsStream(url)));
+            String url = "/ttr/cards/horizontal/eu_WagonCard_" + arrayList.get(i).toString() + ".png";
+            imageview.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(url))));
         }
     }
 

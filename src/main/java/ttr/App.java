@@ -1,7 +1,6 @@
 package ttr;
 
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -136,10 +135,10 @@ public class App {
             trainCardDeck.put("red", 12);
             trainCardDeck.put("blue", 12);
             trainCardDeck.put("yellow", 12);
-            trainCardDeck.put("orange", 12);
+            trainCardDeck.put("brown", 12);
             trainCardDeck.put("white", 12);
             trainCardDeck.put("black", 12);
-            trainCardDeck.put("rainbow", 12);
+            trainCardDeck.put("loco", 12);
             trainCardDeck.put("green", 12);
 
             //create hasmap with ticketDeck
