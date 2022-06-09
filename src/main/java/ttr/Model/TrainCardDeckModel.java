@@ -77,6 +77,10 @@ public class TrainCardDeckModel implements Observable {
         return returnHand;
     }
 
+    public int getDeckCount(){
+        return trainCardDeck.size();
+    }
+
 
     @Override
     public void notifyObservers() {

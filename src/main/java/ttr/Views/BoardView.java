@@ -29,6 +29,8 @@ import static ttr.Constants.CardColorTypes.*;
 public class BoardView implements PlayerObserver {
     public HBox PlayerHandHbox;
     public VBox PlayerInfoVbox;
+    public HBox PlayerHandInfoHbox;
+    public HBox TrainTicketDecksHbox;
     BoardController bc;
     public Rectangle Edinburgh_London_R1;
     public Rectangle Edinburgh_London_R2;
@@ -167,10 +169,40 @@ public class BoardView implements PlayerObserver {
     }
 
     @FXML
+    private void createTrainCardDeckView(PlayerModel player) {
+        TrainTicketDecksHbox.getChildren().clear();
+        int deckSize = player.getDeckSize();
+        String imageUrl = "/ttr/decks/trainDeck/deck-cardLevel-" + chooseDeckImage(deckSize) + ".png";
+        Image trainDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imageUrl)));
+        ImageView trainDeckImageView = new ImageView(trainDeckImage);
+        trainDeckImageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                bc.pullCards();
+            }
+        });
+        trainDeckImageView.setFitWidth(150);
+        TrainTicketDecksHbox.getChildren().add(trainDeckImageView);
+    }
+
+    public String chooseDeckImage(int deckSize){
+        if (deckSize > 70) {
+            return "100";
+        }else if(deckSize > 40){
+            return "70";
+        }else if(deckSize >10){
+            return "40";
+        }else{
+            return "10";
+        }
+    }
+
+    @FXML
     private void createPlayerInfoVbox(PlayerModel player){
         HBox stationHBox = new HBox();
-        stationHBox.setAlignment(Pos.CENTER);
         HBox trainHBox = new HBox();
+        stationHBox.setAlignment(Pos.CENTER);
+        trainHBox.setAlignment(Pos.CENTER);
         Label stationLabel = new Label(" X " + player.getStationCount());
         stationLabel.setFont(new Font(20));
         Label trainLabel = new Label(" X " + player.getTrainCount());
@@ -179,9 +211,10 @@ public class BoardView implements PlayerObserver {
         String stationUrl = "/ttr/station/station-"+ player.getPlayerColor()+".png";
         Image stationImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(stationUrl)));
         ImageView stationImageView = new ImageView(stationImage);
-        String trainUrl = "ttr/trains/train-"+player.getPlayerColor()+".png";
+        String trainUrl = "/ttr/trains/train-"+player.getPlayerColor()+"-Claimed.png";
         Image trainImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(trainUrl)));
         ImageView trainImageView = new ImageView(trainImage);
+        trainImageView.setFitWidth(50);
         stationHBox.getChildren().add(stationImageView);
         stationHBox.getChildren().add(stationLabel);
         trainHBox.getChildren().add(trainImageView);
@@ -194,10 +227,11 @@ public class BoardView implements PlayerObserver {
         ColorAdjust greyOut = new ColorAdjust();
         greyOut.setSaturation(-1);
         PlayerHandHbox.getChildren().clear();
-        ArrayList<TrainCardModel> playerHand = player.getPlayerHand();
         ArrayList<CardColorTypes> cardColorTypes = new ArrayList<CardColorTypes>(Arrays.asList(WHITE, BLUE,
                 BLACK, YELLOW, RED, PURPLE, GREEN, LOCO, BROWN));
         for (CardColorTypes colorTypes : cardColorTypes) {
+            VBox cardBox = new VBox();
+            Label cardCounter = new Label();
             int cardCount = 0;
             String cardColorString = colorTypes.toString().toLowerCase();
             String url = "/ttr/cards/eu_WagonCard_" + cardColorString + ".png";
@@ -205,9 +239,8 @@ public class BoardView implements PlayerObserver {
             ImageView cardImageView = new ImageView(cardImg);
             cardImageView.setFitWidth(100);
             cardImageView.setFitHeight(200);
-            Label cardCounter = new Label();
             cardCounter.setFont(new Font(20));
-            for (TrainCardModel card: playerHand){
+            for (TrainCardModel card: player.getPlayerHand()){
                 if (Objects.equals(card.getCardColor(), cardColorString)){
                     cardCount++;
                 }
@@ -215,12 +248,10 @@ public class BoardView implements PlayerObserver {
             if (cardCount == 0){
                 cardImageView.setEffect(greyOut);
             }
-            cardCounter.setText("Amount: " + cardCount);
-            VBox cardBox = new VBox();
-            giveHoverEffect(cardImageView,cardBox, cardCounter);
             cardBox.getChildren().add(cardCounter);
             cardBox.getChildren().add(cardImageView);
-            cardBox.setStyle("-fx-border-color: blue;");
+            giveHoverEffect(cardImageView,cardBox, cardCounter);
+            cardCounter.setText("X "+cardCount);
             PlayerHandHbox.getChildren().add(cardBox);
         }
     }
@@ -262,8 +293,12 @@ public class BoardView implements PlayerObserver {
     }
 
     @FXML
-    public void pullcards(ActionEvent actionEvent) {
+    public void pullTrainCards(ActionEvent actionEvent) {
         bc.pullCards();
+    }
+
+    @FXML
+    public void pullTickerCards(ActionEvent actionEvent) {
     }
 
 
@@ -271,6 +306,7 @@ public class BoardView implements PlayerObserver {
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
         createPlayerHandHBox(playerModel);
+        createTrainCardDeckView(playerModel);
     }
 
     @FXML

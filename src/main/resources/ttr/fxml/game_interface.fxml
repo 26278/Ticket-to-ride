@@ -1508,9 +1508,9 @@
                     onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE"/>
         </children>
     </AnchorPane>
-    <HBox>
+    <HBox fx:id="PlayerHandInfoHbox">
         <VBox fx:id="PlayerInfoVbox"></VBox>
         <HBox fx:id="PlayerHandHbox"></HBox>
-        <Button onAction="#pullcards"></Button>
+        <HBox fx:id="TrainTicketDecksHbox"></HBox>
     </HBox>
 </VBox>
