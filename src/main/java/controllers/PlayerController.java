@@ -14,6 +14,8 @@ public class PlayerController {
 
     private TrainCardDeckModel trainCardDeckModel;
 
+    FirestoreService firestoreService = new FirestoreService();
+
     private Image image;
 
     private TicketModel ticketModel;
