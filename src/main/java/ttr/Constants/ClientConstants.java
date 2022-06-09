@@ -1,9 +1,9 @@
 package ttr.Constants;
 
-public class ClientConstants{
+public class ClientConstants {
     String ID = new Token().getToken();
     public final static int screenX = 1280;
-    public final static int screenY = 720;
+    public final static int screenY = 880;
 
     public static final String BOARD_STATE = "BoardState";
     public static final String STATION = "stationColor";

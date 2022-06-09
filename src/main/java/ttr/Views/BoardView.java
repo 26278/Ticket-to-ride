@@ -43,7 +43,7 @@ import ttr.Controllers.TrainCardDeckController;
 import ttr.Model.SelectOpenCardModel;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver {
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver {
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -55,7 +55,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     public HBox TrainTicketDecksHbox;
     BoardController bc;
     ArrayList<ImageView> imageview = new ArrayList();
-
+    @FXML
+    public AnchorPane boardPane;
+    private ArrayList<Node> groups;
 
 
     @FXML
@@ -202,6 +204,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
+        bc.placeTrain(r.getParent().getId());
     }
 
     @FXML
@@ -230,7 +233,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     @Override
     public void update(SelectOpenCardModel openCardModel) {
         change_OpenCardImage(openCardModel.getOpen_cards());
-        bc.placeTrain(r.getParent().getId());
     }
 
     @FXML
