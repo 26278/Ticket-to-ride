@@ -36,6 +36,7 @@ public class SelectOpenCardModel implements OpenCardObservable{
                     taken_card.add(color);
                     Open_cards.add((i), deck.get(0).getCardColor());
                     Open_cards.remove(i + 1);
+                    deck.remove(deck.get(0));
                     notifyObservers();
                 }
             }
