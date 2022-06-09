@@ -7,9 +7,12 @@ RoutesOwned = Arraylist van Routes
 
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
+import ttr.Views.BoardView;
 import ttr.Views.PlayerObserver;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class PlayerModel implements PlayerObservable {
     private int score;
     private int trainCount = 45;
     private int stationCount = 45;
+
     private ArrayList<TrainCardModel> playerHand;
     private TrainCardDeckModel trainCardDeck;
     private boolean playerTurn;
@@ -37,13 +41,33 @@ public class PlayerModel implements PlayerObservable {
     }
 
 
-
     public void pullCard() {
         ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCards();
         playerHand.addAll(hulpList);
         notifyObservers();
     }
 
+    public void reduceTrainCount(int trainAmount) {
+        trainCount = trainCount - trainAmount;
+        System.out.println(trainCount);
+        notifyObservers();
+    }
+
+    public ArrayList<TrainCardModel> getTrainCardDeck() {
+        return trainCardDeck.getTrainCardDeck();
+    }
+
+    public int getDeckSize() {
+        return trainCardDeck.getDeckCount();
+    }
+
+    public int getTrainCount() {
+        return trainCount;
+    }
+
+    public int getStationCount() {
+        return stationCount;
+    }
 
     public ArrayList<TrainCardModel> getPlayerHand() {
         return playerHand;
@@ -91,13 +115,14 @@ public class PlayerModel implements PlayerObservable {
         }
     }
 
+
     private int getScore() {
         return score;
     }
 
     @Override
     public void notifyObservers() {
-        for (PlayerObserver observer: this.observers){
+        for (PlayerObserver observer : this.observers) {
             observer.update(this);
         }
 
@@ -105,7 +130,8 @@ public class PlayerModel implements PlayerObservable {
 
     @Override
     public void addObserver(PlayerObserver observer) {
-
+        this.observers.add(observer);
+        this.notifyObservers();
     }
 
     @Override

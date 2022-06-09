@@ -1,9 +1,12 @@
 package ttr.Model;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
-import ttr.Config.Database;
+import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
+
+import ttr.Services.FirestoreService;
 
 import java.util.*;
 
@@ -13,13 +16,10 @@ public class TrainCardDeckModel implements Observable {
     private ArrayList<TrainCardModel> trainCardDeck = new ArrayList<TrainCardModel>();
     private ArrayList<TrainCardModel> discardTrainDeck = new ArrayList<TrainCardModel>();
 
-    Database change = new Database();
 
-    Firestore db = change.getDb();
+    FirestoreService firestoreService = new FirestoreService();
 
     HashMap<TrainCardModel, Integer> trainDeckData = new HashMap<>();
-
-    ApiFuture<WriteResult> future = db.collection("playerhand").document("train").set(trainDeckData);
 
 
     public TrainCardDeckModel() {
@@ -35,7 +35,12 @@ public class TrainCardDeckModel implements Observable {
             trainCardDeck.add(new TrainCardModel(COLOR_BLUE));
             trainCardDeck.add(new TrainCardModel(COLOR_YELLOW));
             trainCardDeck.add(new TrainCardModel(COLOR_GREEN));
+
+        }
+        for (int i = 0; i < 14; i++) {
             trainCardDeck.add(new TrainCardModel(COLOR_RAINBOW));
+            trainCardDeck.add(new TrainCardModel(COLOR_BROWN));
+            trainCardDeck.add(new TrainCardModel(COLOR_PURPLE));
         }
     }
 
@@ -52,27 +57,32 @@ public class TrainCardDeckModel implements Observable {
 
     public ArrayList<TrainCardModel> pullCards() {
         ArrayList<TrainCardModel> returnHand = new ArrayList<>();
-        if (trainCardDeck.size() <= 2){
+        if (trainCardDeck.size() <= 2) {
             shuffleDiscardPileIntoDeck();
         }
 
         if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)) {
             returnHand.add(trainCardDeck.get(0));
             discardTrainDeck.add(trainCardDeck.get(1));
-            //firebase remove card!
             //decreases amount of cards of rainbow
-            trainDeckData.put(trainCardDeck.get(1), trainDeckData.getOrDefault(COLOR_RAINBOW, 0) - 1);
-        }
-        else {
+            firestoreService.updateField("TraincardDeck", trainCardDeck.get(1).getCardColor(),
+                    String.valueOf(trainDeckData.getOrDefault(COLOR_RAINBOW, 12) - 1));
+        } else {
             returnHand.add(trainCardDeck.get(1));
             returnHand.add(trainCardDeck.get(0));
-            //increases amount of cards of one color
-            trainDeckData.merge(returnHand.get(0), 1, Integer::sum);
-            trainDeckData.merge(returnHand.get(1), 1, Integer::sum);
+            //decreases amount of cards of one color
+            firestoreService.updateField("TraincardDeck", returnHand.get(0).getCardColor(),
+                    String.valueOf(trainDeckData.getOrDefault(returnHand.get(0), 12) - 1));
+            firestoreService.updateField("TraincardDeck", returnHand.get(0).getCardColor(),
+                    String.valueOf(trainDeckData.getOrDefault(returnHand.get(0), 12) - 1));
         }
         trainCardDeck.remove(1);
         trainCardDeck.remove(0);
         return returnHand;
+    }
+
+    public int getDeckCount() {
+        return trainCardDeck.size();
     }
 
 

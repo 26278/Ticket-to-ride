@@ -2,8 +2,7 @@ package ttr.Services;
 
 import com.google.cloud.firestore.Firestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
@@ -16,6 +15,8 @@ import ttr.Config.Database;
 import ttr.Constants.ClientConstants;
 import ttr.Controllers.Controller;
 
+import static ttr.Constants.ClientConstants.*;
+
 
 public class FirestoreService {
     private Firestore firestore;
@@ -26,8 +27,8 @@ public class FirestoreService {
 
     static FirestoreService firebaseService;
 
-    public static FirestoreService getInstance(){
-        if (firebaseService == null){
+    public static FirestoreService getInstance() {
+        if (firebaseService == null) {
             firebaseService = new FirestoreService();
         }
         return firebaseService;
@@ -59,11 +60,6 @@ public class FirestoreService {
     public void set(String documentId, Map<String, Object> docData) {
         ApiFuture<WriteResult> future = this.colRef.document(documentId).set(docData);
 
-        try {
-            System.out.println("Update time : " + future.get().getUpdateTime());
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -78,8 +74,7 @@ public class FirestoreService {
             if (document.exists()) {
                 return document;
             }
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return null;
@@ -95,6 +90,32 @@ public class FirestoreService {
         td.put(key, value);
         currentMap.put(field, td);
         this.set(cc.getID(), currentMap);
+    }
+
+
+    public void updateTrainOrStation(String route, String trainOrStation, String color) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        Map<String, Object> currentMap = ds.getData();
+
+        HashMap<String, Object> td = (HashMap) ds.get(BOARD_STATE);
+
+        HashMap<String, String> tosMap = new HashMap<>();
+        tosMap.put(TRAIN, null);
+        tosMap.put(STATION, null);
+        tosMap.put(trainOrStation, color);
+
+        td.put(route, tosMap);
+        currentMap.put(BOARD_STATE, td);
+        this.set(cc.getID(), currentMap);
+    }
+
+
+    public HashMap<Object, HashMap> getBoardState() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap<Object, HashMap> td = (HashMap) ds.get(BOARD_STATE);
+
+        return td;
     }
 
 
