@@ -5,20 +5,24 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import ttr.Constants.ClientConstants;
-import ttr.Controllers.Controller;
 import ttr.Model.FirebaseModel;
 import ttr.Model.PlayerModel;
+import ttr.Model.TrainModel;
 import ttr.Model.SelectOpenCardModel;
 import ttr.Services.FirestoreService;
 import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
+import ttr.Views.TrainObserver;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
+
+import static ttr.Constants.ClientConstants.TRAIN;
 
 public class BoardController implements Controller {
     SelectOpenCardModel som = new SelectOpenCardModel();
+    TrainModel tm = new TrainModel();
     FirebaseModel fbm = new FirebaseModel();
     FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
@@ -105,12 +109,34 @@ public class BoardController implements Controller {
         this.player.pullCard();
     }
 
+    public void placeTrain(String id, int size) {
+        this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
+        this.player.reduceTrainCount(size);
+    }
+
+    public void checkBoardState() {
+        HashMap<Object, HashMap> boardState = fs.getBoardState();
+
+        for (Map.Entry<Object, HashMap> entry : boardState.entrySet()) {
+            String key = (String) entry.getKey();
+            HashMap map = entry.getValue();
+
+            if (map.get(TRAIN) != null) {
+                this.tm.placeTrain(key, map.get(TRAIN).toString());
+            }
+        }
+    }
 
     public void registerPlayerObserver(PlayerObserver boardView) {
         this.player.addObserver(boardView);
     }
 
+    public void registerTrainObserver(TrainObserver boardView) {
+        this.tm.addObserver(boardView);
+    }
+
     public void update(DocumentSnapshot ds) {
+        checkBoardState();
         updatePlayerCount((Map) ds.get("players"));
         setCurrentPlayer((Integer) ds.get("current_player"));
         checkPlayerTurn();

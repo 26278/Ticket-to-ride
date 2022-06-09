@@ -7,10 +7,15 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.text.Font;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -19,11 +24,13 @@ import ttr.Constants.CardColorTypes;
 import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.PlayerModel;
+import ttr.Model.TrainModel;
 import ttr.Model.TrainCardModel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -36,7 +43,7 @@ import ttr.Controllers.TrainCardDeckController;
 import ttr.Model.SelectOpenCardModel;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver {
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver {
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -48,19 +55,26 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
     public HBox TrainTicketDecksHbox;
     BoardController bc;
     ArrayList<ImageView> imageview = new ArrayList();
+    @FXML
+    public AnchorPane boardPane;
+    private ArrayList<Node> groups;
 
 
     @FXML
     protected void initialize() {
+        this.groups = new ArrayList<>(boardPane.getChildren());
         this.bc = BoardController.getInstance();
         Collections.addAll(imageview, Card_1, Card_2, Card_3, Card_4, Card_5);
         this.bc.register_open_card_observer(this);
         this.bc.setopencards();
         this.bc.registerPlayerObserver(this);
+        this.bc.registerTrainObserver(this);
+
     }
 
     public void clickoncard(MouseEvent event) {
         bc.click_card(event);
+
     }
 
     @FXML
@@ -190,8 +204,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
 
     @FXML
     public void place_train_or_station(MouseEvent event) {
-        String routeID = ((Shape) event.getSource()).getParent().getId();
         Rectangle r = (Rectangle) event.getSource();
+        bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
     }
 
     @FXML
@@ -222,17 +236,40 @@ public class BoardView implements PlayerObserver, OpenCardObserver {
         change_OpenCardImage(openCardModel.getOpen_cards());
     }
 
+    @FXML
+    public void paintTrain(String groupName, String color) {
+        String url = "/ttr/trains/train-" + color + "-Claimed.png";
+        Image train = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+        for (int i = 0; i < groups.size(); i++) {
+            if (Objects.equals(groups.get(i).getId(), groupName)) {
+                Group group = (Group) groups.get(i);
+                for (Node node : group.getChildren()) {
+                    Rectangle rec = (Rectangle) node;
+                    if (!(rec.getFill() instanceof ImagePattern))
+                        rec.setFill(new ImagePattern(train));
+
+                }
+            }
+        }
+    }
 
     @Override
     public void update(PlayerModel playerModel) {
+
         createPlayerInfoVbox(playerModel);
         createPlayerHandHBox(playerModel);
         createTrainCardDeckView(playerModel);
     }
 
+
     @FXML
     protected void endTurn() {
         bc.endTurn();
+    }
+
+    @Override
+    public void update(TrainModel trainModel) {
+        paintTrain(trainModel.getGroupName(), trainModel.getColor());
     }
 
 }
