@@ -45,14 +45,15 @@ public class SelectTrainCardView {
         //        ArrayList<CheckBox> trainCardCheckboxes = this.trainCardDeckController.showPlayerTrainCards();
     }
 
-    private void createRequirementMessage(String trainCardColor, int trainCardCount,  boolean isTunnelBoolean) {
+    private void createRequirementMessage(String trainCardColor, int trainCardCount, boolean isTunnelBoolean) {
         String requirement;
         Text requirementText = new Text();
         if (trainCardColor == "") {
             requirement = "Om deze rails te bouwen heb je " + String.valueOf(trainCardCount) + " kaarten van" +
                     " dezelfde kleur nodig.";
         } else {
-            requirement = "Om deze rails te bouwen heb je " + String.valueOf(trainCardCount) + " kaarten van de kleur " +
+            requirement = "Om deze rails te bouwen heb je " + String.valueOf(trainCardCount) + " kaarten van de kleur" +
+                    " " +
                     trainCardColor + " nodig.";
         }
 
@@ -63,7 +64,7 @@ public class SelectTrainCardView {
         borderPane.setTop(requirementText);
     }
 
-//  Making dynamic cards for the view based on the CardColorTyped enum and user's TrainCardDeck
+    //  Making dynamic cards for the view based on the CardColorTyped enum and user's TrainCardDeck
     private void createCardsListView() {
         GridPane gridPane = new GridPane();
         CardColorTypes cardColorTypes[] = this.trainCardDeckController.getCardColorTypes();
@@ -71,7 +72,8 @@ public class SelectTrainCardView {
 
         for (CardColorTypes cardColorType : cardColorTypes) {
             String cardColorString = cardColorType.toString().toLowerCase(Locale.ROOT);
-            String url = "/ttr/fxml/eu_WagonCard_" + cardColorString + ".png";
+            String url = "/ttr/cards/horizontal/eu_WagonCard_" + cardColorString + ".png";
+            System.out.println(url);
             int userAmountOfCards = 0; //Replace 0 with dynamic user amount of cards
             int selectAmountOfCards = 3; //Replace 0 with dynamic selected amount of cards
 
@@ -128,7 +130,7 @@ public class SelectTrainCardView {
     public void cancelSelectedCards(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/view.fxml"));
 
-        this.stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+        this.stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         this.scene = new Scene(root, 1000, 800);
         stage.setScene(scene);
         stage.show();
