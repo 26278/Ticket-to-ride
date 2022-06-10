@@ -20,11 +20,6 @@ import java.util.List;
 
 public class PlayerModel implements PlayerObservable {
     private FirestoreService fs = new FirestoreService();
-
-    public ConnectionModel getCm() {
-        return cm;
-    }
-
     private ConnectionModel cm = new ConnectionModel();
     private String playerColor;
     private int playerNumber;
@@ -60,12 +55,13 @@ public class PlayerModel implements PlayerObservable {
         } else if (trainAmount == 8) {
             this.score += 21;
         }
+        notifyObservers();
     }
 
-    public void getTotalScore() {
 
+    public ConnectionModel getCm() {
+        return cm;
     }
-
 
     public void pullCard() {
         ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCards();
@@ -75,7 +71,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void reduceTrainCount(int trainAmount) {
         trainCount = trainCount - trainAmount;
-        System.out.println(trainCount);
         notifyObservers();
     }
 
@@ -141,7 +136,6 @@ public class PlayerModel implements PlayerObservable {
             setPlayerTurn(false);
         }
     }
-
 
     private int getScore() {
         return score;
