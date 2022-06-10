@@ -1,7 +1,5 @@
 package ttr.Controllers;
 
-import javafx.scene.control.Button;
-import ttr.Constants.CardColorTypes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -10,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import ttr.Constants.CardColorTypes;
 import ttr.Model.TrainCardDeckModel;
+import ttr.Model.TrainCardModel;
 import ttr.Services.FirestoreService;
 
 import java.util.ArrayList;
@@ -19,15 +18,7 @@ import java.util.Locale;
 public class TrainCardDeckController {
     TrainCardDeckModel trainDeck = new TrainCardDeckModel();
     FirestoreService fs = new FirestoreService();
-    CardColorTypes cardColorTypes;
-
     static TrainCardDeckController trainCardDeckController;
-    private ArrayList<String> trainCards = new ArrayList<>();
-    private ArrayList<CheckBox> trainCardCheckboxes = new ArrayList<>();
-
-    public void setTrainDeck(ArrayList<String> trainDeck) {
-
-    }
 
     public void Shuffle() {
         Collections.shuffle(trainDeck.getTrainCardDeck());
@@ -92,11 +83,6 @@ public class TrainCardDeckController {
             }
         }
         confirmButton.setDisable(!matchWithRequirements);
-    }
-
-    @FXML
-    protected void cancelSelectedCards() {
-
     }
 
     public void plusOne(String cardColorString, BorderPane borderPane) {
