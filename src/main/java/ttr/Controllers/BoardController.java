@@ -25,6 +25,7 @@ public class BoardController implements Controller {
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
+    SoundController sc;
     private static BoardController boardController;
 
     private int currentPlayer;
@@ -122,6 +123,7 @@ public class BoardController implements Controller {
 
 
     public void pullCards() {
+        this.sc.playSFX("pullCard");
         this.player.pullCard();
     }
 
@@ -187,6 +189,7 @@ public class BoardController implements Controller {
     }
 
     public void update(DocumentSnapshot ds) {
+        this.sc = SoundController.getInstance();
         updatePlayerList((Map) ds.get("players"));
         checkBoardState();
         checkCurrentPlayerName((HashMap<String, String>) ds.get("players"));

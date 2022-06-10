@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ttr.Controllers.GameStartController;
+import ttr.Controllers.SoundController;
 import ttr.Model.GameStartModel;
 
 import java.io.IOException;
