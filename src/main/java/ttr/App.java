@@ -26,7 +26,7 @@ public class App {
             Map<String, String> trainInfo = new HashMap<String, String>();
             trainInfo.put("trainColor", null);
             trainInfo.put("stationColor", null);
-
+            
             board.put("Edinburgh_London_R", trainInfo);
             board.put("Edinburgh_London_L", trainInfo);
             board.put("Brest_Diepe", trainInfo);

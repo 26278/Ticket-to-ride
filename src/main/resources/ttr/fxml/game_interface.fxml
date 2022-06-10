@@ -483,12 +483,12 @@
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-7.0" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>
             </Group>
-            <Group fx:id="Venezia_Rome">
-                <Rectangle fx:id="Venezia_Rome_1" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="451.0"
+            <Group fx:id="Venezia_Roma">
+                <Rectangle fx:id="Venezia_Roma_1" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="451.0"
                            layoutY="431.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight"
                            onMouseExited="#no_highlight" rotate="-12.3" stroke="BLACK" strokeType="INSIDE"
                            width="12.0"/>
-                <Rectangle fx:id="Venezia_Rome_2" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="458.0"
+                <Rectangle fx:id="Venezia_Roma_2" arcHeight="5.0" arcWidth="5.0" height="36.0" layoutX="458.0"
                            layoutY="469.0" onMouseClicked="#place_train_or_station" onMouseEntered="#highlight"
                            onMouseExited="#no_highlight" rotate="-9.0" stroke="BLACK" strokeType="INSIDE" width="12.0"/>
             </Group>
@@ -1301,22 +1301,22 @@
                            onMouseExited="#no_highlight" rotate="121.5" stroke="BLACK" strokeType="INSIDE"
                            width="12.0"/>
             </Group>
-            <Group fx:id="Contantinople_Smyrna">
-                <Rectangle fx:id="Contantinople_Smyrna_2" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
+            <Group fx:id="Constantinople_Smyrna">
+                <Rectangle fx:id="Constantinople_Smyrna_2" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
                            layoutX="763.0" layoutY="607.0" onMouseClicked="#place_train_or_station"
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="24.1" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>
-                <Rectangle fx:id="Contantinople_Smyrna_1" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
+                <Rectangle fx:id="Constantinople_Smyrna_1" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
                            layoutX="781.0" layoutY="574.0" onMouseClicked="#place_train_or_station"
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="27.6" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>
             </Group>
-            <Group fx:id="Contantinople_Angora">
-                <Rectangle fx:id="Contantinople_Angora_1" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
+            <Group fx:id="Constantinople_Angora">
+                <Rectangle fx:id="Constantinople_Angora_1" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
                            layoutX="822.0" layoutY="566.0" onMouseClicked="#place_train_or_station"
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-53.4" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>
-                <Rectangle fx:id="Contantinople_Angora_2" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
+                <Rectangle fx:id="Constantinople_Angora_2" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
                            layoutX="852.0" layoutY="590.0" onMouseClicked="#place_train_or_station"
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-54.9" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>

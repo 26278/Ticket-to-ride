@@ -21,6 +21,11 @@ import java.util.List;
 public class PlayerModel implements PlayerObservable {
     private FirestoreService fs = new FirestoreService();
 
+    public ConnectionModel getCm() {
+        return cm;
+    }
+
+    private ConnectionModel cm = new ConnectionModel();
     private String playerColor;
     private int playerNumber;
     private String playerName;
@@ -98,7 +103,6 @@ public class PlayerModel implements PlayerObservable {
         this.playerName = playerName;
         fs.updateField("players", ("player_" + this.playerNumber), playerName);
     }
-
 
 
     public boolean isPlayerTurn() {
