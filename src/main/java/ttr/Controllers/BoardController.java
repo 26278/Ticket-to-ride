@@ -10,13 +10,12 @@ import ttr.Model.PlayerModel;
 import ttr.Model.TrainModel;
 import ttr.Model.SelectOpenCardModel;
 import ttr.Services.FirestoreService;
+import ttr.Views.FirebaseObserver;
 import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static ttr.Constants.ClientConstants.TRAIN;
 
@@ -26,14 +25,16 @@ public class BoardController implements Controller {
     FirebaseModel fbm = new FirebaseModel();
     FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
+    FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
     private static BoardController boardController;
 
     private int currentPlayer;
     private int playerCount;
+    private ArrayList<Integer> players;
 
     private BoardController() {
-        updatePlayerCount((Map) fs.get(cc.getID()).get("players"));
+        updatePlayerList((Map) fs.get(cc.getID()).get("players"));
     }
 
 
@@ -76,25 +77,11 @@ public class BoardController implements Controller {
     }
 
 
-    public void setCurrentPlayer(int currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    public void setCurrentPlayer(DocumentSnapshot ds) {
+        String value = ds.get("current_player").toString();
+        this.currentPlayer = Integer.parseInt(value);
     }
 
-    public void updatePlayerCount(Map playerMap) {
-        playerCount = playerMap.size();
-    }
-
-    public void endTurn() {
-
-        currentPlayer += 1;
-
-        if (currentPlayer == (playerCount + 1)) {
-            currentPlayer = 1;
-        }
-
-        fbm.setCurrentPlayer(currentPlayer);
-        checkPlayerTurn();
-    }
 
     public void checkPlayerTurn() {
         if (this.player.getPlayerNumber() == currentPlayer) {
@@ -105,6 +92,38 @@ public class BoardController implements Controller {
         }
     }
 
+    public void updatePlayerList(Map playerMap) {
+        players = new ArrayList<>();
+        List<String> playerList = new ArrayList<>(playerMap.keySet());
+        for (int i = 0; i < playerMap.size(); i++) {
+            String[] numString = playerList.get(i).split("_");
+            players.add(Integer.parseInt(numString[1]));
+        }
+
+    }
+
+    public void endTurn() {
+        if (this.player.isPlayerTurn()) {
+            currentPlayer += 1;
+
+            if (currentPlayer == Collections.max(players) + 1) {
+                currentPlayer = 1;
+            }
+
+            while (true) {
+                if (!players.contains(currentPlayer)) {
+                    currentPlayer += 1;
+                }
+                else {
+                    break;
+                }
+            }
+
+            fbm.setCurrentPlayer(currentPlayer);
+        }
+    }
+
+
     public void pullCards() {
         this.player.pullCard();
     }
@@ -112,6 +131,15 @@ public class BoardController implements Controller {
     public void placeTrain(String id, int size) {
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
+    }
+
+    public void checkCurrentPlayerName(HashMap<String, String> players) {
+        for (Map.Entry<String, String> entry : players.entrySet()) {
+            if (Objects.equals(entry.getKey(), "player_" + currentPlayer)) {
+                String playerName = entry.getValue();
+                fm.setCurrentPlayerName(playerName);
+            }
+        }
     }
 
     public void checkBoardState() {
@@ -135,14 +163,21 @@ public class BoardController implements Controller {
         this.tm.addObserver(boardView);
     }
 
-    public void update(DocumentSnapshot ds) {
-        checkBoardState();
-        updatePlayerCount((Map) ds.get("players"));
-        setCurrentPlayer((Integer) ds.get("current_player"));
-        checkPlayerTurn();
-    }
-
     public void register_open_card_observer(OpenCardObserver boardview) {
         this.som.addObserver(boardview);
     }
+
+    public void registerFirebaseObserver(FirebaseObserver boardview) {
+        this.fm.addObserver(boardview);
+    }
+
+    public void update(DocumentSnapshot ds) {
+        updatePlayerList((Map) ds.get("players"));
+        checkBoardState();
+        checkCurrentPlayerName((HashMap<String, String>) ds.get("players"));
+        setCurrentPlayer(ds);
+        checkPlayerTurn();
+    }
 }
+
+
