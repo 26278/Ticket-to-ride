@@ -2,8 +2,13 @@ package ttr.Controllers;
 
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Model.FirebaseModel;
 import ttr.Model.PlayerModel;
@@ -15,6 +20,7 @@ import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
 
+import java.io.IOException;
 import java.util.*;
 
 import static ttr.Constants.ClientConstants.TRAIN;
@@ -30,8 +36,9 @@ public class BoardController implements Controller {
     private static BoardController boardController;
 
     private int currentPlayer;
-    private int playerCount;
     private ArrayList<Integer> players;
+    private Stage stage;
+    private Scene scene;
 
     private BoardController() {
         updatePlayerList((Map) fs.get(cc.getID()).get("players"));
@@ -45,20 +52,11 @@ public class BoardController implements Controller {
         return boardController;
     }
 
-
-    public void place_train_or_station() {
-
-    }
-
     public void setPlayer(PlayerModel player) {
         this.player = player;
         checkPlayerTurn();
     }
 
-    public void Put_in_hand_and_replace() {
-
-
-    }
 
     public void click_card(MouseEvent event) {
         ImageView image = (ImageView) event.getSource();
@@ -99,11 +97,39 @@ public class BoardController implements Controller {
             String[] numString = playerList.get(i).split("_");
             players.add(Integer.parseInt(numString[1]));
         }
+    }
 
+    private void finalTurnCheck() {
+        String s = fs.get(cc.getID()).get("final_turn").toString();
+        boolean final_turn = Boolean.parseBoolean(s);
+        if (final_turn) {
+            //submit score
+            fm.setFinal_turn(true);
+        }
+        if (this.player.getTrainCount() <= 2 && !final_turn) {
+            this.player.setInitialisedFinalTurn(true);
+            fs.updateValue("final_turn", true);
+        }
+    }
+
+    private void lastPlayerTurnCheck() {
+        if (this.player.hasInitialisedFinalTurn()) {
+            fs.updateValue("game_finished", true);
+        }
+    }
+
+    private void gameFinishedCheck() {
+        String s = fs.get(cc.getID()).get("game_finished").toString();
+        boolean game_finished = Boolean.parseBoolean(s);
+        if (game_finished) {
+            this.fm.setGameFinished(true);
+        }
     }
 
     public void endTurn() {
         if (this.player.isPlayerTurn()) {
+            lastPlayerTurnCheck();
+            finalTurnCheck();
             currentPlayer += 1;
 
             if (currentPlayer == Collections.max(players) + 1) {
@@ -118,7 +144,6 @@ public class BoardController implements Controller {
                     break;
                 }
             }
-
             fbm.setCurrentPlayer(currentPlayer);
         }
     }
@@ -171,7 +196,25 @@ public class BoardController implements Controller {
         this.fm.addObserver(boardview);
     }
 
+    public void openEndScreen(MouseEvent event) {
+        loadFile(event, "game_login.fxml");
+    }
+
+    public void loadFile(MouseEvent event, String file) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ttr/fxml/" + file)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
+        this.stage.setScene(scene);
+        stage.show();
+    }
+
     public void update(DocumentSnapshot ds) {
+        gameFinishedCheck();
         updatePlayerList((Map) ds.get("players"));
         checkBoardState();
         checkCurrentPlayerName((HashMap<String, String>) ds.get("players"));

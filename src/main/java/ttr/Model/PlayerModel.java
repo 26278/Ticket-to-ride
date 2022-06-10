@@ -27,7 +27,7 @@ public class PlayerModel implements PlayerObservable {
     private int score;
     private int trainCount = 45;
     private int stationCount = 45;
-
+    private boolean initialisedFinalTurn = false;
 
     private ArrayList<TrainCardModel> playerHand;
     private TrainCardDeckModel trainCardDeck;
@@ -50,7 +50,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void reduceTrainCount(int trainAmount) {
         trainCount = trainCount - trainAmount;
-        System.out.println(trainCount);
         notifyObservers();
     }
 
@@ -99,7 +98,13 @@ public class PlayerModel implements PlayerObservable {
         fs.updateField("players", ("player_" + this.playerNumber), playerName);
     }
 
+    public boolean hasInitialisedFinalTurn() {
+        return initialisedFinalTurn;
+    }
 
+    public void setInitialisedFinalTurn(boolean initialisedFinalTurn) {
+        this.initialisedFinalTurn = initialisedFinalTurn;
+    }
 
     public boolean isPlayerTurn() {
         return playerTurn;

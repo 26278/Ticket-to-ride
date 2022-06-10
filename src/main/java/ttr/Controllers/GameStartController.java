@@ -98,7 +98,6 @@ public class GameStartController implements Controller {
 
 
     public void loadFile(MouseEvent event, String file) throws IOException {
-        System.out.println(file);
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ttr/fxml/" + file)));
 
         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

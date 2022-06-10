@@ -1,5 +1,6 @@
 package ttr.Controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,15 +18,22 @@ public class GameLoginController {
     private Scene scene;
     private ClientConstants cc = new ClientConstants();
 
-    public void joinGame(String token, MouseEvent event) throws IOException {
+    public void joinGame(String token, MouseEvent event) {
         new Token().createToken(token);
         new App();
-
-        loadFile(event, "game_start.fxml");
+        Platform.runLater(() -> {
+            loadFile(event, "game_start.fxml");
+        });
     }
 
-    public void loadFile(MouseEvent event, String file) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/" + file));
+
+    public void loadFile(MouseEvent event, String file) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/ttr/fxml/" + file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());

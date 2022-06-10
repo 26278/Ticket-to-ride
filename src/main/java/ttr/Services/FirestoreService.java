@@ -80,6 +80,14 @@ public class FirestoreService {
         return null;
     }
 
+    public void updateValue(String field, Object value) {
+        DocumentSnapshot ds = this.get(cc.getID());
+        Map<String, Object> currentMap = ds.getData();
+
+        currentMap.put(field, value);
+        this.set(cc.getID(), currentMap);
+    }
+
     //update specific field
     public void updateField(String field, String key, String value) {
         DocumentSnapshot ds = this.get(cc.getID());

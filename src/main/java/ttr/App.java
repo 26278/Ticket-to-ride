@@ -152,6 +152,8 @@ public class App {
             dataForFirebase.put("TicketDeck", ticketDeck);
             dataForFirebase.put("current_player", 1);
             dataForFirebase.put("players", new HashMap<String, String>());
+            dataForFirebase.put("final_turn", false);
+            dataForFirebase.put("game_finished", false);
 
             //add data to firebase
             fbService.set(gameIdentifier, dataForFirebase);
