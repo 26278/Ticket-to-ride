@@ -1,5 +1,6 @@
 package ttr.Views;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,9 +24,7 @@ import javafx.scene.shape.Shape;
 import ttr.Constants.CardColorTypes;
 import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
-import ttr.Model.PlayerModel;
-import ttr.Model.TrainModel;
-import ttr.Model.TrainCardModel;
+import ttr.Model.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,10 +39,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import ttr.Controllers.TrainCardDeckController;
-import ttr.Model.SelectOpenCardModel;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver {
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver {
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -53,10 +51,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public VBox PlayerInfoVbox;
     public HBox PlayerHandInfoHbox;
     public HBox TrainTicketDecksHbox;
-    BoardController bc;
-    ArrayList<ImageView> imageview = new ArrayList();
+    private BoardController bc;
+    private ArrayList<ImageView> imageview = new ArrayList();
     @FXML
-    public AnchorPane boardPane;
+    private AnchorPane boardPane;
+    @FXML
+    private Label CurrentPlayer;
     private ArrayList<Node> groups;
 
 
@@ -69,7 +69,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc.setopencards();
         this.bc.registerPlayerObserver(this);
         this.bc.registerTrainObserver(this);
-
+        this.bc.registerFirebaseObserver(this);
     }
 
     public void clickoncard(MouseEvent event) {
@@ -225,6 +225,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         }
     }
 
+    private void showPlayerCount(String playerName) {
+        Platform.runLater(() -> {
+            CurrentPlayer.setText("Current Players: " + playerName);
+        });
+    }
 
     @FXML
     public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
@@ -255,7 +260,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     @Override
     public void update(PlayerModel playerModel) {
-
         createPlayerInfoVbox(playerModel);
         createPlayerHandHBox(playerModel);
         createTrainCardDeckView(playerModel);
@@ -272,4 +276,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         paintTrain(trainModel.getGroupName(), trainModel.getColor());
     }
 
+    @Override
+    public void update(FirebaseModel firebaseModel) {
+        showPlayerCount(firebaseModel.getCurrentPlayerName());
+    }
 }

@@ -28,6 +28,7 @@ public class PlayerModel implements PlayerObservable {
     private int trainCount = 45;
     private int stationCount = 45;
 
+
     private ArrayList<TrainCardModel> playerHand;
     private TrainCardDeckModel trainCardDeck;
     private boolean playerTurn;
@@ -97,6 +98,8 @@ public class PlayerModel implements PlayerObservable {
         this.playerName = playerName;
         fs.updateField("players", ("player_" + this.playerNumber), playerName);
     }
+
+
 
     public boolean isPlayerTurn() {
         return playerTurn;

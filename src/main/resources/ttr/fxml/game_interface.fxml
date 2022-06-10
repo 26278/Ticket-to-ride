@@ -10,6 +10,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ttr.Views.BoardView">
     <AnchorPane fx:id="boardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -23,7 +24,7 @@
             </ImageView>
 
             <Button onMouseClicked="#endTurn"/>
-
+            <Label fx:id="CurrentPlayer"/>
             <Group fx:id="Edinburgh_London_R">
                 <Rectangle fx:id="Edinburgh_London_R1" arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="36.0"
                            layoutX="159.0" layoutY="35.0" onMouseClicked="#place_train_or_station"

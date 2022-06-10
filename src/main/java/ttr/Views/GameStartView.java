@@ -1,24 +1,17 @@
 package ttr.Views;
 
-import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import ttr.Controllers.Controller;
 import ttr.Controllers.GameStartController;
 import ttr.Model.GameStartModel;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 
 public class GameStartView implements GameStartObserver {
 

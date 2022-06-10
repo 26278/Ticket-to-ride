@@ -141,22 +141,20 @@ public class App {
             trainCardDeck.put("loco", 12);
             trainCardDeck.put("green", 12);
 
-            //create hasmap with ticketDeck
-            Map<String, String> ticketDeck = new HashMap<String, String>();
+            //create hashmap with ticketDeck
+            Map<String, String> ticketDeck = new HashMap<>();
             ticketDeck.put("1", "Barcelona_Munchen");
 
             // combine hashmaps or add necessary empty fields
-            Map<String, Object> dataForFirebase = new HashMap<String, Object>();
+            Map<String, Object> dataForFirebase = new HashMap<>();
             dataForFirebase.put("BoardState", board);
             dataForFirebase.put("TraincardDeck", trainCardDeck);
             dataForFirebase.put("TicketDeck", ticketDeck);
             dataForFirebase.put("current_player", 1);
             dataForFirebase.put("players", new HashMap<String, String>());
 
-
             //add data to firebase
             fbService.set(gameIdentifier, dataForFirebase);
-
         }
         //initialise listener for firebase
         fbService.listen(gameIdentifier, firebaseController);

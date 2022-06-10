@@ -41,6 +41,7 @@ public class SelectOpenCardModel implements OpenCardObservable {
         if (taken_card.size() == 2 || taken_card.get(0) == "loco") {
             for (int i = 0; i < taken_card.size(); i++) {
                 hand.add(new TrainCardModel(taken_card.get(i)));
+                notifyObservers();
             }
             taken_card.clear();
 

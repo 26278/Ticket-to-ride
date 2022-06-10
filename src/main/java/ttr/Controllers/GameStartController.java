@@ -1,6 +1,7 @@
 package ttr.Controllers;
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -49,12 +50,14 @@ public class GameStartController implements Controller {
     }
 
     public void firstPlayerCheck() {
-        Map playerMap = playerMap();
-        if (playerMap.size() == 0) {
-            player.setPlayerColor("red");
-            player.setPlayerNumber(1);
-            player.setPlayerName("host");
-        }
+        Platform.runLater(() -> {
+            Map playerMap = playerMap();
+            if (playerMap.size() == 0) {
+                player.setPlayerColor("red");
+                player.setPlayerNumber(1);
+                player.setPlayerName("host");
+            }
+        });
     }
 
     public void playerSelect(ToggleGroup group) {
