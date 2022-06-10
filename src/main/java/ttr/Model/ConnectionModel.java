@@ -1,14 +1,13 @@
 package ttr.Model;
 
+import javafx.util.Pair;
 import ttr.Constants.Locations;
+import ttr.Shared.ConnectionAndLengthPair;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ConnectionModel {
-    private List<Set<Locations>> connections = new ArrayList<>();
+    private List<ConnectionAndLengthPair> connections = new ArrayList<>();
     private static final int NOT_A_SET = -1;
 
     /**
@@ -17,19 +16,21 @@ public class ConnectionModel {
      * @param ELocation1 First Location of the route to be added
      * @param ELocation2 Second Location of the route to be added
      */
-    public void addLocations(Locations ELocation1, Locations ELocation2) {
+    public void addLocations(Locations ELocation1, Locations ELocation2, int length) {
         int indexSet1 = getSetForELocation(ELocation1);
         int indexSet2 = getSetForELocation(ELocation2);
         if (isMergeable(indexSet1, indexSet2)) {
             mergeSets(indexSet1, indexSet2);
         } else if (isAddable(indexSet1)) {
-            addELocationToSet(indexSet1, ELocation2);
+            addELocationToSet(indexSet1, ELocation2, length);
         } else if (isAddable(indexSet2)) {
-            addELocationToSet(indexSet2, ELocation1);
+            addELocationToSet(indexSet2, ELocation1, length);
         } else {
-            createNewSet(ELocation1, ELocation2);
+            createNewSet(ELocation1, ELocation2, length);
         }
-        System.out.println(connections);
+        for (ConnectionAndLengthPair pair : connections) {
+            System.out.println(pair.getLocationsSet() + "+" + pair.getLength());
+        }
     }
 
     /**
@@ -39,7 +40,7 @@ public class ConnectionModel {
      */
     public void addRoute(RouteModel route) {
         Locations[] locs = route.getLocations();
-        addLocations(locs[0], locs[1]);
+        addLocations(locs[0], locs[1], route.getLength());
     }
 
 
@@ -59,12 +60,14 @@ public class ConnectionModel {
      * @return set that the location is found in
      */
     private int getSetForELocation(Locations ELocation1) {
-        for (int i = 0, length = connections.size(); i < length; i++) {
-            if (connections.get(i).contains(ELocation1)) {
+        for (int i = 0; i < connections.size(); i++) {
+            if (connections.get(i).getLocationsSet().contains(ELocation1)) {
                 return i;
             }
         }
         return NOT_A_SET;
+
+
     }
 
     /**
@@ -73,8 +76,9 @@ public class ConnectionModel {
      * @param set the set to add to
      * @param loc the location to add
      */
-    private void addELocationToSet(int set, Locations loc) {
-        connections.get(set).add(loc);
+    private void addELocationToSet(int set, Locations loc, int length) {
+        connections.get(set).getLocationsSet().add(loc);
+        connections.get(set).setLength(connections.get(set).getLength() + length);
     }
 
     /**
@@ -83,11 +87,11 @@ public class ConnectionModel {
      * @param ELocation1 first location
      * @param ELocation2 second location
      */
-    private void createNewSet(Locations ELocation1, Locations ELocation2) {
+    private void createNewSet(Locations ELocation1, Locations ELocation2, int length) {
         Set<Locations> newSet = new HashSet<>();
         newSet.add(ELocation1);
         newSet.add(ELocation2);
-        connections.add(newSet);
+        connections.add(new ConnectionAndLengthPair(newSet, length));
     }
 
     /**
@@ -97,7 +101,12 @@ public class ConnectionModel {
      * @param set2 second set
      */
     private void mergeSets(int set1, int set2) {
-        connections.get(set1).addAll(connections.get(set2));
+        Set<Locations> locSet1 = connections.get(set1).getLocationsSet();
+        Set<Locations> locSet2 = connections.get(set2).getLocationsSet();
+        int set1Length = connections.get(set1).getLength();
+        int set2Length = connections.get(set2).getLength();
+        locSet1.addAll(locSet2);
+        connections.get(set1).setLength(set1Length + set2Length);
         connections.remove(set2);
     }
 
@@ -113,6 +122,17 @@ public class ConnectionModel {
         int set2 = getSetForELocation(ELocation2);
         return set1 == set2 && set1 != NOT_A_SET;
     }
+
+    public int getLongestRoute() {
+        int longestRouteLength = 0;
+        for (ConnectionAndLengthPair pair : connections) {
+            if (pair.getLength() > longestRouteLength) {
+                longestRouteLength = pair.getLength();
+            }
+        }
+        return longestRouteLength;
+    }
+
 
     /**
      * Checks if a RouteCrd is finished. Calls checkForRouteCompleted internally

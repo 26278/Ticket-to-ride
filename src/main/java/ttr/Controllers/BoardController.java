@@ -127,8 +127,6 @@ public class BoardController implements Controller {
 
     public ArrayList<Locations> getRoute(String id) {
         String[] routes = id.split("_");
-        for (String string : routes) {
-        }
         ArrayList<Locations> locations = new ArrayList<>();
         for (Locations loc : Locations.values()) {
             if (routes[0].toLowerCase(Locale.ROOT).equals(loc.toString().toLowerCase(Locale.ROOT))) {
@@ -143,8 +141,9 @@ public class BoardController implements Controller {
 
     public void placeTrain(String id, int size) {
         ArrayList<Locations> routes = getRoute(id);
-        RouteModel route = new RouteModel(routes.get(0), routes.get(1));
+        RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
         this.player.getCm().addRoute(route);
+        this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
     }

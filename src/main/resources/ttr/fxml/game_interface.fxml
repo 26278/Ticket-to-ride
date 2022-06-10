@@ -729,12 +729,12 @@
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-77.0" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>
             </Group>
-            <Group fx:id="Danzig_Waszawa">
-                <Rectangle fx:id="Danzig_Waszawa_1" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
+            <Group fx:id="Danzig_Warszawa">
+                <Rectangle fx:id="Danzig_Warszawa_1" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
                            layoutX="626.0" layoutY="131.0" onMouseClicked="#place_train_or_station"
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-57.5" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>
-                <Rectangle fx:id="Danzig_Waszawa_2" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
+                <Rectangle fx:id="Danzig_Warszawa_2" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="33.0"
                            layoutX="648.0" layoutY="163.0" onMouseClicked="#place_train_or_station"
                            onMouseEntered="#highlight" onMouseExited="#no_highlight" rotate="-11.3" stroke="BLACK"
                            strokeType="INSIDE" width="12.0"/>
