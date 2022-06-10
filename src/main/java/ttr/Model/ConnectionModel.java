@@ -28,9 +28,6 @@ public class ConnectionModel {
         } else {
             createNewSet(ELocation1, ELocation2, length);
         }
-        for (ConnectionAndLengthPair pair : connections) {
-            System.out.println(pair.getLocationsSet() + "+" + pair.getLength());
-        }
     }
 
     /**
