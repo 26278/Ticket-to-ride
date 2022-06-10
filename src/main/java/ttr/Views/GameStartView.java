@@ -25,10 +25,9 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class GameStartView implements GameStartObserver {
-
-    GameStartController gsc = new GameStartController();
     ClientConstants cc = new ClientConstants();
     GameStartController gsc;
+
     @FXML
     public VBox list;
 
@@ -102,19 +101,19 @@ public class GameStartView implements GameStartObserver {
         }
     }
 
-    @FXML
+//    @FXML
 //    public void chooseCard(MouseEvent event) throws IOException {
-    public void chooseCard(MouseEvent event, String trainCardColor, int trainCardCount,  boolean isTunnelBoolean) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/selectCardsScreen.fxml"));
-        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
-//        scene.getStylesheets().add(
-//                Objects.requireNonNull(getClass().getResource("/ttr/stylesheets/chooseCards.css"))
-//                        .toExternalForm());
-        stage.setScene(scene);
-        stage.show();
-        RequirementModel requirement = new RequirementModel(trainCardColor, trainCardCount, isTunnelBoolean);
-    }
+//    public void chooseCard(MouseEvent event, String trainCardColor, int trainCardCount,  boolean isTunnelBoolean) throws IOException {
+//        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/selectCardsScreen.fxml"));
+//        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+//        this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
+////        scene.getStylesheets().add(
+////                Objects.requireNonNull(getClass().getResource("/ttr/stylesheets/chooseCards.css"))
+////                        .toExternalForm());
+//        stage.setScene(scene);
+//        stage.show();
+//        RequirementModel requirement = new RequirementModel(trainCardColor, trainCardCount, isTunnelBoolean);
+//    }
 
     private Stage stage;
     private Scene scene;

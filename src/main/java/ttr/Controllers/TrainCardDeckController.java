@@ -29,11 +29,6 @@ public class TrainCardDeckController {
 
     }
 
-    public CardColorTypes[] getCardColorTypes() {
-        return CardColorTypes.values();
-    }
-
-
     public void Shuffle() {
         Collections.shuffle(trainDeck.getTrainCardDeck());
     }

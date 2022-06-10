@@ -29,6 +29,7 @@ import ttr.Model.TrainCardModel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Arrays;
@@ -203,9 +204,14 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
 
     @FXML
-    public void place_train_or_station(MouseEvent event) {
-        Rectangle r = (Rectangle) event.getSource();
-        bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+    public void place_train_or_station(MouseEvent event) throws IOException {
+        boolean hasPaidForTrain = bc.place_train_or_station(event);
+        if (hasPaidForTrain) {
+            Rectangle r = (Rectangle) event.getSource();
+            bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+//            TO DO: Mogelijkheid om hierna zelf beurt te beeindigen.
+        }
+
     }
 
     @FXML

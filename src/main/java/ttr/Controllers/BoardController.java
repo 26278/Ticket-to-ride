@@ -2,8 +2,13 @@ package ttr.Controllers;
 
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Model.FirebaseModel;
 import ttr.Model.PlayerModel;
@@ -14,6 +19,7 @@ import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +37,8 @@ public class BoardController implements Controller {
 
     private int currentPlayer;
     private int playerCount;
+    private Stage stage;
+    private Scene scene;
 
     private BoardController() {
         updatePlayerCount((Map) fs.get(cc.getID()).get("players"));
@@ -45,8 +53,21 @@ public class BoardController implements Controller {
     }
 
 
-    public void place_train_or_station() {
+    public boolean place_train_or_station(MouseEvent event) throws IOException {
+        // player model -> notifyObserver die selectTrainCardView, update je hand
+        Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/selectCardsScreen.fxml"));
+        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
+//        scene.getStylesheets().add(
+//                Objects.requireNonNull(getClass().getResource("/ttr/stylesheets/chooseCards.css"))
+//                        .toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+//        RequirementModel requirement = new RequirementModel(trainCardColor, trainCardCount, isTunnelBoolean);
 
+//        functie dat player heeft betaald schrijven
+        
+        return true;
     }
 
     public void setPlayer(PlayerModel player) {
