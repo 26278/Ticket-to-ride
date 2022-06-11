@@ -56,7 +56,7 @@ public class PlayerModel implements PlayerObservable {
             this.score += 21;
         }
         notifyObservers();
-    }
+    }//updates score based on the amount of trains placed
 
 
     public ConnectionModel getCm() {

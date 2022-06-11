@@ -9,7 +9,7 @@ import java.util.*;
 public class ConnectionModel {
     private List<ConnectionAndLengthPair> connections = new ArrayList<>();
     private static final int NOT_A_SET = -1;
-    
+
     public void addLocations(Locations location1, Locations location2, int length) {
         int indexSet1 = getSetForLocation(location1);
         int indexSet2 = getSetForLocation(location2);
@@ -50,7 +50,7 @@ public class ConnectionModel {
     private void addLocationToSet(int set, Locations loc, int length) {
         connections.get(set).getLocationsSet().add(loc);
         connections.get(set).setLength(connections.get(set).getLength() + length);
-    }//Adds a Location to a given set
+    }//Adds a Location to a given set and add the length of the connection to the set
 
     private void createNewSet(Locations location1, Locations location2, int length) {
         Set<Locations> newSet = new HashSet<>();
