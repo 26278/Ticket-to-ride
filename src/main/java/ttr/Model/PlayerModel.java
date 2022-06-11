@@ -54,7 +54,8 @@ public class PlayerModel implements PlayerObservable {
         } else if (trainAmount == 8) {
             this.score += 21;
         }
-    }
+        notifyObservers();
+    }//updates score based on the amount of trains placed
 
 
     public void pullCard() {
@@ -65,7 +66,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void reduceTrainCount(int trainAmount) {
         trainCount = trainCount - trainAmount;
-        System.out.println(trainCount);
         notifyObservers();
     }
 
@@ -131,7 +131,6 @@ public class PlayerModel implements PlayerObservable {
             setPlayerTurn(false);
         }
     }
-
 
     private int getScore() {
         return score;
