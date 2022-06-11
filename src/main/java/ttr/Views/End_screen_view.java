@@ -24,12 +24,11 @@ public class End_screen_view{
 
 
 
-    public void init(){
+    public void initialize(){
         fs = FirestoreService.getInstance();
         Collections.addAll(textField,Number_1, Number_2, Number_3, Number_4, Number_5);
         mapToList();
         setScore();
-
         }
 
     public void mapToList() {
