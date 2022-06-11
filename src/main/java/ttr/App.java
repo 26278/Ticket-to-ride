@@ -64,7 +64,7 @@ public class App {
             board.put("Munchen_Zurich", trainInfo);
             board.put("Zurich_Venezia", trainInfo);
             board.put("Munchen_Venezia", trainInfo);
-            board.put("Venezia_Rome", trainInfo);
+            board.put("Venezia_roma", trainInfo);
             board.put("Marseille_Roma", trainInfo);
             board.put("Roma_Palermo", trainInfo);
             board.put("Brindisi_Palermo", trainInfo);
@@ -81,7 +81,7 @@ public class App {
             board.put("Kobenhavn_Stockholm_R", trainInfo);
             board.put("Stockholm_Petrograd", trainInfo);
             board.put("Berlin_Danzig", trainInfo);
-            board.put("Danzig_Waszawa", trainInfo);
+            board.put("Danzig_Warszawa", trainInfo);
             board.put("Berlin_Warszawa_T", trainInfo);
             board.put("Berlin_Warszawa_B", trainInfo);
             board.put("Berlin_Wien", trainInfo);
@@ -120,8 +120,8 @@ public class App {
             board.put("Sevastopol_Sochi", trainInfo);
             board.put("Bucuresti_Sevastopol", trainInfo);
             board.put("Angora_Erzurum", trainInfo);
-            board.put("Contantinople_Smyrna", trainInfo);
-            board.put("Contantinople_Angora", trainInfo);
+            board.put("Constantinople_Smyrna", trainInfo);
+            board.put("Constantinople_Angora", trainInfo);
             board.put("Sevastopol_Erzurum", trainInfo);
             board.put("Sevastopol_Constantinople", trainInfo);
             board.put("Smyrna_Angora", trainInfo);

@@ -20,13 +20,12 @@ import java.util.List;
 
 public class PlayerModel implements PlayerObservable {
     private FirestoreService fs = new FirestoreService();
-
     private String playerColor;
     private int playerNumber;
     private String playerName;
     private int score;
     private int trainCount = 45;
-    private int stationCount = 45;
+    private int stationCount = 3;
 
 
     private ArrayList<TrainCardModel> playerHand;
@@ -39,6 +38,22 @@ public class PlayerModel implements PlayerObservable {
     public PlayerModel() {
         trainCardDeck = new TrainCardDeckModel();
         playerHand = new ArrayList<TrainCardModel>();
+    }
+
+    public void awardPoints(int trainAmount) {
+        if (trainAmount == 1) {
+            this.score += 1;
+        } else if (trainAmount == 2) {
+            this.score += 2;
+        } else if (trainAmount == 3) {
+            this.score += 4;
+        } else if (trainAmount == 4) {
+            this.score += 7;
+        } else if (trainAmount == 6) {
+            this.score += 15;
+        } else if (trainAmount == 8) {
+            this.score += 21;
+        }
     }
 
 
@@ -98,7 +113,6 @@ public class PlayerModel implements PlayerObservable {
         this.playerName = playerName;
         fs.updateField("players", ("player_" + this.playerNumber), playerName);
     }
-
 
 
     public boolean isPlayerTurn() {
