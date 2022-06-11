@@ -8,6 +8,7 @@ import ttr.Constants.ClientConstants;
 import ttr.Constants.Locations;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
+import ttr.Services.SoundService;
 import ttr.Views.FirebaseObserver;
 import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
@@ -25,7 +26,7 @@ public class BoardController implements Controller {
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
-    SoundController sc;
+    SoundService sc;
     private static BoardController boardController;
 
     private int currentPlayer;
@@ -33,6 +34,7 @@ public class BoardController implements Controller {
     private ArrayList<Integer> players;
 
     private BoardController() {
+        this.sc = SoundService.getInstance();
         updatePlayerList((Map) fs.get(cc.getID()).get("players"));
     }
 
@@ -148,6 +150,7 @@ public class BoardController implements Controller {
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
+        this.sc.playSFX("placeTrain");
     }
 
     public void checkCurrentPlayerName(HashMap<String, String> players) {
@@ -189,7 +192,6 @@ public class BoardController implements Controller {
     }
 
     public void update(DocumentSnapshot ds) {
-        this.sc = SoundController.getInstance();
         updatePlayerList((Map) ds.get("players"));
         checkBoardState();
         checkCurrentPlayerName((HashMap<String, String>) ds.get("players"));

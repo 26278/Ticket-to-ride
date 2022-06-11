@@ -9,11 +9,12 @@ import javafx.stage.Stage;
 import ttr.App;
 import ttr.Constants.ClientConstants;
 import ttr.Constants.Token;
+import ttr.Services.SoundService;
 
 import java.io.IOException;
 
 public class GameLoginController {
-    SoundController sc = new SoundController();
+    SoundService sc = new SoundService();
     private Stage stage;
     private Scene scene;
     private ClientConstants cc = new ClientConstants();
