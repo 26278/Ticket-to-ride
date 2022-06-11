@@ -31,9 +31,9 @@
         <VBox fx:id="settings" styleClass="vbox" layoutX="430.0" layoutY="121.0" prefHeight="638.0" prefWidth="421.0"
               visible="false">
             <Label styleClass="text">Volume</Label>
-            <Slider fx:id="musicSlider" onMouseReleased="#volumeChanged" value="30"/>
+            <Slider fx:id="musicSlider" onMouseReleased="#volumeChanged" value="20"/>
             <Label styleClass="text">SFX</Label>
-            <Slider fx:id="sfxSlider" onMouseReleased="#sfxChanged" value="30"/>
+            <Slider fx:id="sfxSlider" onMouseReleased="#sfxChanged" value="20"/>
             <ImageView onMouseClicked="#backClicked">
                 <image>
                     <Image url="@../menu/backButton.png"/>
