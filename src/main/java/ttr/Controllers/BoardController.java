@@ -10,10 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
-import ttr.Model.FirebaseModel;
-import ttr.Model.PlayerModel;
-import ttr.Model.TrainModel;
-import ttr.Model.SelectOpenCardModel;
+import ttr.Constants.Locations;
+import ttr.Model.*;
 import ttr.Services.FirestoreService;
 import ttr.Views.FirebaseObserver;
 import ttr.Views.OpenCardObserver;
@@ -33,6 +31,7 @@ public class BoardController implements Controller {
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
+    private ConnectionModel cm = new ConnectionModel();
     private static BoardController boardController;
 
     private int currentPlayer;
@@ -139,8 +138,7 @@ public class BoardController implements Controller {
             while (true) {
                 if (!players.contains(currentPlayer)) {
                     currentPlayer += 1;
-                }
-                else {
+                } else {
                     break;
                 }
             }
@@ -153,7 +151,25 @@ public class BoardController implements Controller {
         this.player.pullCard();
     }
 
+    public ArrayList<Locations> getRoute(String id) {
+        String[] routes = id.split("_");
+        ArrayList<Locations> locations = new ArrayList<>();
+        for (Locations loc : Locations.values()) {
+            if (routes[0].toLowerCase(Locale.ROOT).equals(loc.toString().toLowerCase(Locale.ROOT))) {
+                locations.add(loc);
+            }
+            if (routes[1].toLowerCase(Locale.ROOT).equals(loc.toString().toLowerCase(Locale.ROOT))) {
+                locations.add(loc);
+            }
+        }
+        return locations;
+    }
+
     public void placeTrain(String id, int size) {
+        ArrayList<Locations> routes = getRoute(id);
+        RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
+        this.cm.addRoute(route);
+        this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
     }
