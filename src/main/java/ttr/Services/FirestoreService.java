@@ -113,6 +113,19 @@ public class FirestoreService {
         this.set(cc.getID(), currentMap);
     }
 
+    public int getTrainCardValue(String color) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        String field = "TraincardDeck";
+        Map<String, Object> currentMap = ds.getData();
+
+        HashMap td = (HashMap) ds.get(field);
+        String s = td.get(color).toString();
+        int value = Integer.parseInt(s);
+
+        return value;
+    }
+
 
     public void updateTrainOrStation(String route, String trainOrStation, String color) {
         DocumentSnapshot ds = this.get(cc.getID());

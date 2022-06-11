@@ -21,7 +21,6 @@ public class TrainCardDeckModel implements Observable {
 
     HashMap<TrainCardModel, Integer> trainDeckData = new HashMap<>();
 
-
     public TrainCardDeckModel() {
         initDeck();
         Collections.shuffle(trainCardDeck);
@@ -65,16 +64,16 @@ public class TrainCardDeckModel implements Observable {
             returnHand.add(trainCardDeck.get(0));
             discardTrainDeck.add(trainCardDeck.get(1));
             //decreases amount of cards of rainbow
-            firestoreService.updateField("TraincardDeck", trainCardDeck.get(1).getCardColor(),
-                    String.valueOf(trainDeckData.getOrDefault(COLOR_RAINBOW, 12) - 1));
+            firestoreService.updateField("TraincardDeck", "rainbow",
+                    String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(1))) - 1));
         } else {
             returnHand.add(trainCardDeck.get(1));
             returnHand.add(trainCardDeck.get(0));
             //decreases amount of cards of one color
             firestoreService.updateField("TraincardDeck", returnHand.get(0).getCardColor(),
-                    String.valueOf(trainDeckData.getOrDefault(returnHand.get(0), 12) - 1));
-            firestoreService.updateField("TraincardDeck", returnHand.get(0).getCardColor(),
-                    String.valueOf(trainDeckData.getOrDefault(returnHand.get(0), 12) - 1));
+                    String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(0))) - 1));
+            firestoreService.updateField("TraincardDeck", returnHand.get(1).getCardColor(),
+                    String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(1))) - 1));
         }
         trainCardDeck.remove(1);
         trainCardDeck.remove(0);
