@@ -3,6 +3,7 @@ package ttr.Services;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import ttr.Controllers.VolumeController;
 
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class SoundService {
     public void playMusic() {
         System.out.println(player.getStatus());
         if (player.getStatus() != MediaPlayer.Status.PLAYING) {
-            player.setVolume(0.1);
+//            player.setVolume();
             player.play();
         }
     }
@@ -42,7 +43,7 @@ public class SoundService {
             return;
         }
         clip.stop();
-        clip.setVolume(0.1);
+//        clip.setVolume();
         clip.play();
     }
 
