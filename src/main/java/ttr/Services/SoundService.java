@@ -11,13 +11,13 @@ import static ttr.Constants.ClientConstants.*;
 public class SoundService {
     private static SoundService controller;
     private MediaPlayer player;
-    private double sfxVolume = 50;
+    private double sfxVolume = 20;
 
     public SoundService() {
         Media backgroundMusic = new Media(getClass().getResource("/ttr/music/europe.mp3").toString());
         player = new MediaPlayer(backgroundMusic);
         player.setCycleCount(MediaPlayer.INDEFINITE);
-        player.setVolume(30);
+        player.setVolume(20);
     }
 
     public void setMusicVolume(double volume) {
