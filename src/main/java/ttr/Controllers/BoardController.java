@@ -22,6 +22,7 @@ import ttr.Views.TrainObserver;
 import java.io.IOException;
 import java.util.*;
 
+import static ttr.Constants.ClientConstants.FINAL_SCORES;
 import static ttr.Constants.ClientConstants.TRAIN;
 
 public class BoardController implements Controller {
@@ -179,6 +180,18 @@ public class BoardController implements Controller {
         this.sc.playSFX("placeTrain");
     }
 
+    public void endGame(MouseEvent event) {
+        submitScore();
+        loadFile(event, "game_login.fxml");
+    }
+
+    public void submitScore() {
+        String playerName = this.player.getPlayerName();
+        int score = this.player.getScore();
+
+        fs.updateField(FINAL_SCORES, playerName, score);
+    }
+
     public void checkCurrentPlayerName(HashMap<String, String> players) {
         for (Map.Entry<String, String> entry : players.entrySet()) {
             if (Objects.equals(entry.getKey(), "player_" + currentPlayer)) {
@@ -217,9 +230,6 @@ public class BoardController implements Controller {
         this.fm.addObserver(boardview);
     }
 
-    public void openEndScreen(MouseEvent event) {
-        loadFile(event, "game_login.fxml");
-    }
 
     public void loadFile(MouseEvent event, String file) {
         Parent root = null;

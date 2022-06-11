@@ -8,6 +8,7 @@ public class ClientConstants {
     public static final String BOARD_STATE = "BoardState";
     public static final String STATION = "stationColor";
     public static final String TRAIN = "trainColor";
+    public static final String FINAL_SCORES = "final_scores";
 
     public static String getBoardState() {
         return BOARD_STATE;

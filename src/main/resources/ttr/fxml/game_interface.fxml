@@ -606,7 +606,7 @@
             <Circle fx:id="Sochi" fill="DODGERBLUE" layoutX="982.0" layoutY="469.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="Rostov" fill="DODGERBLUE" layoutX="987.0" layoutY="374.0" onMouseEntered="#highlight" onMouseExited="#no_highlight" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
 
-            <Button fx:id="endGameButton" layoutX="3.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#openEndScreen" text="Go to Results!" visible="false">
+            <Button fx:id="endGameButton" layoutX="3.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#endGame" text="Go to Results!" visible="false">
             <font>
                <Font name="SansSerif Bold" size="24.0" />
             </font>

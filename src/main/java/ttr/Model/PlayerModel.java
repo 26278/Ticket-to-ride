@@ -130,18 +130,10 @@ public class PlayerModel implements PlayerObservable {
         this.playerTurn = playerTurn;
     }
 
-    public void hasCurrentTurn(DocumentSnapshot ds) {
-        int current_Player = (int) ds.get("current_player");
-        if (current_Player == playerNumber) {
-            setPlayerTurn(true);
-        } else {
-            setPlayerTurn(false);
-        }
-    }
-
-    private int getScore() {
+    public int getScore() {
         return score;
     }
+
 
     @Override
     public void notifyObservers() {

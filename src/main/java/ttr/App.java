@@ -9,6 +9,9 @@ import ttr.Controllers.Controller;
 import ttr.Controllers.FirebaseController;
 import ttr.Services.FirestoreService;
 
+import static ttr.Constants.ClientConstants.FINAL_SCORES;
+import static ttr.Constants.ClientConstants.TRAIN;
+
 
 public class App {
     ClientConstants cc = new ClientConstants();
@@ -140,53 +143,53 @@ public class App {
             trainCardDeck.put("green", 12);
 
             //create hashmap with ticketDeck
-            Map<String, String> ticketDeck = new HashMap<>();
-            ticketDeck.put("Barcelona_Munchen", "8");
-            ticketDeck.put("Amsterdam_Pamplona", "7");
-            ticketDeck.put("Amsterdam_Wilno", "12");
-            ticketDeck.put("Angora_Kharkov", "10");
-            ticketDeck.put("Athina_Angora", "5");
-            ticketDeck.put("Athina_Wilno", "11");
-            ticketDeck.put("Barcelona_Bruxelles", "8");
-            ticketDeck.put("Berlin_Bucuresti", "8");
-            ticketDeck.put("Berlin_Moskva", "12");
-            ticketDeck.put("Berlin_Roma", "9");
-            ticketDeck.put("Brest_Marseille", "7");
-            ticketDeck.put("Brest_petrograd", "20");
-            ticketDeck.put("Brest_Venezia", "8");
-            ticketDeck.put("Bruxelles_Danzig", "9");
-            ticketDeck.put("Budapest_Sofia", "5");
-            ticketDeck.put("Cadiz_Stockholm", "21");
-            ticketDeck.put("Edinburgh_Athina", "21");
-            ticketDeck.put("Edinburgh_Paris", "7");
-            ticketDeck.put("Essen_Kyiv", "10");
-            ticketDeck.put("Frankfurt_Kobenhavn", "5");
-            ticketDeck.put("Frankfurt_Smolensk", "13");
-            ticketDeck.put("Kobenhavn_erzuren", "21");
-            ticketDeck.put("Kyiv_Petrograd", "6");
-            ticketDeck.put("Kyiv_Sochi", "8");
-            ticketDeck.put("Lisboa_Danzig", "20");
-            ticketDeck.put("London_Berlin", "7");
-            ticketDeck.put("London_Wien", "10");
-            ticketDeck.put("Madrid_Dieppe", "8");
-            ticketDeck.put("Madrid_Zurich", "8");
-            ticketDeck.put("Marseille_Essen", "8");
-            ticketDeck.put("Palermo_Constantinople", "5");
-            ticketDeck.put("Palermo_Moskva", "20");
-            ticketDeck.put("Paris_Wien", "8");
-            ticketDeck.put("Paris_Zagrab", "7");
-            ticketDeck.put("Riga_Bucuresti", "10");
-            ticketDeck.put("Roma_Smyrna", "8");
-            ticketDeck.put("Rostov_Erzurum", "5");
-            ticketDeck.put("Sarajevo_Sevastopol", "8");
-            ticketDeck.put("Smolensk_Rostov", "8");
-            ticketDeck.put("Sofia_Smyrna", "5");
-            ticketDeck.put("Stockholm_Wien", "11");
-            ticketDeck.put("Venezia_Constantinople", "10");
-            ticketDeck.put("Warszawa_Smolensk", "6");
-            ticketDeck.put("Zagrab_Brindisi", "6");
-            ticketDeck.put("Zurich_Brindisi", "6");
-            ticketDeck.put("Zurich_Budapest", "6");
+            Map<String, Integer> ticketDeck = new HashMap<>();
+            ticketDeck.put("Barcelona_Munchen", 8);
+            ticketDeck.put("Amsterdam_Pamplona", 7);
+            ticketDeck.put("Amsterdam_Wilno", 12);
+            ticketDeck.put("Angora_Kharkov", 1);
+            ticketDeck.put("Athina_Angora", 5);
+            ticketDeck.put("Athina_Wilno", 11);
+            ticketDeck.put("Barcelona_Bruxelles", 8);
+            ticketDeck.put("Berlin_Bucuresti", 8);
+            ticketDeck.put("Berlin_Moskva", 12);
+            ticketDeck.put("Berlin_Roma", 9);
+            ticketDeck.put("Brest_Marseille", 7);
+            ticketDeck.put("Brest_petrograd", 20);
+            ticketDeck.put("Brest_Venezia", 8);
+            ticketDeck.put("Bruxelles_Danzig", 9);
+            ticketDeck.put("Budapest_Sofia", 5);
+            ticketDeck.put("Cadiz_Stockholm", 21);
+            ticketDeck.put("Edinburgh_Athina", 21);
+            ticketDeck.put("Edinburgh_Paris", 7);
+            ticketDeck.put("Essen_Kyiv", 10);
+            ticketDeck.put("Frankfurt_Kobenhavn", 5);
+            ticketDeck.put("Frankfurt_Smolensk", 13);
+            ticketDeck.put("Kobenhavn_erzuren", 21);
+            ticketDeck.put("Kyiv_Petrograd", 6);
+            ticketDeck.put("Kyiv_Sochi", 8);
+            ticketDeck.put("Lisboa_Danzig", 20);
+            ticketDeck.put("London_Berlin", 7);
+            ticketDeck.put("London_Wien", 10);
+            ticketDeck.put("Madrid_Dieppe", 8);
+            ticketDeck.put("Madrid_Zurich", 8);
+            ticketDeck.put("Marseille_Essen", 8);
+            ticketDeck.put("Palermo_Constantinople", 5);
+            ticketDeck.put("Palermo_Moskva", 20);
+            ticketDeck.put("Paris_Wien", 8);
+            ticketDeck.put("Paris_Zagrab", 7);
+            ticketDeck.put("Riga_Bucuresti", 10);
+            ticketDeck.put("Roma_Smyrna", 8);
+            ticketDeck.put("Rostov_Erzurum", 5);
+            ticketDeck.put("Sarajevo_Sevastopol", 8);
+            ticketDeck.put("Smolensk_Rostov", 8);
+            ticketDeck.put("Sofia_Smyrna", 5);
+            ticketDeck.put("Stockholm_Wien", 11);
+            ticketDeck.put("Venezia_Constantinople", 10);
+            ticketDeck.put("Warszawa_Smolensk", 6);
+            ticketDeck.put("Zagrab_Brindisi", 6);
+            ticketDeck.put("Zurich_Brindisi", 6);
+            ticketDeck.put("Zurich_Budapest", 6);
 
             // combine hashmaps or add necessary empty fields
             Map<String, Object> dataForFirebase = new HashMap<>();
@@ -197,12 +200,14 @@ public class App {
             dataForFirebase.put("players", new HashMap<String, String>());
             dataForFirebase.put("final_turn", false);
             dataForFirebase.put("game_finished", false);
+            dataForFirebase.put(FINAL_SCORES, new HashMap<String, Integer>());
 
             //add data to firebase
             fbService.set(gameIdentifier, dataForFirebase);
         }
         //initialise listener for firebase
         fbService.listen(gameIdentifier, firebaseController);
+
     }
 
 }

@@ -208,7 +208,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @FXML
-    public void pullTickerCards(ActionEvent actionEvent) {
+    public void pullTicketCards(ActionEvent actionEvent) {
     }
 
     @FXML
@@ -230,11 +230,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         bc.click_card(event);
     }
 
-    @Override
-    public void update(SelectOpenCardModel openCardModel) {
-        change_OpenCardImage(openCardModel.getOpen_cards());
-    }
-
     @FXML
     public void paintTrain(String groupName, String color) {
         String url = "/ttr/trains/train-" + color + "-Claimed.png";
@@ -246,7 +241,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
                     Rectangle rec = (Rectangle) node;
                     if (!(rec.getFill() instanceof ImagePattern))
                         rec.setFill(new ImagePattern(train));
-
                 }
             }
         }
@@ -259,8 +253,13 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         }
     }
 
-    public void openEndScreen(MouseEvent event) {
-        this.bc.openEndScreen(event);
+    public void endGame(MouseEvent event) {
+        this.bc.endGame(event);
+    }
+
+    @FXML
+    protected void endTurn() {
+        bc.endTurn();
     }
 
     @Override
@@ -270,10 +269,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         createTrainCardDeckView(playerModel);
     }
 
-
-    @FXML
-    protected void endTurn() {
-        bc.endTurn();
+    @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        change_OpenCardImage(openCardModel.getOpen_cards());
     }
 
     @Override

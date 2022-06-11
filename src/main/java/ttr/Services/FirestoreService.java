@@ -27,12 +27,14 @@ public class FirestoreService {
 
     static FirestoreService firebaseService;
 
+
     public static FirestoreService getInstance() {
         if (firebaseService == null) {
             firebaseService = new FirestoreService();
         }
         return firebaseService;
     }
+
 
     public FirestoreService() {
         Database db = new Database();
@@ -57,10 +59,12 @@ public class FirestoreService {
         });
     }
 
+
     public void set(String documentId, Map<String, Object> docData) {
         ApiFuture<WriteResult> future = this.colRef.document(documentId).set(docData);
 
     }
+
 
     public DocumentSnapshot get(String documentId) {
 
@@ -79,6 +83,7 @@ public class FirestoreService {
         return null;
     }
 
+
     public int getTrainCardValue(String color) {
         DocumentSnapshot ds = this.get(cc.getID());
 
@@ -93,6 +98,22 @@ public class FirestoreService {
     }
 
 
+    public HashMap<Object, HashMap> getBoardState() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap<Object, HashMap> td = (HashMap) ds.get(BOARD_STATE);
+
+        return td;
+    }
+
+
+    public String getTrainOrStation(String route, String trainOrStation) {
+        HashMap<Object, HashMap> td = getBoardState();
+
+        HashMap<String, Object> target = td.get(route);
+        String value = target.get(trainOrStation).toString();
+        return value;
+    }
+
     public void updateValue(String field, Object value) {
         DocumentSnapshot ds = this.get(cc.getID());
         Map<String, Object> currentMap = ds.getData();
@@ -101,8 +122,8 @@ public class FirestoreService {
         this.set(cc.getID(), currentMap);
     }
 
-    //update specific field
-    public void updateField(String field, String key, String value) {
+
+    public void updateField(String field, String key, Object value) {
         DocumentSnapshot ds = this.get(cc.getID());
 
         Map<String, Object> currentMap = ds.getData();
