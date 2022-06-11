@@ -181,7 +181,6 @@ public class BoardController implements Controller {
     }
 
     public void endGame(MouseEvent event) {
-        this.player.setScore(20);
         submitScore();
         loadFile(event, "End_Screen.fxml");
     }
