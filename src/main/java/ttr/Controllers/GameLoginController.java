@@ -14,12 +14,13 @@ import ttr.Services.SoundService;
 import java.io.IOException;
 
 public class GameLoginController {
-    SoundService sc = new SoundService();
     private Stage stage;
     private Scene scene;
     private ClientConstants cc = new ClientConstants();
+    private SoundService sc;
 
     public GameLoginController() {
+        this.sc = SoundService.getInstance();
         sc.playMusic();
     }
 
