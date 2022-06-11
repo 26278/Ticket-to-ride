@@ -24,6 +24,9 @@ public class FirebaseModel implements FirebaseObservable {
 
     private String currentPlayerName;
 
+    private boolean final_turn = true;
+    private boolean gameFinished = false;
+
     //change current player in firebase
     public void setCurrentPlayer(int nextPlayer) {
         docRef.update("current_player", nextPlayer);
@@ -36,6 +39,24 @@ public class FirebaseModel implements FirebaseObservable {
 
     public String getCurrentPlayerName() {
         return currentPlayerName;
+    }
+
+    public boolean isFinal_turn() {
+        return final_turn;
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
+    }
+
+    public void setFinal_turn(boolean final_turn) {
+        this.final_turn = final_turn;
+        notifyObservers();
+    }
+
+    public void setGameFinished(boolean gameFinished) {
+        this.gameFinished = gameFinished;
+        notifyObservers();
     }
 
     @Override

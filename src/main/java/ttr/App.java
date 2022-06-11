@@ -14,11 +14,9 @@ public class App {
     ClientConstants cc = new ClientConstants();
     String gameIdentifier = cc.getID();
     Controller firebaseController = new FirebaseController();
-    FirestoreService fbService;
+    FirestoreService fbService = new FirestoreService();
 
     public App() {
-        this.fbService = FirestoreService.getInstance();
-
         if (fbService.get(gameIdentifier) == null) {
 
             //create hashmap with board-data
@@ -152,6 +150,8 @@ public class App {
             dataForFirebase.put("TicketDeck", ticketDeck);
             dataForFirebase.put("current_player", 1);
             dataForFirebase.put("players", new HashMap<String, String>());
+            dataForFirebase.put("final_turn", false);
+            dataForFirebase.put("game_finished", false);
 
             //add data to firebase
             fbService.set(gameIdentifier, dataForFirebase);
