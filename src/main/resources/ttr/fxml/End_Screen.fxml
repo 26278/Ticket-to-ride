@@ -20,27 +20,27 @@
             <Font size="63.0" />
          </font>
       </Text>
-      <Text fx:id="Number_1" layoutX="210.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: Score">
+      <Text fx:id="Number_1" layoutX="210.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Text fx:id="Number_2" layoutX="210.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: Score">
+      <Text fx:id="Number_2" layoutX="210.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Text fx:id="Number_3" layoutX="210.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: Score">
+      <Text fx:id="Number_3" layoutX="210.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Text fx:id="Number_4" layoutX="210.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: Score">
+      <Text fx:id="Number_4" layoutX="210.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Text fx:id="Number_5" layoutX="210.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: Score">
+      <Text fx:id="Number_5" layoutX="210.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="25.0" />
          </font>
