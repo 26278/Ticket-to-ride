@@ -1,53 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ToggleGroup?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.Group?>
-<VBox fx:id="list" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ttr.Views.GameStartView">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="playerCountLabel">Current Players:</Label>
-    <Button fx:id="selectPlayer" text="Select player!" onAction="#playerSelect"/>
+<AnchorPane prefHeight="880.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ttr.Views.GameStartView">
+    <children>
+        <VBox fx:id="list" alignment="CENTER" layoutX="430.0" layoutY="160.0" prefHeight="560.0" prefWidth="264.0">
+            <fx:define>
+                <ToggleGroup fx:id="group"/>
+            </fx:define>
 
 
-    <fx:define>
-        <ToggleGroup fx:id="group" />
-    </fx:define>
+            <Label fx:id="playerCountLabel" styleClass="text">Current Players:</Label>
+            <AnchorPane prefHeight="139.0" prefWidth="440.0">
+                <children>
 
 
-    <RadioButton fx:id="player_1" text="red" toggleGroup="$group" >
-    </RadioButton>
-
-    <RadioButton fx:id="player_2" text="blue" toggleGroup="$group">
-    </RadioButton>
-
-    <RadioButton fx:id="player_3" text="green" toggleGroup="$group">
-    </RadioButton>
-
-    <RadioButton fx:id="player_4" text="yellow" toggleGroup="$group">
-    </RadioButton>
-
-    <RadioButton fx:id="player_5" text="black" toggleGroup="$group">
-    </RadioButton>
-
-
-
-    <TextField fx:id="nameField"/>
-    <Button fx:id="nameSubmit" text="submit name!" onAction="#playerNameSubmit"/>
-
-    <Button fx:id="startGame" text="Start Game!" onMouseClicked="#startGame"/>
-
-
-
-</VBox>
+                    <ImageView fx:id="player_1" layoutX="117.0" layoutY="79.0" onMouseClicked="#playerSelect">
+                        <Image url="@../trains/train-red-Claimed.png"/>
+                    </ImageView>
+                    <ImageView fx:id="player_2" layoutX="14.0" layoutY="79.0" onMouseClicked="#playerSelect">
+                        <Image url="@../trains/train-blue-Claimed.png"/>
+                    </ImageView>
+                    <ImageView fx:id="player_3" layoutX="14.0" layoutY="14.0" onMouseClicked="#playerSelect">
+                        <Image url="@../trains/train-green-Claimed.png"/>
+                    </ImageView>
+                    <ImageView fx:id="player_4" layoutX="220.0" layoutY="14.0" onMouseClicked="#playerSelect">
+                        <Image url="@../trains/train-yellow-Claimed.png"/>
+                    </ImageView>
+                    <ImageView fx:id="player_5" layoutX="117.0" layoutY="14.0" onMouseClicked="#playerSelect">
+                        <Image url="@../trains/train-purple-Claimed.png"/>
+                    </ImageView>
+                </children>
+            </AnchorPane>
+            <Label fx:id="nameLabel" visible="false" styleClass="text">What's ur name?</Label>
+            <TextField fx:id="nameField" visible="false"/>
+            <ImageView fx:id="startButton" onMouseClicked="#startGame" visible="false">
+                <Image url="@../menu/playButton.png"/>
+            </ImageView>
 
 
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../css/gameLoginStart.css"/>
+    </stylesheets>
+</AnchorPane>

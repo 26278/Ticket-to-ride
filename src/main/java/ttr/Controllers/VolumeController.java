@@ -1,15 +1,18 @@
 package ttr.Controllers;
 
-import ttr.Model.VolumeModel;
+import ttr.Services.SoundService;
 
 public class VolumeController {
-    private VolumeModel vm = new VolumeModel();
+    SoundService sc;
 
-    public void setMusicVolume(float volume) {
-        vm.setMusicVolume(volume);
+    public void setMusicVolume(double volume) {
+        this.sc = SoundService.getInstance();
+        sc.setMusicVolume(volume);
     }
 
-    public void setSfxVolume(float volume) {
-        vm.setMusicVolume(volume);
+    public void setSfxVolume(double volume) {
+        this.sc = SoundService.getInstance();
+        sc.setSfxVolume(volume);
+        sc.playSFX("pullCard");
     }
 }

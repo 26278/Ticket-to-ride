@@ -3,7 +3,6 @@ package ttr.Services;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import ttr.Controllers.VolumeController;
 
 import java.util.Objects;
 
@@ -12,18 +11,25 @@ import static ttr.Constants.ClientConstants.*;
 public class SoundService {
     private static SoundService controller;
     private MediaPlayer player;
-
+    private double sfxVolume = 50;
 
     public SoundService() {
         Media backgroundMusic = new Media(getClass().getResource("/ttr/music/europe.mp3").toString());
         player = new MediaPlayer(backgroundMusic);
         player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.setVolume(30);
+    }
+
+    public void setMusicVolume(double volume) {
+        player.setVolume(volume / 100);
+    }
+
+    public void setSfxVolume(double sfxVolume) {
+        this.sfxVolume = sfxVolume / 100;
     }
 
     public void playMusic() {
-        System.out.println(player.getStatus());
         if (player.getStatus() != MediaPlayer.Status.PLAYING) {
-//            player.setVolume();
             player.play();
         }
     }
@@ -45,7 +51,7 @@ public class SoundService {
             return;
         }
         clip.stop();
-//        clip.setVolume();
+        clip.setVolume(sfxVolume);
         clip.play();
     }
 
@@ -53,7 +59,6 @@ public class SoundService {
         if (controller == null) {
             controller = new SoundService();
         }
-
         return controller;
     }
 }
