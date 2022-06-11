@@ -36,13 +36,13 @@ public class Rules extends Application {
         ScrollPane scroll = new ScrollPane();
         scroll.setPrefSize(594, 807);
         scroll.setContent(imageView);
-        Button button = new Button("Back");
+        //Button button = new Button("Back");
 
         //Setting the stage
-        button.setMaxSize(100, 200);
+        //button.setMaxSize(100, 200);
         Group root = new Group();
         root.getChildren().addAll(scroll);
-        root.getChildren().addAll(button);
+        //root.getChildren().addAll(button);
         Scene scene = new Scene(root, 594, 807, Color.BEIGE);
         stage.setTitle("Game Rules");
         stage.setScene(scene);
