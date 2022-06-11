@@ -134,6 +134,9 @@ public class PlayerModel implements PlayerObservable {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     @Override
     public void notifyObservers() {

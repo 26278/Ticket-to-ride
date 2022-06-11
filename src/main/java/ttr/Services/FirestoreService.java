@@ -84,28 +84,6 @@ public class FirestoreService {
     }
 
 
-    public int getTrainCardValue(String color) {
-        DocumentSnapshot ds = this.get(cc.getID());
-
-        String field = "TraincardDeck";
-        Map<String, Object> currentMap = ds.getData();
-
-        HashMap td = (HashMap) ds.get(field);
-        String s = td.get(color).toString();
-        int value = Integer.parseInt(s);
-
-        return value;
-    }
-
-
-    public HashMap<Object, HashMap> getBoardState() {
-        DocumentSnapshot ds = this.get(cc.getID());
-        HashMap<Object, HashMap> td = (HashMap) ds.get(BOARD_STATE);
-
-        return td;
-    }
-
-
     public String getTrainOrStation(String route, String trainOrStation) {
         HashMap<Object, HashMap> td = getBoardState();
 
