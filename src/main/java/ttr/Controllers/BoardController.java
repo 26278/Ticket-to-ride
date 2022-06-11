@@ -27,6 +27,7 @@ public class BoardController implements Controller {
     FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
     SoundService sc;
+    private ConnectionModel cm = new ConnectionModel();
     private static BoardController boardController;
 
     private int currentPlayer;
@@ -146,7 +147,7 @@ public class BoardController implements Controller {
     public void placeTrain(String id, int size) {
         ArrayList<Locations> routes = getRoute(id);
         RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
-        this.player.getCm().addRoute(route);
+        this.cm.addRoute(route);
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
