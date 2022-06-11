@@ -3,42 +3,31 @@ package ttr.Views;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.text.Font;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import ttr.Constants.CardColorTypes;
+import javafx.scene.text.Font;
 import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Arrays;
-import java.util.Objects;
-
-import static ttr.Constants.CardColorTypes.*;
-
 import java.util.Collections;
-import java.util.HashMap;
-
-import ttr.Controllers.TrainCardDeckController;
+import java.util.Objects;
 
 
 public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver {
@@ -57,6 +46,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     private AnchorPane boardPane;
     @FXML
     private Label CurrentPlayer;
+    @FXML
+    private Button endTurnButton;
+    @FXML
+    private Button endGameButton;
+
     private ArrayList<Node> groups;
 
 
@@ -232,7 +226,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @FXML
-    public void Put_in_hand_and_replace(MouseEvent event) throws FileNotFoundException {
+    public void Put_in_hand_and_replace(MouseEvent event)  {
         bc.click_card(event);
     }
 
@@ -258,6 +252,17 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         }
     }
 
+    private void showEndGameButton(Boolean gameFinished) {
+        if (gameFinished) {
+            endTurnButton.setVisible(false);
+            endGameButton.setVisible(true);
+        }
+    }
+
+    public void openEndScreen(MouseEvent event) {
+        this.bc.openEndScreen(event);
+    }
+
     @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
@@ -279,5 +284,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @Override
     public void update(FirebaseModel firebaseModel) {
         showPlayerCount(firebaseModel.getCurrentPlayerName());
+        showEndGameButton(firebaseModel.isGameFinished());
     }
+
+
 }

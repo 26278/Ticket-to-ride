@@ -62,7 +62,6 @@ public class FirestoreService {
 
     }
 
-
     public DocumentSnapshot get(String documentId) {
 
         DocumentReference docRef = this.colRef.document(documentId);
@@ -78,6 +77,28 @@ public class FirestoreService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getTrainCardValue(String color) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        String field = "TraincardDeck";
+        Map<String, Object> currentMap = ds.getData();
+
+        HashMap td = (HashMap) ds.get(field);
+        String s = td.get(color).toString();
+        int value = Integer.parseInt(s);
+
+        return value;
+    }
+
+
+    public void updateValue(String field, Object value) {
+        DocumentSnapshot ds = this.get(cc.getID());
+        Map<String, Object> currentMap = ds.getData();
+
+        currentMap.put(field, value);
+        this.set(cc.getID(), currentMap);
     }
 
     //update specific field

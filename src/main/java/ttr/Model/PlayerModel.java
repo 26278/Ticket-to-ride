@@ -26,7 +26,7 @@ public class PlayerModel implements PlayerObservable {
     private int score;
     private int trainCount = 45;
     private int stationCount = 3;
-
+    private boolean initialisedFinalTurn = false;
 
     private ArrayList<TrainCardModel> playerHand;
     private TrainCardDeckModel trainCardDeck;
@@ -114,6 +114,13 @@ public class PlayerModel implements PlayerObservable {
         fs.updateField("players", ("player_" + this.playerNumber), playerName);
     }
 
+    public boolean hasInitialisedFinalTurn() {
+        return initialisedFinalTurn;
+    }
+
+    public void setInitialisedFinalTurn(boolean initialisedFinalTurn) {
+        this.initialisedFinalTurn = initialisedFinalTurn;
+    }
 
     public boolean isPlayerTurn() {
         return playerTurn;
