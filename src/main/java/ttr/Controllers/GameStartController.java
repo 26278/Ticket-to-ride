@@ -17,6 +17,7 @@ import ttr.Constants.ClientConstants;
 import ttr.Model.GameStartModel;
 import ttr.Model.PlayerModel;
 import ttr.Services.FirestoreService;
+import ttr.Services.SoundService;
 import ttr.Views.GameStartObserver;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GameStartController implements Controller {
+    private SoundService sc;
     private PlayerModel player = new PlayerModel();
     private GameStartModel gsm = new GameStartModel();
     private ClientConstants cc = new ClientConstants();
@@ -36,6 +38,7 @@ public class GameStartController implements Controller {
 
     private GameStartController() {
         fs = FirestoreService.getInstance();
+        sc = SoundService.getInstance();
     }
 
     public static GameStartController getInstance() {
@@ -90,6 +93,7 @@ public class GameStartController implements Controller {
             //load file
             BoardController bc = BoardController.getInstance();
             bc.setPlayer(this.player);
+            sc.playSFX("startGame");
             loadFile(event, "game_interface.fxml");
             new App();
 

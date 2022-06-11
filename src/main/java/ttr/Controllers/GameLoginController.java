@@ -10,15 +10,21 @@ import javafx.stage.Stage;
 import ttr.App;
 import ttr.Constants.ClientConstants;
 import ttr.Constants.Token;
+import ttr.Services.SoundService;
 
 import java.io.IOException;
 
 public class GameLoginController {
+    SoundService sc = new SoundService();
     private Stage stage;
     private Scene scene;
     private ClientConstants cc = new ClientConstants();
 
-    public void joinGame(String token, MouseEvent event) {
+    public GameLoginController() {
+        sc.playMusic();
+    }
+
+    public void joinGame(String token, MouseEvent event) throws IOException {
         new Token().createToken(token);
         new App();
         Platform.runLater(() -> {
@@ -35,7 +41,7 @@ public class GameLoginController {
             e.printStackTrace();
         }
 
-        this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
         stage.setScene(scene);
         stage.show();

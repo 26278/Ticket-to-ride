@@ -13,6 +13,7 @@ import ttr.Constants.ClientConstants;
 import ttr.Constants.Locations;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
+import ttr.Services.SoundService;
 import ttr.Views.FirebaseObserver;
 import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
@@ -31,6 +32,7 @@ public class BoardController implements Controller {
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
+    SoundService sc;
     private ConnectionModel cm = new ConnectionModel();
     private static BoardController boardController;
 
@@ -40,6 +42,7 @@ public class BoardController implements Controller {
     private Scene scene;
 
     private BoardController() {
+        this.sc = SoundService.getInstance();
         updatePlayerList((Map) fs.get(cc.getID()).get("players"));
     }
 
@@ -148,6 +151,7 @@ public class BoardController implements Controller {
 
 
     public void pullCards() {
+        this.sc.playSFX("pullCard");
         this.player.pullCard();
     }
 
@@ -172,6 +176,7 @@ public class BoardController implements Controller {
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
+        this.sc.playSFX("placeTrain");
     }
 
     public void checkCurrentPlayerName(HashMap<String, String> players) {
