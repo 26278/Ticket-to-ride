@@ -9,7 +9,7 @@ import java.util.*;
 public class ConnectionModel {
     private List<ConnectionAndLengthPair> connections = new ArrayList<>();
     private static final int NOT_A_SET = -1;
-    
+
     public void addLocations(Locations location1, Locations location2, int length) {
         int indexSet1 = getSetForLocation(location1);
         int indexSet2 = getSetForLocation(location2);
