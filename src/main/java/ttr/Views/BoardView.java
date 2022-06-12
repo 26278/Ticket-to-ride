@@ -41,7 +41,7 @@ import ttr.Controllers.TrainCardDeckController;
 import ttr.Services.FirestoreService;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,StationObserver {
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver, StationObserver {
     private FirestoreService fs = new FirestoreService();
     public ImageView Card_1;
     public ImageView Card_2;
@@ -66,7 +66,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     private ArrayList<Node> groups;
 
 
-
     @FXML
     protected void initialize() {
         this.groups = new ArrayList<>(boardPane.getChildren());
@@ -81,7 +80,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     public void clickoncard(MouseEvent event) {
         bc.click_card(event);
-
     }
 
     @FXML
@@ -212,8 +210,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
-      bc.trainOrStation(r);
-      
+        bc.trainOrStation(r);
+
     }
 
     @FXML
@@ -240,7 +238,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @FXML
-    public void Put_in_hand_and_replace(MouseEvent event)  {
+    public void Put_in_hand_and_replace(MouseEvent event) {
         bc.click_card(event);
     }
 
@@ -293,23 +291,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         }
     }
 
-    @FXML
-    public void paintStation(String groupName, String color) {
-        String url = "/ttr/station/station-" + color + ".png";
-        Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
-        for (int i = 0; i < groups.size(); i++) {
-            if (Objects.equals(groups.get(0).getId(), groupName)) {
-                Group group = (Group) groups.get(0);
-                for (Node node : group.getChildren()) {
-                    Rectangle rec = (Rectangle) node;
-                    if (!(rec.getFill() instanceof ImagePattern))
-                        rec.setFill(new ImagePattern(station));
-
-                }
-            }
-        }
-    }
-
     @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
@@ -323,7 +304,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @Override
-    public void update(TrainModel trainModel) {paintTrain(trainModel.getGroupName(), trainModel.getColor());
+    public void update(TrainModel trainModel) {
+        paintTrain(trainModel.getGroupName(), trainModel.getColor());
     }
 
     @Override
