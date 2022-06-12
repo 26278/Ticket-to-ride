@@ -334,6 +334,14 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
     }
 
+    @FXML
+    public void pullTrainCards(ActionEvent actionEvent) {
+        bc.pullCards();
+    }
+
+    @FXML
+    public void pullTicketCards(ActionEvent actionEvent) {
+    }
 
     @FXML
     public void change_OpenCardImage(ArrayList arrayList) {
@@ -380,6 +388,14 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     public void endGame(MouseEvent event) {
         this.bc.endGame(event);
+    }
+
+    @FXML
+    protected void endTurn() {
+        bc.endTurn();
+                }
+            }
+        }
     }
 
     @FXML

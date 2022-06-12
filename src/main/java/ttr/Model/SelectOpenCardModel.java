@@ -50,7 +50,6 @@ public class SelectOpenCardModel implements OpenCardObservable {
                 hand.add(new TrainCardModel(taken_card.get(i)));
             }
             taken_card.clear();
-
         }
         notifyObservers();
     }
@@ -61,7 +60,6 @@ public class SelectOpenCardModel implements OpenCardObservable {
         for (int i = 0; i < observerlist.size(); i++) {
             observerlist.get(i).update(this);
         }
-
     }
 
     @Override
