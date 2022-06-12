@@ -153,9 +153,10 @@ public class BoardController implements Controller {
     public void pullCards() {
         this.sc.playSFX(SFX_PULLCARD);
         this.player.pullCard();
+        endTurn();
     }
 
-    public ArrayList<Locations> getRoute(String id) {
+    private ArrayList<Locations> getRoute(String id) {
         String[] routes = id.split("_");
         ArrayList<Locations> locations = new ArrayList<>();
         for (Locations loc : Locations.values()) {
@@ -177,6 +178,7 @@ public class BoardController implements Controller {
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
         this.sc.playSFX(SFX_PLACETRAIN);
+        endTurn();
     }
 
     public void endGame(MouseEvent event) {

@@ -47,10 +47,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @FXML
     private Label CurrentPlayer;
     @FXML
-    private Button endTurnButton;
-    @FXML
     private Button endGameButton;
-
+    @FXML
+    private Label finalTurnLabel;
     private ArrayList<Node> groups;
 
 
@@ -246,10 +245,14 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
             }
         }
     }
+    private void showFinalTurnLabel(boolean finalTurn) {
+        if (finalTurn) {
+            finalTurnLabel.setVisible(true);
+        }
+    }
 
     private void showEndGameButton(Boolean gameFinished) {
         if (gameFinished) {
-            endTurnButton.setVisible(false);
             endGameButton.setVisible(true);
         }
     }
@@ -258,10 +261,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc.endGame(event);
     }
 
-    @FXML
-    protected void endTurn() {
-        bc.endTurn();
-    }
 
     @Override
     public void update(PlayerModel playerModel) {
@@ -284,6 +283,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @Override
     public void update(FirebaseModel firebaseModel) {
         showPlayerCount(firebaseModel.getCurrentPlayerName());
+        showFinalTurnLabel(firebaseModel.isFinal_turn());
         showEndGameButton(firebaseModel.isGameFinished());
     }
 
