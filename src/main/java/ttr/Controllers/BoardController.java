@@ -202,7 +202,7 @@ public class BoardController implements Controller {
         this.cm.addRoute(route);
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
-        this.player.reduceTrainCount(size);
+        this.player.reduceStationCount(size);
         this.sc.playSFX("placeStation");
     }
 

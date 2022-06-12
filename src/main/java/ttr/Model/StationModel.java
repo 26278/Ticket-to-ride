@@ -1,11 +1,12 @@
 package ttr.Model;
 
+import ttr.Shared.StationObservable;
 import ttr.Views.StationObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StationModel implements StationObserver{
+public class StationModel implements StationObservable {
     private List<StationObserver> observers = new ArrayList<StationObserver>();
 
     private String color;
@@ -41,16 +42,17 @@ public class StationModel implements StationObserver{
         observers.add(observer);
     }
 
+
+
+
+
     @Override
     public void removeObserver(StationObserver observer) {
         observers.remove(observer);
     }
 
 
-    @Override
-    public void update(StationModel stationModel) {
 
-    }
 }
 
 
