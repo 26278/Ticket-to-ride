@@ -63,7 +63,11 @@ public class PlayerModel implements PlayerObservable {
         playerHand.addAll(hulpList);
         notifyObservers();
     }
-
+    public void reduceStationCount(int stationAmount) {
+        stationCount = stationCount - stationAmount;
+        System.out.println(stationCount);
+        notifyObservers();
+    }
     public void reduceTrainCount(int trainAmount) {
         trainCount = trainCount - trainAmount;
         notifyObservers();

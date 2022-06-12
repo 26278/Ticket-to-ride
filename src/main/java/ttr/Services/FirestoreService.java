@@ -59,7 +59,6 @@ public class FirestoreService {
         });
     }
 
-
     public void set(String documentId, Map<String, Object> docData) {
         ApiFuture<WriteResult> future = this.colRef.document(documentId).set(docData);
 
@@ -134,6 +133,13 @@ public class FirestoreService {
         this.set(cc.getID(), currentMap);
     }
 
+    public String getTrainOrStation(String route, String trainOrStation) {
+        HashMap<Object, HashMap> td = getBoardState();
+
+        HashMap<String, Object> target = td.get(route);
+        String value = target.get(trainOrStation).toString();
+        return value;
+    }
     public int getTrainCardValue(String color) {
         DocumentSnapshot ds = this.get(cc.getID());
 

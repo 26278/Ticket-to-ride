@@ -28,9 +28,20 @@ import ttr.Model.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Arrays;
+import java.util.Objects;
+
+import static ttr.Constants.CardColorTypes.*;
+
+import java.util.Collections;
+import java.util.HashMap;
+
+import ttr.Controllers.TrainCardDeckController;
+import ttr.Services.FirestoreService;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver {
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,StationObserver {
+    private FirestoreService fs = new FirestoreService();
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -52,6 +63,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     private Button endGameButton;
 
     private ArrayList<Node> groups;
+
 
 
     @FXML
@@ -199,7 +211,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
-        bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+      if(fs.getTrainOrStation(r.getParent().getId(),"TRAIN").equals(null)){
+          bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
+      else{
+          bc.placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+      }
+
     }
 
     @FXML
@@ -232,7 +249,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     @FXML
     public void paintTrain(String groupName, String color) {
-        String url = "/ttr/trains/train-" + color + "-Claimed.png";
+        String url = "/ttr/trains/train-" + color + "Claimed.png";
         Image train = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
         for (int i = 0; i < groups.size(); i++) {
             if (Objects.equals(groups.get(i).getId(), groupName)) {
@@ -262,6 +279,23 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         bc.endTurn();
     }
 
+    @FXML
+    public void paintStation(String groupName, String color) {
+        String url = "/ttr/station/station-" + color + ".png";
+        Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+        for (int i = 0; i < groups.size(); i++) {
+            if (Objects.equals(groups.get(0).getId(), groupName)) {
+                Group group = (Group) groups.get(0);
+                for (Node node : group.getChildren()) {
+                    Rectangle rec = (Rectangle) node;
+                    if (!(rec.getFill() instanceof ImagePattern))
+                        rec.setFill(new ImagePattern(station));
+
+                }
+            }
+        }
+    }
+
     @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
@@ -275,9 +309,29 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @Override
-    public void update(TrainModel trainModel) {
-        paintTrain(trainModel.getGroupName(), trainModel.getColor());
+    public void update(TrainModel trainModel) {paintTrain(trainModel.getGroupName(), trainModel.getColor());
     }
+
+    @Override
+    public void update(StationModel stationModel) {
+        paintStation(stationModel.getGroupName(), stationModel.getColor());
+    }
+
+    @Override
+    public void notifyObservers() {
+
+    }
+
+    @Override
+    public void addObserver(StationObserver observer) {
+
+    }
+
+    @Override
+    public void removeObserver(StationObserver observer) {
+
+    }
+
 
     @Override
     public void update(FirebaseModel firebaseModel) {

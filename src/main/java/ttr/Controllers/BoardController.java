@@ -12,17 +12,20 @@ import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Constants.Locations;
 import ttr.Model.*;
+import ttr.Model.*;
 import ttr.Services.FirestoreService;
 import ttr.Services.SoundService;
 import ttr.Views.FirebaseObserver;
 import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
+import ttr.Views.*;
 
 import java.io.IOException;
 import java.util.*;
 
 import static ttr.Constants.ClientConstants.FINAL_SCORES;
+import static ttr.Constants.ClientConstants.STATION;
 import static ttr.Constants.ClientConstants.TRAIN;
 
 public class BoardController implements Controller {
@@ -33,6 +36,8 @@ public class BoardController implements Controller {
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
+
+    StationModel sm = new StationModel();
     SoundService sc;
     private ConnectionModel cm = new ConnectionModel();
     private static BoardController boardController;
@@ -191,6 +196,10 @@ public class BoardController implements Controller {
 
         fs.updateField(FINAL_SCORES, playerName, score);
     }
+    public void placeStation(String id, int size) {
+        this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
+        this.player.reduceStationCount(size);
+    }
 
     public void checkCurrentPlayerName(HashMap<String, String> players) {
         for (Map.Entry<String, String> entry : players.entrySet()) {
@@ -220,6 +229,9 @@ public class BoardController implements Controller {
 
     public void registerTrainObserver(TrainObserver boardView) {
         this.tm.addObserver(boardView);
+    }
+    public void registerStationObserver(StationObserver boardView) {
+        this.sm.addObserver(boardView);
     }
 
     public void register_open_card_observer(OpenCardObserver boardview) {
