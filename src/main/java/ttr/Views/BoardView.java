@@ -293,6 +293,23 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         }
     }
 
+    @FXML
+    public void paintStation(String groupName, String color) {
+        String url = "/ttr/station/station-" + color + ".png";
+        Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+        for (int i = 0; i < groups.size(); i++) {
+            if (Objects.equals(groups.get(0).getId(), groupName)) {
+                Group group = (Group) groups.get(0);
+                for (Node node : group.getChildren()) {
+                    Rectangle rec = (Rectangle) node;
+                    if (!(rec.getFill() instanceof ImagePattern))
+                        rec.setFill(new ImagePattern(station));
+
+                }
+            }
+        }
+    }
+
     @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
