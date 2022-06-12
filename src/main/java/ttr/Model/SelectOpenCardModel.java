@@ -44,7 +44,6 @@ public class SelectOpenCardModel implements OpenCardObservable {
                 notifyObservers();
             }
             taken_card.clear();
-
         }
         notifyObservers();
     }
@@ -55,7 +54,6 @@ public class SelectOpenCardModel implements OpenCardObservable {
         for (int i = 0; i < observerlist.size(); i++) {
             observerlist.get(i).update(this);
         }
-
     }
 
     @Override

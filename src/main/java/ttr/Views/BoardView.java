@@ -214,7 +214,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @FXML
-    public void pullTickerCards(ActionEvent actionEvent) {
+    public void pullTicketCards(ActionEvent actionEvent) {
     }
 
     @FXML
@@ -248,10 +248,14 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
                     Rectangle rec = (Rectangle) node;
                     if (!(rec.getFill() instanceof ImagePattern))
                         rec.setFill(new ImagePattern(train));
-
                 }
             }
         }
+    }
+
+    @FXML
+    protected void endTurn() {
+        bc.endTurn();
     }
 
     @Override
@@ -264,11 +268,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         createPlayerInfoVbox(playerModel);
         createPlayerHandHBox(playerModel);
         createTrainCardDeckView(playerModel);
-    }
-
-    @FXML
-    protected void endTurn() {
-        bc.endTurn();
     }
 
     @Override
