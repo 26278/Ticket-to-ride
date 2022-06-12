@@ -334,6 +334,14 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
     }
 
+    @FXML
+    public void pullTrainCards(ActionEvent actionEvent) {
+        bc.pullCards();
+    }
+
+    @FXML
+    public void pullTicketCards(ActionEvent actionEvent) {
+    }
 
     @FXML
     public void change_OpenCardImage(ArrayList arrayList) {
@@ -353,6 +361,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void Put_in_hand_and_replace(MouseEvent event) {
         bc.click_card(event);
     }
+
 
     @FXML
     public void paintTrain(String groupName, String color) {
@@ -385,6 +394,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     protected void endTurn() {
         bc.endTurn();
     }
+    
+
+    @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        change_OpenCardImage(openCardModel.getOpen_cards());
+    }
 
     @Override
     public void update(PlayerModel playerModel) {
@@ -392,12 +407,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         createPlayerTicketHand(playerModel);
         createPlayerHandHBox(playerModel);
         createTrainTicketCardDeckView(playerModel);
-    }
-
-    @Override
-    public void update(SelectOpenCardModel openCardModel) {
-        change_OpenCardImage(openCardModel.getOpen_cards());
-        this.bc.updateView();
     }
 
     @Override
@@ -415,4 +424,5 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void update(TicketCardDeckModel ticketCardDeckModel) {
         updateTicketView(ticketCardDeckModel.getReturnHand());
     }
+
 }
