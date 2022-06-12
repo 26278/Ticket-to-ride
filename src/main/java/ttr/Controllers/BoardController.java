@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static ttr.Constants.ClientConstants.*;
-import static ttr.Constants.ClientConstants.STATION;
+
 
 public class BoardController implements Controller {
     StationModel sm = new StationModel();
@@ -188,25 +188,13 @@ public class BoardController implements Controller {
         this.sc.playSFX("placeStation");
     }
 
-    public void checkBoardStateStation() {
-        HashMap<Object, HashMap> boardState = fs.getBoardState();
 
-        for (Map.Entry<Object, HashMap> entry : boardState.entrySet()) {
-            String key = (String) entry.getKey();
-            HashMap map = entry.getValue();
-
-            if (map.get(STATION) != null) {
-                this.sm.placeStation(key, map.get(TRAIN).toString());
-            }
-        }
-    }
 
     public void trainOrStation(Rectangle r){
-        if(fs.getTrainOrStation(r.getParent().getId(),TRAIN ).equals(null)){
-            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
-        else if(fs.getTrainOrStation(r.getParent().getId(),STATION ).equals(null)){
+
             placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
-        }
+
+
 
     }
 
@@ -238,10 +226,14 @@ public class BoardController implements Controller {
         for (Map.Entry<Object, HashMap> entry : boardState.entrySet()) {
             String key = (String) entry.getKey();
             HashMap map = entry.getValue();
+            if (map.get(STATION) != null) {
+                this.sm.placeStation(key, map.get(STATION).toString());
+            }
 
             if (map.get(TRAIN) != null) {
                 this.tm.placeTrain(key, map.get(TRAIN).toString());
             }
+
         }
     }
 
@@ -286,7 +278,7 @@ public class BoardController implements Controller {
         checkCurrentPlayerName((HashMap<String, String>) ds.get("players"));
         setCurrentPlayer(ds);
         checkPlayerTurn();
-        checkBoardStateStation();
+
     }
 }
 

@@ -21,7 +21,7 @@ public class StationModel implements StationObservable {
     }
 
     public void placeStation(String rectangleGroupName, String stationColor){
-        // eerst firebase hier stop ik trein;
+        // eerst firebase hier stop ik station;
         this.color = stationColor;
         this.groupName = rectangleGroupName;
 
