@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Constants.Locations;
@@ -65,6 +66,18 @@ public class BoardController implements Controller {
         checkPlayerTurn();
     }
 
+    public void Put_in_hand_and_replace() {
+
+
+    }
+    public void trainOrStation(Rectangle r){
+        if(fs.getTrainOrStation(r.getParent().getId(),TRAIN ).equals(null)){
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
+        else if(fs.getTrainOrStation(r.getParent().getId(),STATION ).equals(null)){
+            placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        }
+
+    }
 
     public void click_card(MouseEvent event) {
         ImageView image = (ImageView) event.getSource();
