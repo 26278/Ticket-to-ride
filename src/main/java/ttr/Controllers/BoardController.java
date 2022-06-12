@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Constants.Locations;
@@ -22,10 +23,11 @@ import ttr.Views.TrainObserver;
 import java.io.IOException;
 import java.util.*;
 
-import static ttr.Constants.ClientConstants.FINAL_SCORES;
-import static ttr.Constants.ClientConstants.TRAIN;
+import static ttr.Constants.ClientConstants.*;
+import static ttr.Constants.ClientConstants.STATION;
 
 public class BoardController implements Controller {
+    StationModel sm = new StationModel();
     SelectOpenCardModel som = new SelectOpenCardModel();
     TrainModel tm = new TrainModel();
     FirebaseModel fbm = new FirebaseModel();
@@ -179,6 +181,38 @@ public class BoardController implements Controller {
         this.player.reduceTrainCount(size);
         this.sc.playSFX("placeTrain");
     }
+    public void placeStation(String id, int size) {
+        ArrayList<Locations> routes = getRoute(id);
+        RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
+        this.cm.addRoute(route);
+        this.player.awardPoints(size);
+        this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
+        this.player.reduceTrainCount(size);
+        this.sc.playSFX("placeStation");
+    }
+
+    public void checkBoardStateStation() {
+        HashMap<Object, HashMap> boardState = fs.getBoardState();
+
+        for (Map.Entry<Object, HashMap> entry : boardState.entrySet()) {
+            String key = (String) entry.getKey();
+            HashMap map = entry.getValue();
+
+            if (map.get(STATION) != null) {
+                this.sm.placeStation(key, map.get(TRAIN).toString());
+            }
+        }
+    }
+
+    public void trainOrStation(Rectangle r){
+        if(fs.getTrainOrStation(r.getParent().getId(),TRAIN ).equals(null)){
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
+        else if(fs.getTrainOrStation(r.getParent().getId(),STATION ).equals(null)){
+            placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        }
+
+    }
+
 
     public void endGame(MouseEvent event) {
         submitScore();
@@ -230,6 +264,10 @@ public class BoardController implements Controller {
         this.fm.addObserver(boardview);
     }
 
+    public void registerStationObserver(StationObserver boardView) {
+        this.sm.addObserver(boardView);
+    }
+
 
     public void loadFile(MouseEvent event, String file) {
         Parent root = null;
@@ -251,6 +289,7 @@ public class BoardController implements Controller {
         checkCurrentPlayerName((HashMap<String, String>) ds.get("players"));
         setCurrentPlayer(ds);
         checkPlayerTurn();
+        checkBoardStateStation();
     }
 }
 
