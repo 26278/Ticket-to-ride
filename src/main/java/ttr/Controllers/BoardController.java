@@ -181,7 +181,7 @@ public class BoardController implements Controller {
 
     public void endGame(MouseEvent event) {
         submitScore();
-        loadFile(event, "game_login.fxml");
+        loadFile(event, "End_Screen.fxml");
     }
 
     public void submitScore() {
