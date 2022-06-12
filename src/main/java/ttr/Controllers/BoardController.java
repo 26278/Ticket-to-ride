@@ -5,18 +5,13 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import ttr.Constants.ClientConstants;
-import ttr.Model.FirebaseModel;
-import ttr.Model.PlayerModel;
-import ttr.Model.TrainModel;
-import ttr.Model.SelectOpenCardModel;
+import ttr.Model.*;
 import ttr.Services.FirestoreService;
-import ttr.Views.FirebaseObserver;
-import ttr.Views.OpenCardObserver;
-import ttr.Views.PlayerObserver;
-import ttr.Views.TrainObserver;
+import ttr.Views.*;
 
 import java.util.*;
 
+import static ttr.Constants.ClientConstants.STATION;
 import static ttr.Constants.ClientConstants.TRAIN;
 
 public class BoardController implements Controller {
@@ -27,6 +22,8 @@ public class BoardController implements Controller {
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
     PlayerModel player;
+
+    StationModel sm = new StationModel();
     private static BoardController boardController;
 
     private int currentPlayer;
@@ -132,6 +129,10 @@ public class BoardController implements Controller {
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
     }
+    public void placeStation(String id, int size) {
+        this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
+        this.player.reduceStationCount(size);
+    }
 
     public void checkCurrentPlayerName(HashMap<String, String> players) {
         for (Map.Entry<String, String> entry : players.entrySet()) {
@@ -161,6 +162,9 @@ public class BoardController implements Controller {
 
     public void registerTrainObserver(TrainObserver boardView) {
         this.tm.addObserver(boardView);
+    }
+    public void registerStationObserver(StationObserver boardView) {
+        this.sm.addObserver(boardView);
     }
 
     public void register_open_card_observer(OpenCardObserver boardview) {
