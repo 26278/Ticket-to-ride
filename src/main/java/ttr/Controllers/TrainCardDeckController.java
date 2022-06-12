@@ -7,6 +7,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import ttr.Constants.CardColorTypes;
+import ttr.Model.PlayerModel;
 import ttr.Model.TrainCardDeckModel;
 import ttr.Model.TrainCardModel;
 import ttr.Services.FirestoreService;
@@ -19,6 +20,7 @@ public class TrainCardDeckController {
     TrainCardDeckModel trainDeck = new TrainCardDeckModel();
     FirestoreService fs = new FirestoreService();
     static TrainCardDeckController trainCardDeckController;
+    PlayerModel player;
 
     public void Shuffle() {
         Collections.shuffle(trainDeck.getTrainCardDeck());
@@ -31,12 +33,26 @@ public class TrainCardDeckController {
         return trainCardDeckController;
     }
 
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
+
     public CardColorTypes[] getCardColorTypes() {
         return CardColorTypes.values();
     }
 
+    public int amountOfTrainCardsFromType(String cardColorString) {
+        int amountOfTrainCards = 0;
+        ArrayList<TrainCardModel> playerTrainCards = player.getPlayerHand();
+        for (TrainCardModel trainCards : playerTrainCards) {
+            if (trainCards.getCardColor().equals(cardColorString)) {
+                amountOfTrainCards++;
+            }
+        }
+        return amountOfTrainCards;
+    }
+
     private boolean checkMinimum(String cardColorString, BorderPane borderPane) {
-//        Check in Player's TrainCardDeck if the amount of cards from this type is already 0
         int amount = getSelectedAmountOfCardsInt(cardColorString, borderPane);
         if ( amount > 0) {
             return true;
@@ -45,11 +61,10 @@ public class TrainCardDeckController {
     }
 
     private boolean checkMaximum(String cardColorString, BorderPane borderPane) {
-//        Check in Player's TrainCardDeck if the amount of cards from this type is equal as selected.
-        int x = 5;
+        int amountOfTrainCards = amountOfTrainCardsFromType(cardColorString);
         int maxAmount = getSelectedAmountOfCardsInt(cardColorString, borderPane);
 
-        if ( maxAmount < x ) {
+        if ( maxAmount < amountOfTrainCards ) {
             return true;
         }
         return false;

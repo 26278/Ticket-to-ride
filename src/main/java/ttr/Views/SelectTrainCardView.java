@@ -74,7 +74,9 @@ public class SelectTrainCardView {
             String cardColorString = cardColorType.toString().toLowerCase(Locale.ROOT);
             String url = "/ttr/cards/horizontal/eu_WagonCard_" + cardColorString + ".png";
             System.out.println(url);
-            int userAmountOfCards = 0; //Replace 0 with dynamic user amount of cards
+
+            this.trainCardDeckController.amountOfTrainCardsFromType(cardColorString);
+            int userAmountOfCards = this.trainCardDeckController.amountOfTrainCardsFromType(cardColorString);
             int selectAmountOfCards = 3; //Replace 0 with dynamic selected amount of cards
 
             Text userAmountOfCardsText = new Text("Aantal kaarten: " + String.valueOf(userAmountOfCards));
@@ -118,6 +120,7 @@ public class SelectTrainCardView {
         this.trainCardDeckController.minusOne(cardColorString, borderPane);
     }
 
+    @FXML
     public void confirmSelectedCards(MouseEvent mouseEvent) {
 //        SelectTrainCardView word gesloten
 //

@@ -202,15 +202,10 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         glowRec.setEffect(null);
     }
 
-
     @FXML
     public void place_train_or_station(MouseEvent event) throws IOException {
-        boolean hasPaidForTrain = bc.place_train_or_station(event);
-        if (hasPaidForTrain) {
-            Rectangle r = (Rectangle) event.getSource();
-            bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
-//            TO DO: Mogelijkheid om hierna zelf beurt te beeindigen.
-        }
+        Rectangle r = (Rectangle) event.getSource();
+        bc.place_train_or_station(event, r);
 
     }
 

@@ -27,6 +27,7 @@ public class PlayerModel implements PlayerObservable {
     private int score;
     private int trainCount = 45;
     private int stationCount = 45;
+    private boolean hasPaidForTrain = false;
 
     private ArrayList<TrainCardModel> playerHand;
     private TrainCardDeckModel trainCardDeck;
@@ -137,5 +138,13 @@ public class PlayerModel implements PlayerObservable {
     @Override
     public void removeObserver(PlayerObserver observer) {
 
+    }
+
+    public boolean isHasPaidForTrain() {
+        return hasPaidForTrain;
+    }
+
+    public void setHasPaidForTrain(boolean hasPaidForTrain) {
+        this.hasPaidForTrain = hasPaidForTrain;
     }
 }

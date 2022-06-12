@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Model.FirebaseModel;
@@ -15,6 +16,7 @@ import ttr.Model.PlayerModel;
 import ttr.Model.TrainModel;
 import ttr.Model.SelectOpenCardModel;
 import ttr.Services.FirestoreService;
+import ttr.Views.BoardView;
 import ttr.Views.OpenCardObserver;
 import ttr.Views.PlayerObserver;
 import ttr.Views.TrainObserver;
@@ -53,9 +55,21 @@ public class BoardController implements Controller {
     }
 
 
-    public boolean place_train_or_station(MouseEvent event) throws IOException {
+    public void place_train_or_station(MouseEvent event, Rectangle rectangle) throws IOException {
+        int amountOfTrains = player.getTrainCount();
+        int lengthOfTrain = BoardController.getInstance().getLengthOfTrain(rectangle);
+
+        if (lengthOfTrain > amountOfTrains) {
+            return;
+        }
+
         // player model -> notifyObserver die selectTrainCardView, update je hand
         Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/selectCardsScreen.fxml"));
+        TrainCardDeckController trainCardDeckController = TrainCardDeckController.getInstance();
+        trainCardDeckController.setPlayer(player);
+
+//        trainCardDeckController.setRequirement()
+
         this.stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
 //        scene.getStylesheets().add(
@@ -63,11 +77,22 @@ public class BoardController implements Controller {
 //                        .toExternalForm());
         stage.setScene(scene);
         stage.show();
-//        RequirementModel requirement = new RequirementModel(trainCardColor, trainCardCount, isTunnelBoolean);
 
 //        functie dat player heeft betaald schrijven
-        
-        return true;
+        if (player.isHasPaidForTrain()) {
+//
+        }
+//        return true;
+    }
+
+    private int getLengthOfTrain(Rectangle r) {
+        int lengthOfTrain = r.getParent().getChildrenUnmodifiable().size();
+        return lengthOfTrain;
+    }
+
+    private String getColorOfTrain(Rectangle rectangle) {
+        String trainColor = rectangle.getParent().getChildrenUnmodifiable().toString();
+        return trainColor;
     }
 
     public void setPlayer(PlayerModel player) {
