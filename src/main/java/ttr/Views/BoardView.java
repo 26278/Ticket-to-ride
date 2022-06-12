@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import static ttr.Constants.CardColorTypes.*;
+import static ttr.Constants.ClientConstants.TRAIN;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -208,12 +209,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
-      if(fs.getTrainOrStation(r.getParent().getId(),"TRAIN").equals(null)){
-          bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
-      else{
-          bc.placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
-      }
-
+      bc.trainOrStation(r);
+      
     }
 
     @FXML

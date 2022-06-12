@@ -4,6 +4,7 @@ package ttr.Controllers;
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import ttr.Constants.ClientConstants;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
@@ -54,6 +55,14 @@ public class BoardController implements Controller {
 
     public void Put_in_hand_and_replace() {
 
+
+    }
+    public void trainOrStation(Rectangle r){
+        if(fs.getTrainOrStation(r.getParent().getId(),TRAIN ).equals(null)){
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
+        else if(fs.getTrainOrStation(r.getParent().getId(),STATION ).equals(null)){
+            placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        }
 
     }
 
