@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver {
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,StationObserver {
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -64,6 +64,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc.registerPlayerObserver(this);
         this.bc.registerTrainObserver(this);
         this.bc.registerFirebaseObserver(this);
+        this.bc.registerStationObserver(this);
     }
 
     public void clickoncard(MouseEvent event) {
@@ -196,11 +197,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
 
-    @FXML
-    public void place_train_or_station(MouseEvent event) {
-        Rectangle r = (Rectangle) event.getSource();
-        bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
-    }
+
     @FXML
     public void paintStation(String groupName, String color) {
         String url = "/ttr/station/station-" + color + ".png";

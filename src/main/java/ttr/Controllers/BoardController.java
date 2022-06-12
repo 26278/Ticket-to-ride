@@ -15,10 +15,7 @@ import ttr.Constants.Locations;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
 import ttr.Services.SoundService;
-import ttr.Views.FirebaseObserver;
-import ttr.Views.OpenCardObserver;
-import ttr.Views.PlayerObserver;
-import ttr.Views.TrainObserver;
+import ttr.Views.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -187,7 +184,7 @@ public class BoardController implements Controller {
         this.cm.addRoute(route);
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
-        this.player.reduceTrainCount(size);
+        this.player.reduceStationCount(size);
         this.sc.playSFX("placeStation");
     }
 
