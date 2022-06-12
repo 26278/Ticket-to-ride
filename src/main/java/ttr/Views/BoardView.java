@@ -354,6 +354,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         bc.click_card(event);
     }
 
+
     @FXML
     public void paintTrain(String groupName, String color) {
         String url = "/ttr/trains/train-" + color + "-Claimed.png";
@@ -387,6 +388,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        change_OpenCardImage(openCardModel.getOpen_cards());
+    }
+
+    @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
         createPlayerTicketHand(playerModel);
@@ -398,6 +404,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void update(SelectOpenCardModel openCardModel) {
         change_OpenCardImage(openCardModel.getOpen_cards());
         this.bc.updateView();
+    @FXML
+    protected void endTurn() {
+        bc.endTurn();
     }
 
     @Override

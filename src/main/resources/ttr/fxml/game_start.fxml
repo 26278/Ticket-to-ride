@@ -15,28 +15,25 @@
 
 
             <Label fx:id="playerCountLabel" styleClass="text">Current Players:</Label>
+            <Label fx:id="optionLabel" styleClass="text">Choose a color!</Label>
             <AnchorPane prefHeight="139.0" prefWidth="440.0">
-                <children>
-
-
-                    <ImageView fx:id="player_1" layoutX="117.0" layoutY="79.0" onMouseClicked="#playerSelect">
-                        <Image url="@../trains/train-red-Claimed.png"/>
-                    </ImageView>
-                    <ImageView fx:id="player_2" layoutX="14.0" layoutY="79.0" onMouseClicked="#playerSelect">
-                        <Image url="@../trains/train-blue-Claimed.png"/>
-                    </ImageView>
-                    <ImageView fx:id="player_3" layoutX="14.0" layoutY="14.0" onMouseClicked="#playerSelect">
-                        <Image url="@../trains/train-green-Claimed.png"/>
-                    </ImageView>
-                    <ImageView fx:id="player_4" layoutX="220.0" layoutY="14.0" onMouseClicked="#playerSelect">
-                        <Image url="@../trains/train-yellow-Claimed.png"/>
-                    </ImageView>
-                    <ImageView fx:id="player_5" layoutX="117.0" layoutY="14.0" onMouseClicked="#playerSelect">
-                        <Image url="@../trains/train-purple-Claimed.png"/>
-                    </ImageView>
-                </children>
+                <ImageView fx:id="player_1" layoutX="117.0" layoutY="79.0" onMouseClicked="#playerSelect">
+                    <Image url="@../trains/train-red-Claimed.png"/>
+                </ImageView>
+                <ImageView fx:id="player_2" layoutX="14.0" layoutY="79.0" onMouseClicked="#playerSelect">
+                    <Image url="@../trains/train-blue-Claimed.png"/>
+                </ImageView>
+                <ImageView fx:id="player_3" layoutX="14.0" layoutY="14.0" onMouseClicked="#playerSelect">
+                    <Image url="@../trains/train-green-Claimed.png"/>
+                </ImageView>
+                <ImageView fx:id="player_4" layoutX="220.0" layoutY="14.0" onMouseClicked="#playerSelect">
+                    <Image url="@../trains/train-yellow-Claimed.png"/>
+                </ImageView>
+                <ImageView fx:id="player_5" layoutX="117.0" layoutY="14.0" onMouseClicked="#playerSelect">
+                    <Image url="@../trains/train-purple-Claimed.png"/>
+                </ImageView>
             </AnchorPane>
-            <Label fx:id="nameLabel" visible="false" styleClass="text">What's ur name?</Label>
+            <Label fx:id="nameLabel" visible="false" styleClass="text">What's your name?</Label>
             <TextField fx:id="nameField" visible="false"/>
             <ImageView fx:id="startButton" onMouseClicked="#startGame" visible="false">
                 <Image url="@../menu/playButton.png"/>
