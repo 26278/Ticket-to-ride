@@ -9,6 +9,7 @@ RoutesOwned = Arraylist van Routes
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import ttr.Constants.Locations;
 import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
@@ -31,16 +32,22 @@ public class PlayerModel implements PlayerObservable {
     private boolean initialisedFinalTurn = false;
 
     private ArrayList<TrainCardModel> playerHand;
+    private ArrayList<TicketCardModel> playerTicketHand;
+
     private TrainCardDeckModel trainCardDeck;
+    private TicketCardDeckModel ticketCardDeck;
     private boolean playerTurn;
 
     private List<PlayerObserver> observers = new ArrayList<PlayerObserver>();
 
 
     public PlayerModel() {
+        ticketCardDeck = new TicketCardDeckModel();
         trainCardDeck = new TrainCardDeckModel();
-        playerHand = new ArrayList<TrainCardModel>();
+        playerHand = new ArrayList<>();
+        playerTicketHand = new ArrayList<>();
     }
+
 
     public void awardPoints(int trainAmount) {
         if (trainAmount == 1) {
@@ -60,6 +67,10 @@ public class PlayerModel implements PlayerObservable {
     }//updates score based on the amount of trains placed
 
 
+    public void pullThreeTicketCards() {
+        ticketCardDeck.pullThreeCards();
+    }
+
     public void pullCard() {
         ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCards();
         playerHand.addAll(hulpList);
@@ -69,6 +80,15 @@ public class PlayerModel implements PlayerObservable {
     public void reduceTrainCount(int trainAmount) {
         trainCount = trainCount - trainAmount;
         notifyObservers();
+    }
+
+    public void addCardsToTicketHand(ArrayList<TicketCardModel> addHand) {
+        this.playerTicketHand.addAll(addHand);
+    }
+
+
+    public ArrayList<TicketCardModel> getPlayerTicketHand() {
+        return playerTicketHand;
     }
 
     public ArrayList<TrainCardModel> getTrainCardDeck() {
@@ -122,6 +142,10 @@ public class PlayerModel implements PlayerObservable {
 
     public void setInitialisedFinalTurn(boolean initialisedFinalTurn) {
         this.initialisedFinalTurn = initialisedFinalTurn;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public boolean isPlayerTurn() {

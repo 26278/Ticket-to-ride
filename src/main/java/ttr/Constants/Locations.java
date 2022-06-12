@@ -1,6 +1,7 @@
 package ttr.Constants;
 
 public enum Locations {
+    EMPTY,
     Edinburgh,
     Brest,
     London,
@@ -13,7 +14,7 @@ public enum Locations {
     Barcelona,
     Madrid,
     Cadiz,
-    LIsboa,
+    Lisboa,
     Zurich,
     Essen,
     Frankfurt,

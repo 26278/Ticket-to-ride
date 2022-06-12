@@ -88,8 +88,8 @@ public class ConnectionModel {
     }//returns longest route length
 
 
-//    public boolean isRouteCardCompleted(RouteCard routeCard) {
-//        return checkForRouteCompleted(routeCard.getStart(), routeCard.getEnd());
-//    }
+    public boolean isRouteCardCompleted(TicketCardModel ticketCard) {
+        return checkForRouteCompleted(ticketCard.getFirst_Destination(), ticketCard.getSecond_Destination());
+    }
 }
 

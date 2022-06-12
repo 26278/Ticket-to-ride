@@ -3,6 +3,7 @@ package ttr.Controllers;
 
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,10 +15,7 @@ import ttr.Constants.Locations;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
 import ttr.Services.SoundService;
-import ttr.Views.FirebaseObserver;
-import ttr.Views.OpenCardObserver;
-import ttr.Views.PlayerObserver;
-import ttr.Views.TrainObserver;
+import ttr.Views.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,6 +29,7 @@ public class BoardController implements Controller {
     FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
+    TicketCardDeckModel tcdm;
     PlayerModel player;
     SoundService sc;
     private ConnectionModel cm = new ConnectionModel();
@@ -42,6 +41,7 @@ public class BoardController implements Controller {
     private Scene scene;
 
     private BoardController() {
+        this.tcdm = TicketCardDeckModel.getInstance();
         this.sc = SoundService.getInstance();
         updatePlayerList((Map) fs.get(cc.getID()).get(PLAYERS));
     }
@@ -149,6 +149,9 @@ public class BoardController implements Controller {
         }
     }
 
+    public void getThreeTicketCards() {
+        tcdm.pullThreeCards();
+    }
 
     public void pullCards() {
         this.sc.playSFX(SFX_PULLCARD);
@@ -169,6 +172,15 @@ public class BoardController implements Controller {
         return locations;
     }
 
+    public void checkTicketCards(ArrayList<TicketCardModel> playerTicketHand) {
+        for (TicketCardModel ticketCard : playerTicketHand) {
+            if (this.cm.isRouteCardCompleted(ticketCard)) {
+                this.player.setScore(this.player.getScore() + ticketCard.getRewardPoints());
+                ticketCard.setCompleted(true);
+            }
+        }
+    }
+
     public void placeTrain(String id, int size) {
         ArrayList<Locations> routes = getRoute(id);
         RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
@@ -177,6 +189,8 @@ public class BoardController implements Controller {
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
         this.sc.playSFX(SFX_PLACETRAIN);
+        checkTicketCards(player.getPlayerTicketHand());
+        this.sc.playSFX("placeTrain");
     }
 
     public void endGame(MouseEvent event) {
@@ -200,6 +214,19 @@ public class BoardController implements Controller {
         }
     }
 
+
+    public void addTickets(ArrayList<Node> list) {
+        ArrayList<TicketCardModel> addHand = new ArrayList<>();
+        for (Node ticket : list) {
+            String[] tickets = ticket.getId().split("_");
+            addHand.add(tcdm.searchForTicket(tickets[0], tickets[1]));
+        }
+        if (addHand != null) {
+            this.player.addCardsToTicketHand(addHand);
+            tcdm.removeTicket(addHand);
+        }
+    }
+
     public void checkBoardState() {
         HashMap<Object, HashMap> boardState = fs.getBoardState();
 
@@ -219,6 +246,10 @@ public class BoardController implements Controller {
 
     public void registerPlayerObserver(PlayerObserver boardView) {
         this.player.addObserver(boardView);
+    }
+
+    public void registerTicketObserver(TicketCardObserver boardView) {
+        this.tcdm.addObserver(boardView);
     }
 
     public void registerTrainObserver(TrainObserver boardView) {
@@ -255,6 +286,8 @@ public class BoardController implements Controller {
         setCurrentPlayer(ds);
         checkPlayerTurn();
     }
+
+
 }
 
 
