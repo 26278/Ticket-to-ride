@@ -68,7 +68,11 @@ public class PlayerModel implements PlayerObservable {
         trainCount = trainCount - trainAmount;
         notifyObservers();
     }
-
+    public void reduceStationCount(int stationAmount) {
+        stationCount = stationCount - stationAmount;
+        System.out.println(stationCount);
+        notifyObservers();
+    }
     public ArrayList<TrainCardModel> getTrainCardDeck() {
         return trainCardDeck.getTrainCardDeck();
     }
@@ -113,6 +117,9 @@ public class PlayerModel implements PlayerObservable {
         this.playerName = playerName;
         fs.updateField("players", ("player_" + this.playerNumber), playerName);
     }
+
+
+
 
     public boolean hasInitialisedFinalTurn() {
         return initialisedFinalTurn;
