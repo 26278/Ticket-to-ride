@@ -61,10 +61,12 @@ public class TrainCardDeckModel implements Observable {
         }
 
         if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)) {
-            returnHand.add(trainCardDeck.get(0));
+            firestoreService.updateField(TRAINCARD_DECK, trainCardDeck.get(0).getCardColor(),
+                    String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(0))) - 1));
             //decreases amount of cards of rainbow
             firestoreService.updateField(TRAINCARD_DECK, "rainbow",
                     String.valueOf(firestoreService.getTrainCardValue("rainbow") - 1));
+            returnHand.add(trainCardDeck.get(0));
             discardTrainDeck.add(trainCardDeck.get(1));
         } else {
             //decreases amount of cards of one color
