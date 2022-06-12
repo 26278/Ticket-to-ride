@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static ttr.Constants.ClientConstants.PLAYERS;
+import static ttr.Constants.ClientConstants.SFX_STARTGAME;
+
 public class GameStartController implements Controller {
     private SoundService sc;
     private PlayerModel player = new PlayerModel();
@@ -49,7 +52,7 @@ public class GameStartController implements Controller {
     }
 
     private Map playerMap() {
-        return (Map) fs.get(cc.getID()).get("players");
+        return (Map) fs.get(cc.getID()).get(PLAYERS);
     }
 
     public void firstPlayerCheck() {
@@ -93,13 +96,12 @@ public class GameStartController implements Controller {
             //load file
             BoardController bc = BoardController.getInstance();
             bc.setPlayer(this.player);
-            sc.playSFX("startGame");
+            sc.playSFX(SFX_STARTGAME);
             loadFile(event, "game_interface.fxml");
             new App();
 
         }
     }
-
 
     public void loadFile(MouseEvent event, String file) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ttr/fxml/" + file)));
@@ -116,7 +118,7 @@ public class GameStartController implements Controller {
 
     @Override
     public void update(DocumentSnapshot ds) {
-        gsm.setPlayerCount((Map) ds.get("players"));
+        gsm.setPlayerCount((Map) ds.get(PLAYERS));
     }
 
 

@@ -18,6 +18,8 @@ import ttr.Views.PlayerObserver;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ttr.Constants.ClientConstants.PLAYERS;
+
 public class PlayerModel implements PlayerObservable {
     private FirestoreService fs = new FirestoreService();
     private String playerColor;
@@ -111,7 +113,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
-        fs.updateField("players", ("player_" + this.playerNumber), playerName);
+        fs.updateField(PLAYERS, ("player_" + this.playerNumber), playerName);
     }
 
     public boolean hasInitialisedFinalTurn() {

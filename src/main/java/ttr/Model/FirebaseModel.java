@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static ttr.Constants.ClientConstants.CURRENT_PLAYER;
+
 public class FirebaseModel implements FirebaseObservable {
     ClientConstants cc = new ClientConstants();
 
@@ -29,7 +31,7 @@ public class FirebaseModel implements FirebaseObservable {
 
     //change current player in firebase
     public void setCurrentPlayer(int nextPlayer) {
-        docRef.update("current_player", nextPlayer);
+        docRef.update(CURRENT_PLAYER, nextPlayer);
     }
 
     public void setCurrentPlayerName(String currentPlayerName) {

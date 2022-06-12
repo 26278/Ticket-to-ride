@@ -22,8 +22,7 @@ import ttr.Views.TrainObserver;
 import java.io.IOException;
 import java.util.*;
 
-import static ttr.Constants.ClientConstants.FINAL_SCORES;
-import static ttr.Constants.ClientConstants.TRAIN;
+import static ttr.Constants.ClientConstants.*;
 
 public class BoardController implements Controller {
     SelectOpenCardModel som = new SelectOpenCardModel();
@@ -44,7 +43,7 @@ public class BoardController implements Controller {
 
     private BoardController() {
         this.sc = SoundService.getInstance();
-        updatePlayerList((Map) fs.get(cc.getID()).get("players"));
+        updatePlayerList((Map) fs.get(cc.getID()).get(PLAYERS));
     }
 
 
@@ -79,7 +78,7 @@ public class BoardController implements Controller {
 
 
     public void setCurrentPlayer(DocumentSnapshot ds) {
-        String value = ds.get("current_player").toString();
+        String value = ds.get(CURRENT_PLAYER).toString();
         this.currentPlayer = Integer.parseInt(value);
     }
 
@@ -103,7 +102,7 @@ public class BoardController implements Controller {
     }
 
     private void finalTurnCheck() {
-        String s = fs.get(cc.getID()).get("final_turn").toString();
+        String s = fs.get(cc.getID()).get(FINAL_TURN).toString();
         boolean final_turn = Boolean.parseBoolean(s);
         if (final_turn) {
             //submit score
@@ -111,18 +110,18 @@ public class BoardController implements Controller {
         }
         if (this.player.getTrainCount() <= 2 && !final_turn) {
             this.player.setInitialisedFinalTurn(true);
-            fs.updateValue("final_turn", true);
+            fs.updateValue(FINAL_TURN, true);
         }
     }
 
     private void lastPlayerTurnCheck() {
         if (this.player.hasInitialisedFinalTurn()) {
-            fs.updateValue("game_finished", true);
+            fs.updateValue(GAME_FINISHED, true);
         }
     }
 
     private void gameFinishedCheck() {
-        String s = fs.get(cc.getID()).get("game_finished").toString();
+        String s = fs.get(cc.getID()).get(GAME_FINISHED).toString();
         boolean game_finished = Boolean.parseBoolean(s);
         if (game_finished) {
             this.fm.setGameFinished(true);
@@ -152,7 +151,7 @@ public class BoardController implements Controller {
 
 
     public void pullCards() {
-        this.sc.playSFX("pullCard");
+        this.sc.playSFX(SFX_PULLCARD);
         this.player.pullCard();
     }
 
@@ -177,7 +176,7 @@ public class BoardController implements Controller {
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
-        this.sc.playSFX("placeTrain");
+        this.sc.playSFX(SFX_PLACETRAIN);
     }
 
     public void endGame(MouseEvent event) {
@@ -214,6 +213,10 @@ public class BoardController implements Controller {
         }
     }
 
+    public void updateView() {
+        this.player.notifyObservers();
+    }
+
     public void registerPlayerObserver(PlayerObserver boardView) {
         this.player.addObserver(boardView);
     }
@@ -246,9 +249,9 @@ public class BoardController implements Controller {
 
     public void update(DocumentSnapshot ds) {
         gameFinishedCheck();
-        updatePlayerList((Map) ds.get("players"));
+        updatePlayerList((Map) ds.get(PLAYERS));
         checkBoardState();
-        checkCurrentPlayerName((HashMap<String, String>) ds.get("players"));
+        checkCurrentPlayerName((HashMap<String, String>) ds.get(PLAYERS));
         setCurrentPlayer(ds);
         checkPlayerTurn();
     }
