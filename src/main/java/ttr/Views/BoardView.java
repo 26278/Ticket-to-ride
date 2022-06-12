@@ -393,15 +393,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @FXML
     protected void endTurn() {
         bc.endTurn();
-                }
-            }
-        }
     }
-
-    @FXML
-    protected void endTurn() {
-        bc.endTurn();
-    }
+    
 
     @Override
     public void update(SelectOpenCardModel openCardModel) {
@@ -414,15 +407,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         createPlayerTicketHand(playerModel);
         createPlayerHandHBox(playerModel);
         createTrainTicketCardDeckView(playerModel);
-    }
-
-    @Override
-    public void update(SelectOpenCardModel openCardModel) {
-        change_OpenCardImage(openCardModel.getOpen_cards());
-        this.bc.updateView();
-    @FXML
-    protected void endTurn() {
-        bc.endTurn();
     }
 
     @Override
@@ -440,4 +424,5 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void update(TicketCardDeckModel ticketCardDeckModel) {
         updateTicketView(ticketCardDeckModel.getReturnHand());
     }
+
 }
