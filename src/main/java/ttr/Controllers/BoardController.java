@@ -20,6 +20,7 @@ import ttr.Views.*;
 import java.io.IOException;
 import java.util.*;
 
+import static java.lang.Math.toIntExact;
 import static ttr.Constants.ClientConstants.*;
 
 public class BoardController implements Controller {
@@ -174,9 +175,11 @@ public class BoardController implements Controller {
 
     public void checkTicketCards(ArrayList<TicketCardModel> playerTicketHand) {
         for (TicketCardModel ticketCard : playerTicketHand) {
-            if (this.cm.isRouteCardCompleted(ticketCard)) {
-                this.player.setScore(this.player.getScore() + ticketCard.getRewardPoints());
-                ticketCard.setCompleted(true);
+            if (!ticketCard.getCompleted()) {
+                if (this.cm.isRouteCardCompleted(ticketCard)) {
+                    this.player.setScore(this.player.getScore() + toIntExact(ticketCard.getRewardPoints()));
+                    ticketCard.setCompleted(true);
+                }
             }
         }
     }
@@ -216,6 +219,7 @@ public class BoardController implements Controller {
 
 
     public void addTickets(ArrayList<Node> list) {
+        tcdm.updateTicketDeck(fs.getTicketDeck());
         ArrayList<TicketCardModel> addHand = new ArrayList<>();
         for (Node ticket : list) {
             String[] tickets = ticket.getId().split("_");
@@ -223,7 +227,6 @@ public class BoardController implements Controller {
         }
         if (addHand != null) {
             this.player.addCardsToTicketHand(addHand);
-            System.out.println(addHand);
             tcdm.removeTicket(addHand);
         }
     }

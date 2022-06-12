@@ -136,10 +136,6 @@ public class FirestoreService {
         this.set(cc.getID(), currentMap);
     }
 
-    public void updateTicketCards() {
-
-    }
-
     public void removeTicket(String key) {
         DocumentSnapshot ds = this.get(cc.getID());
 
@@ -151,6 +147,12 @@ public class FirestoreService {
             currentMap.put(TICKET_DECK, td);
             this.set(cc.getID(), currentMap);
         }
+    }
+
+    public HashMap getTicketDeck() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap td = (HashMap) ds.get(TICKET_DECK);
+        return td;
     }
 
 

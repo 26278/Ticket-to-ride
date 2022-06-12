@@ -9,10 +9,10 @@ public class TicketCardModel {
     private String type;
     private Locations first_Destination;
     private Locations second_Destination;
-    private Integer rewardPoints;
+    private long rewardPoints;
     private boolean completed;
 
-    public TicketCardModel(String type, Locations first_Destination, Locations second_Destination, Integer rewardPoints,
+    public TicketCardModel(String type, Locations first_Destination, Locations second_Destination, long rewardPoints,
                            boolean completed) {
         this.type = type;
         this.first_Destination = first_Destination;
@@ -29,7 +29,7 @@ public class TicketCardModel {
         return second_Destination;
     }
 
-    public Integer getRewardPoints() {
+    public long getRewardPoints() {
         return rewardPoints;
     }
 
@@ -40,7 +40,7 @@ public class TicketCardModel {
     public String getFirstDestString() {
         return first_Destination.toString().toLowerCase(Locale.ROOT);
     }
-    
+
     public String getSecondDestString() {
         return second_Destination.toString().toLowerCase(Locale.ROOT);
     }

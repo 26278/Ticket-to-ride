@@ -5,7 +5,7 @@ public enum Locations {
     Edinburgh,
     Brest,
     London,
-    Diepe,
+    Dieppe,
     Paris,
     Bruxelles,
     Amsterdam,

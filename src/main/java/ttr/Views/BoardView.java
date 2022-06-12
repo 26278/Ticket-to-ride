@@ -118,7 +118,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     public void updateTicketView(ArrayList<TicketCardModel> list) {
         ArrayList<Node> listOfChosenCards = new ArrayList<>();
-        HBox hbox = new HBox();
         ColorAdjust greyOut = new ColorAdjust();
         greyOut.setSaturation(-1);
         goTicketButton.setEffect(greyOut);
@@ -134,11 +133,16 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
                 @Override
                 public void handle(MouseEvent event) {
                     highlightCard(ticketView);
-                    listOfChosenCards.add(ticketView);
-
-                    if (goTicketButton.getEffect() == greyOut) {
-                        goTicketButton.setEffect(null);
-
+                    if (listOfChosenCards.contains(ticketView)) {
+                        listOfChosenCards.remove(ticketView);
+                        if (listOfChosenCards.size() == 0) {
+                            goTicketButton.setEffect(greyOut);
+                        }
+                    } else {
+                        listOfChosenCards.add(ticketView);
+                        if (goTicketButton.getEffect() == greyOut) {
+                            goTicketButton.setEffect(null);
+                        }
                         if (listOfChosenCards.size() != 0) {
                             goTicketButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
@@ -148,9 +152,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
                             });
                         }
 
-                    } else {
-                        goTicketButton.setEffect(greyOut);
                     }
+
 
                 }
             });
@@ -162,6 +165,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void goTicketButtonPress(ArrayList<Node> listOfChosenCards) {
         bc.addTickets(listOfChosenCards);
         ticketCardPane.setVisible(false);
+        this.bc.updateView();
     }
 
 
@@ -248,6 +252,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
             cardImageView.setFitWidth(129);
             cardImageView.setFitHeight(200);
             cardBox.getChildren().add(cardImageView);
+            if (ticket.getCompleted()) {
+                cardImageView.setEffect(greyOut);
+            }
             PlayerHandTicketHbox.getChildren().add(cardBox);
         }
     }
@@ -408,6 +415,4 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void update(TicketCardDeckModel ticketCardDeckModel) {
         updateTicketView(ticketCardDeckModel.getReturnHand());
     }
-
-
 }
