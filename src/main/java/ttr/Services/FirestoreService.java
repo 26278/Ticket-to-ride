@@ -87,7 +87,7 @@ public class FirestoreService {
     public int getTrainCardValue(String color) {
         DocumentSnapshot ds = this.get(cc.getID());
 
-        String field = "TraincardDeck";
+        String field = TRAINCARD_DECK;
         Map<String, Object> currentMap = ds.getData();
 
         HashMap td = (HashMap) ds.get(field);
@@ -110,8 +110,12 @@ public class FirestoreService {
         HashMap<Object, HashMap> td = getBoardState();
 
         HashMap<String, Object> target = td.get(route);
-        String value = target.get(trainOrStation).toString();
-        return value;
+        Object value = target.get(trainOrStation);
+        if(value == null) {
+            return null;
+        }
+
+        return value.toString();
     }
 
     public void updateValue(String field, Object value) {
@@ -151,7 +155,6 @@ public class FirestoreService {
         currentMap.put(BOARD_STATE, td);
         this.set(cc.getID(), currentMap);
     }
-
 
     public void delete(String documentId) {
         ApiFuture<WriteResult> writeResult = this.colRef.document(documentId).delete();

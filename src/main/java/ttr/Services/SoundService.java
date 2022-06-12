@@ -6,6 +6,8 @@ import javafx.scene.media.MediaPlayer;
 
 import java.util.Objects;
 
+import static ttr.Constants.ClientConstants.*;
+
 public class SoundService {
     private static SoundService controller;
     private MediaPlayer player;
@@ -27,16 +29,16 @@ public class SoundService {
 
     public void playSFX(String choice) {
         AudioClip clip;
-        if (Objects.equals(choice, "pullCard")) {
+        if (Objects.equals(choice, SFX_PULLCARD)) {
             clip = new AudioClip(getClass().getResource("/ttr/sfx/card_dealt3.mp3").toString());
 
-        } else if (Objects.equals(choice, "buttonClick")) {
+        } else if (Objects.equals(choice, SFX_BUTTONCLICK)) {
             clip = new AudioClip(getClass().getResource("/ttr/sfx/ButtonClick.ogg").toString());
 
-        } else if (Objects.equals(choice, "placeTrain")) {
+        } else if (Objects.equals(choice, SFX_PLACETRAIN)) {
             clip = new AudioClip(getClass().getResource("/ttr/sfx/train_horn2.mp3").toString());
 
-        } else if (Objects.equals(choice, "startGame")) {
+        } else if (Objects.equals(choice, SFX_STARTGAME)) {
             clip = new AudioClip(getClass().getResource("/ttr/sfx/startGame.mp3").toString());
         } else {
             return;
