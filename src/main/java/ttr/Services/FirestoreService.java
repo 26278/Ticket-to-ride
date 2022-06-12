@@ -67,7 +67,6 @@ public class FirestoreService {
 
 
     public DocumentSnapshot get(String documentId) {
-
         DocumentReference docRef = this.colRef.document(documentId);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document;
@@ -111,10 +110,9 @@ public class FirestoreService {
 
         HashMap<String, Object> target = td.get(route);
         Object value = target.get(trainOrStation);
-        if(value == null) {
+        if (value == null) {
             return null;
         }
-
         return value.toString();
     }
 
@@ -136,6 +134,25 @@ public class FirestoreService {
         td.put(key, value);
         currentMap.put(field, td);
         this.set(cc.getID(), currentMap);
+    }
+
+    public void removeTicket(String key) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        Map<String, Object> currentMap = ds.getData();
+
+        HashMap td = (HashMap) ds.get(TICKET_DECK);
+        if (td.get(key) != null) {
+            td.remove(key);
+            currentMap.put(TICKET_DECK, td);
+            this.set(cc.getID(), currentMap);
+        }
+    }
+
+    public HashMap getTicketDeck() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap td = (HashMap) ds.get(TICKET_DECK);
+        return td;
     }
 
 

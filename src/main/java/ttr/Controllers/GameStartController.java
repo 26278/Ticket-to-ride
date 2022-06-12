@@ -99,7 +99,6 @@ public class GameStartController implements Controller {
             sc.playSFX(SFX_STARTGAME);
             loadFile(event, "game_interface.fxml");
             new App();
-
         }
     }
 
