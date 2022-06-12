@@ -67,7 +67,6 @@ public class TrainCardDeckModel implements Observable {
             //decreases amount of cards of rainbow
             firestoreService.updateField(TRAINCARD_DECK, "rainbow",
                     String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(1).getCardColor())) - 1));
-                    String.valueOf(firestoreService.getTrainCardValue("rainbow") - 1));
             returnHand.add(trainCardDeck.get(0));
             discardTrainDeck.add(trainCardDeck.get(1));
         } else {
