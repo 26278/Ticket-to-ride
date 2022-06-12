@@ -211,19 +211,10 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
 
             Rectangle rec = (Rectangle) group.getChildren().get(0);
-            double x = rec.getLayoutX();
-            double y = rec.getLayoutY();
-            double rotat = rec.getRotate();
-            System.out.println(x);
-            System.out.println(y);
-            System.out.println(rotat);
-            Rectangle r = new Rectangle(x, y, 30, 15);
-            Rotate rotation = new Rotate(90);
-            rotation.setPivotX(x);
-            rotation.setPivotY(y);
-            r.getTransforms().add(rotation);
-            r.setFill(new ImagePattern(station));
-            boardPane.getChildren().add(r);
+
+
+            rec.setFill(new ImagePattern(station));
+
 
 
         }
