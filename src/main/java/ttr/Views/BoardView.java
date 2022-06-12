@@ -45,6 +45,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public AnchorPane ticketCardPane;
     public VBox ticketCardsVBOX;
     public ImageView goTicketButton;
+    public HBox PlayerHandTicketHbox;
     private BoardController bc;
     private ArrayList<ImageView> imageview = new ArrayList();
     @FXML
@@ -104,7 +105,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         trainDeckImageView.setFitWidth(150);
         ticketDeckImageView.setFitWidth(150);
         TrainTicketDecksHbox.getChildren().addAll(trainDeckImageView, ticketDeckImageView);
-    }//Creates an image of the TrainCardDeck, which can be pressed to draw cards from the TrainCardDeck
+    }//Creates an image of the TrainCardDeck and TicketCardDeck, so that you can pull/pick cards from
 
     public void pullTicketCards() {
         bc.getThreeTicketCards();
@@ -117,14 +118,15 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     public void updateTicketView(ArrayList<TicketCardModel> list) {
         ArrayList<Node> listOfChosenCards = new ArrayList<>();
+        HBox hbox = new HBox();
         ColorAdjust greyOut = new ColorAdjust();
         greyOut.setSaturation(-1);
         goTicketButton.setEffect(greyOut);
         ticketCardsVBOX.getChildren().clear();
         for (TicketCardModel ticket : list) {
-            String dest1 = ticket.getFirst_Destination().toString().toLowerCase(Locale.ROOT);
-            String dest2 = ticket.getSecond_Destination().toString().toLowerCase(Locale.ROOT);
-            String imageUrl = "/ttr/cards/tickets/eu-" + dest1 + "-" + dest2 + ".png";
+            String dest1 = ticket.getFirstDestString();
+            String dest2 = ticket.getSecondDestString();
+            String imageUrl = "/ttr/cards/tickets/horizontal/eu-" + dest1 + "-" + dest2 + ".png";
             Image ticketImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imageUrl)));
             ImageView ticketView = new ImageView(ticketImage);
             ticketView.setId(dest1 + "_" + dest2);
@@ -141,7 +143,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
                             goTicketButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    bc.addTickets(listOfChosenCards);
+                                    goTicketButtonPress(listOfChosenCards);
                                 }
                             });
                         }
@@ -154,6 +156,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
             });
             ticketCardsVBOX.getChildren().add(ticketView);
         }
+
+    }
+
+    public void goTicketButtonPress(ArrayList<Node> listOfChosenCards) {
+        bc.addTickets(listOfChosenCards);
+        ticketCardPane.setVisible(false);
     }
 
 
@@ -202,8 +210,47 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         trainHBox.getChildren().add(trainLabel);
         stationHBox.setAlignment(Pos.CENTER);
         trainHBox.setAlignment(Pos.CENTER);
-        PlayerInfoVbox.getChildren().addAll(stationHBox, trainHBox);
+        Button btn = new Button();
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                changeHands();
+            }
+        });
+        PlayerInfoVbox.getChildren().addAll(stationHBox, trainHBox, btn);
     }//dynamically creates the view of amount of Stations and Trains the player has left
+
+    @FXML
+    private void changeHands() {
+        if (PlayerHandHbox.isVisible()) {
+            PlayerHandHbox.setVisible(false);
+            PlayerHandTicketHbox.setVisible(true);
+            this.bc.updateView();
+        } else {
+            PlayerHandTicketHbox.setVisible(false);
+            PlayerHandHbox.setVisible(true);
+            this.bc.updateView();
+        }
+    }
+
+    @FXML
+    private void createPlayerTicketHand(PlayerModel player) {
+        ColorAdjust greyOut = new ColorAdjust();
+        greyOut.setSaturation(-1);
+        PlayerHandTicketHbox.getChildren().clear();
+        for (TicketCardModel ticket : player.getPlayerTicketHand()) {
+            VBox cardBox = new VBox();
+            String loc1 = ticket.getFirstDestString();
+            String loc2 = ticket.getSecondDestString();
+            String imgUrl = "/ttr/cards/tickets/vertical/eu-" + loc1 + "-" + loc2 + ".png";
+            Image cardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imgUrl)));
+            ImageView cardImageView = new ImageView(cardImg);
+            cardImageView.setFitWidth(129);
+            cardImageView.setFitHeight(200);
+            cardBox.getChildren().add(cardImageView);
+            PlayerHandTicketHbox.getChildren().add(cardBox);
+        }
+    }
 
 
     @FXML
@@ -335,6 +382,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
+        createPlayerTicketHand(playerModel);
         createPlayerHandHBox(playerModel);
         createTrainTicketCardDeckView(playerModel);
     }

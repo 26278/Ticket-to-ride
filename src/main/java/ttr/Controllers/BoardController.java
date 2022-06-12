@@ -41,7 +41,6 @@ public class BoardController implements Controller {
     private Scene scene;
 
     private BoardController() {
-        this.tcdm = TicketCardDeckModel.getInstance();
         this.sc = SoundService.getInstance();
         updatePlayerList((Map) fs.get(cc.getID()).get(PLAYERS));
     }
@@ -56,6 +55,7 @@ public class BoardController implements Controller {
 
     public void setPlayer(PlayerModel player) {
         this.player = player;
+        this.tcdm = player.getTicketCardDeck();
         checkPlayerTurn();
     }
 
@@ -223,6 +223,7 @@ public class BoardController implements Controller {
         }
         if (addHand != null) {
             this.player.addCardsToTicketHand(addHand);
+            System.out.println(addHand);
             tcdm.removeTicket(addHand);
         }
     }

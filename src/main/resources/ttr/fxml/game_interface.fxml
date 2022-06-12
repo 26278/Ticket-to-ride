@@ -12,6 +12,7 @@
     <AnchorPane fx:id="boardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                 prefHeight="670.0" prefWidth="1006.0">
         <children>
+
             <ImageView fitHeight="670.0" fitWidth="1006.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@euMap.jpg"/>
@@ -1540,24 +1541,31 @@
                 </font>
             </Button>
 
-            <AnchorPane fx:id="ticketCardPane" layoutX="368.0" layoutY="272.0" prefHeight="134.0" prefWidth="250"
+            <AnchorPane fx:id="ticketCardPane" layoutX="378.0" layoutY="64.0" prefHeight="134.0" prefWidth="250"
                         style="-fx-background-color: grey;" visible="false">
                 <VBox fx:id="ticketVBOX" alignment="CENTER">
-                    <VBox fx:id="ticketCardsVBOX"/>
+                    <VBox fx:id="ticketCardsVBOX">
+                    </VBox>
+                    <AnchorPane>
+                        <ImageView fitHeight="34.0" fitWidth="69.0" onMouseClicked="#closeCardView">
+                            <Image url="@../menu/closeButton.png"/>
+                        </ImageView>
+                        <ImageView fx:id="goTicketButton" fitHeight="34.0" fitWidth="69.0" layoutX="181.0">
+                            <Image url="@../menu/goButton.png"/>
+                        </ImageView>
+                    </AnchorPane>
                 </VBox>
-                <ImageView fitHeight="34.0" fitWidth="69.0" layoutX="14.0" layoutY="86.0"
-                           onMouseClicked="#closeCardView">
-                    <Image url="@../menu/closeButton.png"/>
-                </ImageView>
-                <ImageView fx:id="goTicketButton" fitHeight="34.0" fitWidth="69.0" layoutX="167.0" layoutY="86.0">
-                    <Image url="@../menu/goButton.png"/>
-                </ImageView>
             </AnchorPane>
+
+
         </children>
     </AnchorPane>
     <HBox fx:id="PlayerHandInfoHbox">
         <VBox fx:id="PlayerInfoVbox"/>
-        <HBox fx:id="PlayerHandHbox"/>
+        <AnchorPane>
+            <HBox fx:id="PlayerHandHbox"/>
+            <HBox fx:id="PlayerHandTicketHbox" visible="false"/>
+        </AnchorPane>
         <HBox fx:id="TrainTicketDecksHbox"/>
     </HBox>
 </VBox>

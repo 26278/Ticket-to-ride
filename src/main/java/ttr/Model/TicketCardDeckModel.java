@@ -4,6 +4,7 @@ import ttr.Constants.Locations;
 import ttr.Views.TicketCardObserver;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TicketCardDeckModel implements ThreeTicketCardObservable {
     private static TicketCardDeckModel controller;
@@ -112,9 +113,9 @@ public class TicketCardDeckModel implements ThreeTicketCardObservable {
 
     public TicketCardModel searchForTicket(String loc1, String loc2) {
         for (TicketCardModel ticket : ticketCardDeck) {
-            String dest1 = ticket.getFirst_Destination().toString().toLowerCase();
-            String dest2 = ticket.getSecond_Destination().toString().toLowerCase();
-            if (dest1.equals(loc1) && dest2.equals(loc2)) {
+            String dest1 = ticket.getFirstDestString();
+            String dest2 = ticket.getSecondDestString();
+            if (Objects.equals(dest1, loc1) && Objects.equals(dest2, loc2)) {
                 return ticket;
             }
         }
@@ -134,8 +135,10 @@ public class TicketCardDeckModel implements ThreeTicketCardObservable {
     }
 
     public void pullThreeCards() {
+        returnHand.clear();
         for (int i = 0; i < 3; i++) {
-            returnHand.add(ticketCardDeck.remove(0));
+            returnHand.add(ticketCardDeck.get(i));
+            System.out.println(ticketCardDeck.get(i));
         }
         notifyObservers();
     }

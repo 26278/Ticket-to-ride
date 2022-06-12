@@ -34,6 +34,7 @@ public class PlayerModel implements PlayerObservable {
     private ArrayList<TrainCardModel> playerHand;
     private ArrayList<TicketCardModel> playerTicketHand;
 
+
     private TrainCardDeckModel trainCardDeck;
     private TicketCardDeckModel ticketCardDeck;
     private boolean playerTurn;
@@ -46,6 +47,10 @@ public class PlayerModel implements PlayerObservable {
         trainCardDeck = new TrainCardDeckModel();
         playerHand = new ArrayList<>();
         playerTicketHand = new ArrayList<>();
+    }
+
+    public TicketCardDeckModel getTicketCardDeck() {
+        return ticketCardDeck;
     }
 
 

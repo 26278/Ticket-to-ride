@@ -2,6 +2,8 @@ package ttr.Model;
 
 import ttr.Constants.Locations;
 
+import java.util.Locale;
+
 public class TicketCardModel {
 
     private String type;
@@ -19,10 +21,6 @@ public class TicketCardModel {
         this.completed = completed;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public Locations getFirst_Destination() {
         return first_Destination;
     }
@@ -37,6 +35,14 @@ public class TicketCardModel {
 
     public boolean getCompleted() {
         return completed;
+    }
+
+    public String getFirstDestString() {
+        return first_Destination.toString().toLowerCase(Locale.ROOT);
+    }
+    
+    public String getSecondDestString() {
+        return second_Destination.toString().toLowerCase(Locale.ROOT);
     }
 
     public void setCompleted(boolean completed) {
