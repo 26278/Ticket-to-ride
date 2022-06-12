@@ -22,6 +22,9 @@ public class GameStartView implements GameStartObserver {
     public VBox list;
 
     @FXML
+    public Label optionLabel;
+
+    @FXML
     protected ToggleGroup group;
 
     @FXML
@@ -68,6 +71,8 @@ public class GameStartView implements GameStartObserver {
         nameField.setVisible(true);
         nameLabel.setVisible(true);
         startButton.setVisible(true);
+        optionLabel.setVisible(false);
+        playerCountLabel.setVisible(false);
         for (int i = 0; i < playerButtons.size(); i++) {
             playerButtons.get(i).setVisible(false);
         }

@@ -236,10 +236,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         bc.click_card(event);
     }
 
-    @Override
-    public void update(SelectOpenCardModel openCardModel) {
-        change_OpenCardImage(openCardModel.getOpen_cards());
-    }
 
     @FXML
     public void paintTrain(String groupName, String color) {
@@ -259,12 +255,16 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
     @Override
+    public void update(SelectOpenCardModel openCardModel) {
+        change_OpenCardImage(openCardModel.getOpen_cards());
+    }
+
+    @Override
     public void update(PlayerModel playerModel) {
         createPlayerInfoVbox(playerModel);
         createPlayerHandHBox(playerModel);
         createTrainCardDeckView(playerModel);
     }
-
 
     @FXML
     protected void endTurn() {
