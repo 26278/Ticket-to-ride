@@ -333,8 +333,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         String url = "/ttr/station/station-" + color + ".png";
         Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
         for (int i = 0; i < groups.size(); i++) {
-            if (Objects.equals(groups.get(0).getId(), groupName)) {
-                Group group = (Group) groups.get(0);
+            if (Objects.equals(groups.get(i).getId(), groupName)) {
+                Group group = (Group) groups.get(i);
                 for (Node node : group.getChildren()) {
                     Rectangle rec = (Rectangle) node;
                     if (!(rec.getFill() instanceof ImagePattern))
