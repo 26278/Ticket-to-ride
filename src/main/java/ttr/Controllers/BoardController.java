@@ -72,7 +72,6 @@ public class BoardController implements Controller {
         while (col.size() != 5) {
             col.add(player.getTrainCardDeck().get(0).getCardColor());
             player.getTrainCardDeck().remove(0);
-
         }
         som.setOpen_cards(col);
     }
@@ -289,6 +288,7 @@ public class BoardController implements Controller {
         checkCurrentPlayerName((HashMap<String, String>) ds.get(PLAYERS));
         setCurrentPlayer(ds);
         checkPlayerTurn();
+        this.player.updateDeck();
     }
 
 

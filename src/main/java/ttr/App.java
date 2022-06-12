@@ -9,8 +9,8 @@ import ttr.Controllers.Controller;
 import ttr.Controllers.FirebaseController;
 import ttr.Services.FirestoreService;
 
-import static ttr.Constants.ClientConstants.FINAL_SCORES;
-import static ttr.Constants.ClientConstants.TRAIN;
+import static ttr.Constants.ClientConstants.*;
+import static ttr.Constants.ColorConstants.*;
 
 
 public class App {
@@ -133,15 +133,26 @@ public class App {
 
             // create hashmap with traincardDeck
             Map trainCardDeck = new HashMap<String, String>();
-            trainCardDeck.put("red", 12);
-            trainCardDeck.put("blue", 12);
-            trainCardDeck.put("yellow", 12);
-            trainCardDeck.put("brown", 12);
-            trainCardDeck.put("white", 12);
-            trainCardDeck.put("black", 12);
-            trainCardDeck.put("loco", 12);
-            trainCardDeck.put("green", 12);
-            trainCardDeck.put("purple", 12);
+            trainCardDeck.put(COLOR_RED, 12);
+            trainCardDeck.put(COLOR_BLUE, 12);
+            trainCardDeck.put(COLOR_YELLOW, 12);
+            trainCardDeck.put(COLOR_BROWN, 12);
+            trainCardDeck.put(COLOR_WHITE, 12);
+            trainCardDeck.put(COLOR_BLACK, 12);
+            trainCardDeck.put(COLOR_RAINBOW, 12);
+            trainCardDeck.put(COLOR_GREEN, 12);
+            trainCardDeck.put(COLOR_PURPLE, 12);
+
+            Map discardDeck = new HashMap<String, String>();
+            discardDeck.put(COLOR_RED, 0);
+            discardDeck.put(COLOR_BLUE, 0);
+            discardDeck.put(COLOR_YELLOW, 0);
+            discardDeck.put(COLOR_BROWN, 0);
+            discardDeck.put(COLOR_WHITE, 0);
+            discardDeck.put(COLOR_BLACK, 0);
+            discardDeck.put(COLOR_RAINBOW, 0);
+            discardDeck.put(COLOR_GREEN, 0);
+            discardDeck.put(COLOR_PURPLE, 0);
 
 
             //create hashmap with ticketDeck
@@ -195,13 +206,14 @@ public class App {
 
             // combine hashmaps or add necessary empty fields
             Map<String, Object> dataForFirebase = new HashMap<>();
-            dataForFirebase.put("BoardState", board);
-            dataForFirebase.put("TraincardDeck", trainCardDeck);
-            dataForFirebase.put("TicketDeck", ticketDeck);
-            dataForFirebase.put("current_player", 1);
-            dataForFirebase.put("players", new HashMap<String, String>());
-            dataForFirebase.put("final_turn", false);
-            dataForFirebase.put("game_finished", false);
+            dataForFirebase.put(BOARD_STATE, board);
+            dataForFirebase.put(TRAINCARD_DECK, trainCardDeck);
+            dataForFirebase.put(DISCARD_DECK, discardDeck);
+            dataForFirebase.put(TICKET_DECK, ticketDeck);
+            dataForFirebase.put(CURRENT_PLAYER, 1);
+            dataForFirebase.put(PLAYERS, new HashMap<String, String>());
+            dataForFirebase.put(FINAL_TURN, false);
+            dataForFirebase.put(GAME_FINISHED, false);
             dataForFirebase.put(FINAL_SCORES, new HashMap<String, Integer>());
 
             //add data to firebase
