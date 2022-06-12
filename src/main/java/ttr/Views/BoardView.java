@@ -394,11 +394,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     protected void endTurn() {
         bc.endTurn();
     }
-    
+
 
     @Override
     public void update(SelectOpenCardModel openCardModel) {
         change_OpenCardImage(openCardModel.getOpen_cards());
+        this.bc.updateView();
     }
 
     @Override

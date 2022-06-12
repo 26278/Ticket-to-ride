@@ -148,10 +148,7 @@ public class PlayerModel implements PlayerObservable {
     public void setInitialisedFinalTurn(boolean initialisedFinalTurn) {
         this.initialisedFinalTurn = initialisedFinalTurn;
     }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
+    
 
     public boolean isPlayerTurn() {
         return playerTurn;

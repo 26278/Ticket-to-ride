@@ -59,7 +59,6 @@ public class TrainCardDeckModel implements Observable {
         if (trainCardDeck.size() <= 2) {
             shuffleDiscardPileIntoDeck();
         }
-        System.out.println(trainCardDeck.get(0).getCardColor() + "+" + trainCardDeck.get(1).getCardColor());
 
         if (Objects.equals(trainCardDeck.get(1).getCardColor(), COLOR_RAINBOW)) {
             firestoreService.updateField(TRAINCARD_DECK, trainCardDeck.get(0).getCardColor(),
@@ -71,10 +70,12 @@ public class TrainCardDeckModel implements Observable {
             discardTrainDeck.add(trainCardDeck.get(1));
         } else {
             //decreases amount of cards of one color
-            firestoreService.updateField(TRAINCARD_DECK, returnHand.get(0).getCardColor(),
+            firestoreService.updateField(TRAINCARD_DECK, trainCardDeck.get(0).getCardColor(),
                     String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(0).getCardColor())) - 1));
-            firestoreService.updateField(TRAINCARD_DECK, returnHand.get(1).getCardColor(),
+            firestoreService.updateField(TRAINCARD_DECK, trainCardDeck.get(1).getCardColor(),
                     String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(1).getCardColor())) - 1));
+            returnHand.add(trainCardDeck.get(0));
+            returnHand.add(trainCardDeck.get(1));
         }
         trainCardDeck.remove(1);
         trainCardDeck.remove(0);
