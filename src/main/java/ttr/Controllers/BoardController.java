@@ -211,7 +211,11 @@ public class BoardController implements Controller {
 
     public void trainOrStation(Rectangle r){
 
+        if(fs.getTrainOrStation(r.getParent().getId(),TRAIN ).equals(null)){
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
+        else if(fs.getTrainOrStation(r.getParent().getId(),STATION ).equals(null)){
             placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        }
 
 
 
