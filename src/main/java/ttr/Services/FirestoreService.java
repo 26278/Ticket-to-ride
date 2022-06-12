@@ -96,18 +96,22 @@ public class FirestoreService {
 
         return value;
     }
-
-
-
-
-
     public String getTrainOrStation(String route, String trainOrStation) {
         HashMap<Object, HashMap> td = getBoardState();
 
         HashMap<String, Object> target = td.get(route);
-        String value = target.get(trainOrStation).toString();
-        return value;
+        Object value = target.get(trainOrStation);
+        if(value == null) {
+            return null;
+        }
+
+        return value.toString();
     }
+
+
+
+
+
 
     public void updateValue(String field, Object value) {
         DocumentSnapshot ds = this.get(cc.getID());

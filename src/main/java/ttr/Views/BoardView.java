@@ -21,6 +21,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Rotate;
 import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.*;
@@ -202,18 +203,32 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void paintStation(String groupName, String color) {
         String url = "/ttr/station/station-" + color + ".png";
         Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+        Group group = new Group();
         for (int i = 0; i < groups.size(); i++) {
             if (Objects.equals(groups.get(i).getId(), groupName)) {
-                Group group = (Group) groups.get(i);
-                for (Node node : group.getChildren()) {
-                    Rectangle rec = (Rectangle) node;
-                    if (!(rec.getFill() instanceof ImagePattern))
-                        rec.setFill(new ImagePattern(station));
+                group = (Group) groups.get(i);
+            }}
 
-                }
-            }
+
+            Rectangle rec = (Rectangle) group.getChildren().get(0);
+            double x = rec.getLayoutX();
+            double y = rec.getLayoutY();
+            double rotat = rec.getRotate();
+            System.out.println(x);
+            System.out.println(y);
+            System.out.println(rotat);
+            Rectangle r = new Rectangle(x, y, 30, 15);
+            Rotate rotation = new Rotate(90);
+            rotation.setPivotX(x);
+            rotation.setPivotY(y);
+            r.getTransforms().add(rotation);
+            r.setFill(new ImagePattern(station));
+            boardPane.getChildren().add(r);
+
+
         }
-    }
+
+
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
