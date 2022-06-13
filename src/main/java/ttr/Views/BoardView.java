@@ -58,11 +58,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     @FXML
     private Label CurrentPlayer;
     @FXML
-    private Button endTurnButton;
-    @FXML
     private Button endGameButton;
     @FXML
-    private VBox ticketVBOX;
     public Group groupgroup;
     private ArrayList<Node> groups;
 
@@ -368,7 +365,8 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     private void showPlayerCount(String playerName) {
         Platform.runLater(() -> {
-            CurrentPlayer.setText("Current Players: " + playerName);
+            CurrentPlayer.setText("Current Player: " + playerName);
+            CurrentPlayer.setFont(new Font(5));
         });
     }
 
@@ -396,8 +394,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
     private void showEndGameButton(Boolean gameFinished) {
         if (gameFinished) {
-            endTurnButton.setVisible(false);
-            endGameButton.setVisible(true);
+            try {
+                endGameButton.setVisible(true);
+            } catch (NullPointerException ignored) {
+
+            }
+
         }
     }
 

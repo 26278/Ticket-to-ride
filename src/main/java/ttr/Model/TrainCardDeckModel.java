@@ -112,8 +112,13 @@ public class TrainCardDeckModel implements Observable {
             firestoreService.updateField(TRAINCARD_DECK, returnHand.get(1).getCardColor(),
                     String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(1).getCardColor())) - 1));
         }
-        trainCardDeck.remove(1);
-        trainCardDeck.remove(0);
+        try {
+            trainCardDeck.remove(1);
+            trainCardDeck.remove(0);
+        } catch (IndexOutOfBoundsException ignored) {
+
+        }
+
         return returnHand;
     }
 

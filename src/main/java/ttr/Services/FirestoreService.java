@@ -173,13 +173,23 @@ public class FirestoreService {
 
     public HashMap<String, Object> getTraincardDeck() {
         DocumentSnapshot ds = this.get(cc.getID());
-        HashMap td = (HashMap) ds.get(TRAINCARD_DECK);
+        HashMap td = new HashMap<>();
+        try {
+            td = (HashMap) ds.get(TRAINCARD_DECK);
+        } catch (NullPointerException ignored) {
+
+        }
         return td;
     }
 
     public HashMap<String, Object> getDiscardDeck() {
         DocumentSnapshot ds = this.get(cc.getID());
-        HashMap td = (HashMap) ds.get(DISCARD_DECK);
+        HashMap td = new HashMap();
+        try {
+            td = (HashMap) ds.get(DISCARD_DECK);
+        } catch (NullPointerException ignored) {
+
+        }
         return td;
     }
 

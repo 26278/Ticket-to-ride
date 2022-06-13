@@ -55,17 +55,6 @@ public class GameStartController implements Controller {
         return (Map) fs.get(cc.getID()).get(PLAYERS);
     }
 
-    public void firstPlayerCheck() {
-        Platform.runLater(() -> {
-            Map playerMap = playerMap();
-            if (playerMap.size() == 0) {
-                player.setPlayerColor("red");
-                player.setPlayerNumber(1);
-                player.setPlayerName("host");
-            }
-        });
-    }
-
     public void playerSelect(String id) {
         player.setPlayerColor(getSelectedPlayerColor(id));
         player.setPlayerNumber(getSelectedPlayerNumber(id));

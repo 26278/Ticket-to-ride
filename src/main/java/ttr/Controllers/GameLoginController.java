@@ -29,7 +29,10 @@ public class GameLoginController {
         new Token().createToken(token);
         new App();
         Platform.runLater(() -> {
-            loadFile(event, "game_start.fxml");
+            try {
+                loadFile(event, "game_start.fxml");
+            } catch (NullPointerException ignored) {
+            }
         });
     }
 

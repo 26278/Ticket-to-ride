@@ -61,7 +61,6 @@ public class GameStartView implements GameStartObserver {
     protected void initialize() {
         this.gsc = GameStartController.getInstance();
         this.gsc.addGameStartObserver(this);
-        this.gsc.firstPlayerCheck();
         Collections.addAll(playerButtons, player_1, player_2, player_3, player_4, player_5);
     }
 

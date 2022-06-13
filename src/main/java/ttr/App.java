@@ -133,15 +133,15 @@ public class App {
 
             // create hashmap with traincardDeck
             Map trainCardDeck = new HashMap<String, String>();
-            trainCardDeck.put(COLOR_RED, 12);
-            trainCardDeck.put(COLOR_BLUE, 12);
-            trainCardDeck.put(COLOR_YELLOW, 12);
-            trainCardDeck.put(COLOR_BROWN, 12);
-            trainCardDeck.put(COLOR_WHITE, 12);
-            trainCardDeck.put(COLOR_BLACK, 12);
-            trainCardDeck.put(COLOR_RAINBOW, 12);
-            trainCardDeck.put(COLOR_GREEN, 12);
-            trainCardDeck.put(COLOR_PURPLE, 12);
+            trainCardDeck.put(COLOR_RED, 500);
+            trainCardDeck.put(COLOR_BLUE, 500);
+            trainCardDeck.put(COLOR_YELLOW, 500);
+            trainCardDeck.put(COLOR_BROWN, 500);
+            trainCardDeck.put(COLOR_WHITE, 500);
+            trainCardDeck.put(COLOR_BLACK, 500);
+            trainCardDeck.put(COLOR_RAINBOW, 500);
+            trainCardDeck.put(COLOR_GREEN, 500);
+            trainCardDeck.put(COLOR_PURPLE, 500);
 
             Map discardDeck = new HashMap<String, String>();
             discardDeck.put(COLOR_RED, 0);
