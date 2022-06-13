@@ -8,7 +8,7 @@ module ttr {
     requires google.cloud.core;
     requires com.google.auth;
     requires javafx.graphics;
-
+    requires javafx.media;
     opens ttr to javafx.fxml;
     exports ttr;
     exports ttr.Views;

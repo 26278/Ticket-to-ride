@@ -1,6 +1,7 @@
 package ttr.Controllers;
 
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ import ttr.Constants.ClientConstants;
 import ttr.Model.GameStartModel;
 import ttr.Model.PlayerModel;
 import ttr.Services.FirestoreService;
+import ttr.Services.SoundService;
 import ttr.Views.GameStartObserver;
 
 import java.io.IOException;
@@ -23,7 +25,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static ttr.Constants.ClientConstants.PLAYERS;
+import static ttr.Constants.ClientConstants.SFX_STARTGAME;
+
 public class GameStartController implements Controller {
+    private SoundService sc;
     private PlayerModel player = new PlayerModel();
     private GameStartModel gsm = new GameStartModel();
     private ClientConstants cc = new ClientConstants();
@@ -35,6 +41,7 @@ public class GameStartController implements Controller {
 
     private GameStartController() {
         fs = FirestoreService.getInstance();
+        sc = SoundService.getInstance();
     }
 
     public static GameStartController getInstance() {
@@ -45,35 +52,39 @@ public class GameStartController implements Controller {
     }
 
     private Map playerMap() {
-        return (Map) fs.get(cc.getID()).get("players");
+        return (Map) fs.get(cc.getID()).get(PLAYERS);
     }
 
-    public void firstPlayerCheck() {
-        Map playerMap = playerMap();
-        if (playerMap.size() == 0) {
-            player.setPlayerColor("red");
-            player.setPlayerNumber(1);
-            player.setPlayerName("host");
-        }
-    }
-
-    public void playerSelect(ToggleGroup group) {
-        player.setPlayerColor(getSelectedPlayerName(group));
-        player.setPlayerNumber(getSelectedPlayerNumber(group));
+    public void playerSelect(String id) {
+        player.setPlayerColor(getSelectedPlayerColor(id));
+        player.setPlayerNumber(getSelectedPlayerNumber(id));
     }
 
     public void playerNameSubmit(TextField nameField) {
-        player.setPlayerName(nameField.getText());
+        if (nameField.getText() != null || !nameField.getText().trim().isEmpty()) {
+            player.setPlayerName(nameField.getText());
+        }
     }
 
-    private String getSelectedPlayerName(ToggleGroup group) {
-        RadioButton groupSelected = (RadioButton) group.getSelectedToggle();
-        return groupSelected.getText();
+    private String getSelectedPlayerColor(String id) {
+        String[] parts = id.split("_");
+        int playerNumber = Integer.parseInt(parts[1]);
+        if (playerNumber == 1) {
+            return "red";
+        } else if (playerNumber == 2) {
+            return "blue";
+        } else if (playerNumber == 3) {
+            return "green";
+        } else if (playerNumber == 4) {
+            return "yellow";
+        } else if (playerNumber == 5) {
+            return "purple";
+        }
+        return "";
     }
 
-    private int getSelectedPlayerNumber(ToggleGroup group) {
-        RadioButton groupSelected = (RadioButton) group.getSelectedToggle();
-        String[] parts = groupSelected.getId().split("_");
+    private int getSelectedPlayerNumber(String id) {
+        String[] parts = id.split("_");
         return Integer.parseInt(parts[1]);
     }
 
@@ -83,19 +94,17 @@ public class GameStartController implements Controller {
         Map playerMap = playerMap();
         int playerCount = playerMap.size();
 
-        if (this.player.getPlayerColor() != null && playerCount >= 3) {
+        if (this.player.getPlayerColor() != null && playerCount >= 1) {
             //load file
             BoardController bc = BoardController.getInstance();
             bc.setPlayer(this.player);
+            sc.playSFX(SFX_STARTGAME);
             loadFile(event, "game_interface.fxml");
             new App();
-
         }
     }
 
-
     public void loadFile(MouseEvent event, String file) throws IOException {
-        System.out.println(file);
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ttr/fxml/" + file)));
 
         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -110,7 +119,7 @@ public class GameStartController implements Controller {
 
     @Override
     public void update(DocumentSnapshot ds) {
-        gsm.setPlayerCount((Map) ds.get("players"));
+        gsm.setPlayerCount((Map) ds.get(PLAYERS));
     }
 
 

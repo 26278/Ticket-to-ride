@@ -27,12 +27,14 @@ public class FirestoreService {
 
     static FirestoreService firebaseService;
 
+
     public static FirestoreService getInstance() {
         if (firebaseService == null) {
             firebaseService = new FirestoreService();
         }
         return firebaseService;
     }
+
 
     public FirestoreService() {
         Database db = new Database();
@@ -57,6 +59,7 @@ public class FirestoreService {
         });
     }
 
+
     public void set(String documentId, Map<String, Object> docData) {
         ApiFuture<WriteResult> future = this.colRef.document(documentId).set(docData);
 
@@ -64,7 +67,6 @@ public class FirestoreService {
 
 
     public DocumentSnapshot get(String documentId) {
-
         DocumentReference docRef = this.colRef.document(documentId);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document;
@@ -74,14 +76,72 @@ public class FirestoreService {
             if (document.exists()) {
                 return document;
             }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | ExecutionException | NullPointerException ignored) {
+
         }
         return null;
     }
 
-    //update specific field
-    public void updateField(String field, String key, String value) {
+
+    public int getTrainCardValue(String color) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        String field = TRAINCARD_DECK;
+
+        HashMap td = (HashMap) ds.get(field);
+        String s = new String();
+        try {
+            s = td.get(color).toString();
+        } catch (NullPointerException ignored) {
+
+        }
+        int value = Integer.parseInt(s);
+        return value;
+    }
+
+    public int getDiscardCardValue(String color) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        String field = DISCARD_DECK;
+
+        HashMap td = (HashMap) ds.get(field);
+        String s = td.get(color).toString();
+        int value = Integer.parseInt(s);
+
+        return value;
+    }
+
+    public HashMap<Object, HashMap> getBoardState() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap<Object, HashMap> td = (HashMap) ds.get(BOARD_STATE);
+
+        return td;
+    }
+
+
+    public String getTrainOrStation(String route, String trainOrStation) {
+        HashMap<Object, HashMap> td = getBoardState();
+
+        HashMap<String, Object> target = td.get(route.toLowerCase(Locale.ROOT));
+        Object value = target.get(trainOrStation);
+        if (value == null) {
+            return null;
+        }
+
+        return value.toString();
+    }
+
+
+    public void updateValue(String field, Object value) {
+        DocumentSnapshot ds = this.get(cc.getID());
+        Map<String, Object> currentMap = ds.getData();
+
+        currentMap.put(field, value);
+        this.set(cc.getID(), currentMap);
+    }
+
+
+    public void updateField(String field, String key, Object value) {
         DocumentSnapshot ds = this.get(cc.getID());
 
         Map<String, Object> currentMap = ds.getData();
@@ -92,30 +152,63 @@ public class FirestoreService {
         this.set(cc.getID(), currentMap);
     }
 
+    public void removeTicket(String key) {
+        DocumentSnapshot ds = this.get(cc.getID());
+
+        Map<String, Object> currentMap = ds.getData();
+
+        HashMap td = (HashMap) ds.get(TICKET_DECK);
+        if (td.get(key) != null) {
+            td.remove(key);
+            currentMap.put(TICKET_DECK, td);
+            this.set(cc.getID(), currentMap);
+        }
+    }
+
+    public HashMap getTicketDeck() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap td = (HashMap) ds.get(TICKET_DECK);
+        return td;
+    }
+
+    public HashMap<String, Object> getTraincardDeck() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap td = new HashMap<>();
+        try {
+            td = (HashMap) ds.get(TRAINCARD_DECK);
+        } catch (NullPointerException ignored) {
+
+        }
+        return td;
+    }
+
+    public HashMap<String, Object> getDiscardDeck() {
+        DocumentSnapshot ds = this.get(cc.getID());
+        HashMap td = new HashMap();
+        try {
+            td = (HashMap) ds.get(DISCARD_DECK);
+        } catch (NullPointerException ignored) {
+
+        }
+        return td;
+    }
+
 
     public void updateTrainOrStation(String route, String trainOrStation, String color) {
         DocumentSnapshot ds = this.get(cc.getID());
-
+        route = route.toLowerCase(Locale.ROOT);
         Map<String, Object> currentMap = ds.getData();
 
         HashMap<String, Object> td = (HashMap) ds.get(BOARD_STATE);
 
         HashMap<String, String> tosMap = new HashMap<>();
-        tosMap.put(TRAIN, null);
-        tosMap.put(STATION, null);
+        tosMap.put(TRAIN, getTrainOrStation(route, TRAIN));
+        tosMap.put(STATION, getTrainOrStation(route, STATION));
         tosMap.put(trainOrStation, color);
 
         td.put(route, tosMap);
         currentMap.put(BOARD_STATE, td);
         this.set(cc.getID(), currentMap);
-    }
-
-
-    public HashMap<Object, HashMap> getBoardState() {
-        DocumentSnapshot ds = this.get(cc.getID());
-        HashMap<Object, HashMap> td = (HashMap) ds.get(BOARD_STATE);
-
-        return td;
     }
 
 
