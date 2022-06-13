@@ -66,23 +66,36 @@ public class GameStartController implements Controller {
         });
     }
 
-    public void playerSelect(ToggleGroup group) {
-        player.setPlayerColor(getSelectedPlayerName(group));
-        player.setPlayerNumber(getSelectedPlayerNumber(group));
+    public void playerSelect(String id) {
+        player.setPlayerColor(getSelectedPlayerColor(id));
+        player.setPlayerNumber(getSelectedPlayerNumber(id));
     }
 
     public void playerNameSubmit(TextField nameField) {
-        player.setPlayerName(nameField.getText());
+        if (nameField.getText() != null || !nameField.getText().trim().isEmpty()) {
+            player.setPlayerName(nameField.getText());
+        }
     }
 
-    private String getSelectedPlayerName(ToggleGroup group) {
-        RadioButton groupSelected = (RadioButton) group.getSelectedToggle();
-        return groupSelected.getText();
+    private String getSelectedPlayerColor(String id) {
+        String[] parts = id.split("_");
+        int playerNumber = Integer.parseInt(parts[1]);
+        if (playerNumber == 1) {
+            return "red";
+        } else if (playerNumber == 2) {
+            return "blue";
+        } else if (playerNumber == 3) {
+            return "green";
+        } else if (playerNumber == 4) {
+            return "yellow";
+        } else if (playerNumber == 5) {
+            return "purple";
+        }
+        return "";
     }
 
-    private int getSelectedPlayerNumber(ToggleGroup group) {
-        RadioButton groupSelected = (RadioButton) group.getSelectedToggle();
-        String[] parts = groupSelected.getId().split("_");
+    private int getSelectedPlayerNumber(String id) {
+        String[] parts = id.split("_");
         return Integer.parseInt(parts[1]);
     }
 
@@ -92,14 +105,13 @@ public class GameStartController implements Controller {
         Map playerMap = playerMap();
         int playerCount = playerMap.size();
 
-        if (this.player.getPlayerColor() != null && playerCount >= 3) {
+        if (this.player.getPlayerColor() != null && playerCount >= 1) {
             //load file
             BoardController bc = BoardController.getInstance();
             bc.setPlayer(this.player);
             sc.playSFX(SFX_STARTGAME);
             loadFile(event, "game_interface.fxml");
             new App();
-
         }
     }
 

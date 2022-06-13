@@ -17,25 +17,28 @@ import ttr.Constants.ClientConstants;
 import ttr.Constants.ColorConstants;
 import ttr.Constants.Locations;
 import ttr.Model.*;
+import ttr.Services.*;
 import ttr.Services.FirestoreService;
-import ttr.Services.SoundService;
-import ttr.Views.FirebaseObserver;
-import ttr.Views.OpenCardObserver;
-import ttr.Views.PlayerObserver;
-import ttr.Views.TrainObserver;
+import ttr.Views.*;
 
 import java.io.IOException;
 import java.util.*;
 
 import static ttr.Constants.ClientConstants.*;
 
+import static java.lang.Math.toIntExact;
+import static ttr.Constants.ClientConstants.*;
+
+
 public class BoardController implements Controller {
+    StationModel sm = new StationModel();
     SelectOpenCardModel som = new SelectOpenCardModel();
     TrainModel tm = new TrainModel();
     FirebaseModel fbm = new FirebaseModel();
     FirestoreService fs = new FirestoreService();
     ClientConstants cc = new ClientConstants();
     FirebaseModel fm = new FirebaseModel();
+    TicketCardDeckModel tcdm;
     PlayerModel player;
     SoundService sc;
     private ConnectionModel cm = new ConnectionModel();
@@ -61,6 +64,7 @@ public class BoardController implements Controller {
 
     public void setPlayer(PlayerModel player) {
         this.player = player;
+        this.tcdm = player.getTicketCardDeck();
         checkPlayerTurn();
     }
 
@@ -76,7 +80,6 @@ public class BoardController implements Controller {
         while (col.size() != 5) {
             col.add(player.getTrainCardDeck().get(0).getCardColor());
             player.getTrainCardDeck().remove(0);
-
         }
         som.setOpen_cards(col);
     }
@@ -154,6 +157,10 @@ public class BoardController implements Controller {
         }
     }
 
+    public void getThreeTicketCards() {
+        tcdm.updateTicketDeck(fs.getTicketDeck());
+        tcdm.pullThreeCards();
+    }
 
     public void pullCards() {
         this.sc.playSFX(SFX_PULLCARD);
@@ -174,9 +181,18 @@ public class BoardController implements Controller {
         return locations;
     }
 
-    public void placeTrain(Group group, MouseEvent event) {
-        String id = group.getChildren().get(0).getId();
-        int size = group.getChildren().size();
+    public void checkTicketCards(ArrayList<TicketCardModel> playerTicketHand) {
+        for (TicketCardModel ticketCard : playerTicketHand) {
+            if (!ticketCard.getCompleted()) {
+                if (this.cm.isRouteCardCompleted(ticketCard)) {
+                    this.player.setScore(this.player.getScore() + toIntExact(ticketCard.getRewardPoints()));
+                    ticketCard.setCompleted(true);
+                }
+            }
+        }
+    }
+
+    public void placeTrain(String id, int size) {
         ArrayList<Locations> routes = getRoute(id);
         RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
         this.cm.addRoute(route);
@@ -184,7 +200,28 @@ public class BoardController implements Controller {
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
         this.sc.playSFX(SFX_PLACETRAIN);
+        checkTicketCards(player.getPlayerTicketHand());
     }
+
+    public void placeStation(String id, int size) {
+        ArrayList<Locations> routes = getRoute(id);
+        RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
+        this.cm.addRoute(route);
+        this.player.awardPoints(size);
+        this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
+        this.player.reduceStationCount(1);
+        this.sc.playSFX("placeStation");
+    }
+
+
+    public void trainOrStation(Rectangle r) {
+        if (fs.getTrainOrStation(r.getParent().getId(), TRAIN) == (null)) {
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        } else if (fs.getTrainOrStation(r.getParent().getId(), STATION) == (null)) {
+            placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        }
+    }
+
 
     public void endGame(MouseEvent event) {
         submitScore();
@@ -207,15 +244,32 @@ public class BoardController implements Controller {
         }
     }
 
+
+    public void addTickets(ArrayList<Node> list) {
+        tcdm.updateTicketDeck(fs.getTicketDeck());
+        ArrayList<TicketCardModel> addHand = new ArrayList<>();
+        for (Node ticket : list) {
+            String[] tickets = ticket.getId().split("_");
+            addHand.add(tcdm.searchForTicket(tickets[0], tickets[1]));
+        }
+        if (addHand != null) {
+            this.player.addCardsToTicketHand(addHand);
+            tcdm.removeTicket(addHand);
+        }
+    }
+
     public void checkBoardState() {
         HashMap<Object, HashMap> boardState = fs.getBoardState();
 
         for (Map.Entry<Object, HashMap> entry : boardState.entrySet()) {
             String key = (String) entry.getKey();
+            key = key.toLowerCase(Locale.ROOT);
             HashMap map = entry.getValue();
-
             if (map.get(TRAIN) != null) {
                 this.tm.placeTrain(key, map.get(TRAIN).toString());
+            }
+            if (map.get(STATION) != null) {
+                this.sm.placeStation(key, map.get(STATION).toString());
             }
         }
     }
@@ -228,6 +282,10 @@ public class BoardController implements Controller {
         this.player.addObserver(boardView);
     }
 
+    public void registerTicketObserver(TicketCardObserver boardView) {
+        this.tcdm.addObserver(boardView);
+    }
+
     public void registerTrainObserver(TrainObserver boardView) {
         this.tm.addObserver(boardView);
     }
@@ -238,6 +296,10 @@ public class BoardController implements Controller {
 
     public void registerFirebaseObserver(FirebaseObserver boardview) {
         this.fm.addObserver(boardview);
+    }
+
+    public void registerStationObserver(StationObserver boardView) {
+        this.sm.addObserver(boardView);
     }
 
 
@@ -261,6 +323,7 @@ public class BoardController implements Controller {
         checkCurrentPlayerName((HashMap<String, String>) ds.get(PLAYERS));
         setCurrentPlayer(ds);
         checkPlayerTurn();
+        this.player.updateDeck();
     }
 
     public void payForTrain(Group group, MouseEvent event) {

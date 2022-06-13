@@ -15,6 +15,8 @@ public class ClientConstants {
     public static final String FINAL_TURN = "final_turn";
     public static final String CURRENT_PLAYER = "current_player";
     public static final String TRAINCARD_DECK = "TraincardDeck";
+    public static final String DISCARD_DECK = "DiscardDeck";
+    public static final String TICKET_DECK = "TicketDeck";
 
 
     //sfx sound reference constants

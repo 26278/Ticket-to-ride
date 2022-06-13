@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import ttr.Constants.ClientConstants;
 
@@ -19,7 +20,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/game_login.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/game_login.fxml")));
         stage.setTitle("TTR!");
         stage.setScene(new Scene(root, cc.getScreenX(), cc.getScreenY()));
         stage.show();

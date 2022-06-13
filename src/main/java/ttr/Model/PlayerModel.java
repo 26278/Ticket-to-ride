@@ -1,18 +1,7 @@
 package ttr.Model;
 
-/*todo
-PLAYERHAND = PlayerHand
-RoutesOwned = Arraylist van Routes
-*/
-
-
-import com.google.cloud.firestore.DocumentSnapshot;
-import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
-import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
-import ttr.Views.BoardView;
 import ttr.Views.PlayerObserver;
 
 import java.util.ArrayList;
@@ -33,15 +22,29 @@ public class PlayerModel implements PlayerObservable {
 
 
     private ArrayList<TrainCardModel> playerHand;
+    private ArrayList<TicketCardModel> playerTicketHand;
+
+
     private TrainCardDeckModel trainCardDeck;
+    private TicketCardDeckModel ticketCardDeck;
     private boolean playerTurn;
 
     private List<PlayerObserver> observers = new ArrayList<PlayerObserver>();
 
 
     public PlayerModel() {
+        ticketCardDeck = new TicketCardDeckModel();
         trainCardDeck = new TrainCardDeckModel();
-        playerHand = new ArrayList<TrainCardModel>();
+        playerHand = new ArrayList<>();
+        playerTicketHand = new ArrayList<>();
+    }
+
+    public TicketCardDeckModel getTicketCardDeck() {
+        return ticketCardDeck;
+    }
+
+    public void updateDeck() {
+        this.trainCardDeck.updateDecks();
     }
 
     public void awardPoints(int trainAmount) {
@@ -61,7 +64,6 @@ public class PlayerModel implements PlayerObservable {
         notifyObservers();
     }//updates score based on the amount of trains placed
 
-
     public void pullCard() {
         ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCards();
         playerHand.addAll(hulpList);
@@ -70,6 +72,21 @@ public class PlayerModel implements PlayerObservable {
 
     public void reduceTrainCount(int trainAmount) {
         trainCount = trainCount - trainAmount;
+        notifyObservers();
+    }
+
+    public void addCardsToTicketHand(ArrayList<TicketCardModel> addHand) {
+        this.playerTicketHand.addAll(addHand);
+        notifyObservers();
+    }
+
+
+    public ArrayList<TicketCardModel> getPlayerTicketHand() {
+        return playerTicketHand;
+    }
+
+    public void reduceStationCount(int stationAmount) {
+        stationCount = stationCount - stationAmount;
         notifyObservers();
     }
 
@@ -126,6 +143,7 @@ public class PlayerModel implements PlayerObservable {
         this.initialisedFinalTurn = initialisedFinalTurn;
     }
 
+
     public boolean isPlayerTurn() {
         return playerTurn;
     }
@@ -136,10 +154,6 @@ public class PlayerModel implements PlayerObservable {
 
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     @Override
@@ -167,5 +181,8 @@ public class PlayerModel implements PlayerObservable {
 
     public void setHasPaidForTrain(boolean hasPaidForTrain) {
         this.hasPaidForTrain = hasPaidForTrain;
+    }
+    public void setScore(int i) {
+        this.score = i;
     }
 }
