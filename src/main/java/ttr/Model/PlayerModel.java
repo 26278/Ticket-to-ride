@@ -18,6 +18,8 @@ public class PlayerModel implements PlayerObservable {
     private int trainCount = 45;
     private int stationCount = 3;
     private boolean initialisedFinalTurn = false;
+    private boolean hasPaidForTrain = false;
+
 
     private ArrayList<TrainCardModel> playerHand;
     private ArrayList<TicketCardModel> playerTicketHand;
@@ -173,6 +175,13 @@ public class PlayerModel implements PlayerObservable {
 
     }
 
+    public boolean isHasPaidForTrain() {
+        return hasPaidForTrain;
+    }
+
+    public void setHasPaidForTrain(boolean hasPaidForTrain) {
+        this.hasPaidForTrain = hasPaidForTrain;
+    }
     public void setScore(int i) {
         this.score = i;
     }

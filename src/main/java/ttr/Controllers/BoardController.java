@@ -9,9 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
+import ttr.Constants.ColorConstants;
 import ttr.Constants.Locations;
 import ttr.Model.*;
 import ttr.Services.*;
@@ -323,7 +326,41 @@ public class BoardController implements Controller {
         this.player.updateDeck();
     }
 
+    public void payForTrain(Group group, MouseEvent event) {
+        this.player.setHasPaidForTrain(false);
+        int amountOfTrains = player.getTrainCount();
+        int size = group.getChildren().size();
 
+        ArrayList<String> requirements = new ArrayList<>();
+
+        for (int i = 0; i < group.getChildren().size(); i++) {
+            Rectangle rec = (Rectangle) group.getChildren().get(i);
+
+
+            ArrayList<String[]> colorCodes = ColorConstants.getColorCodes();
+//        colorCode omzetten naar text.
+            String color = rec.getFill().toString();
+            for (int j = 0; j < colorCodes.size(); j++) {
+                if (Objects.equals(colorCodes.get(j)[1], color)) {
+                    String trainColor = colorCodes.get(j)[0];
+                    requirements.add(trainColor);
+                }
+            }
+        }
+
+        if (size > amountOfTrains) {
+            return;
+        }
+
+        RequirementModel requirementModel = new RequirementModel(requirements);
+        TrainCardDeckController trainCardDeckController = TrainCardDeckController.getInstance();
+        trainCardDeckController.setRequirement(requirementModel);
+        trainCardDeckController.setRoute(group);
+        trainCardDeckController.setPlayer(this.player);
+
+        // player model -> notifyObserver die selectTrainCardView, update je hand
+        loadFile(event, "selectCardsScreen.fxml");
+    }
 }
 
 

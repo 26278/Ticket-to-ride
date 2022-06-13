@@ -27,7 +27,10 @@ import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -336,6 +339,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
 
     @FXML
+    public void place_train_or_station(MouseEvent event) throws IOException {;
+        Rectangle r = (Rectangle) event.getSource();
+        Group route = (Group) r.getParent();
+        bc.payForTrain(route, event);
+    }
+
     public void paintStation(String groupName, String color) {
         String url = "/ttr/station/station-" + color + ".png";
         Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
@@ -348,7 +357,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         Rectangle rec = (Rectangle) group.getChildren().get(0);
         rec.setFill(new ImagePattern(station));
     }
-
 
     @FXML
     public void place_train_or_station(MouseEvent event) {
