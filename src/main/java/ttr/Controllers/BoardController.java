@@ -70,18 +70,25 @@ public class BoardController implements Controller {
 
 
     public void click_card(MouseEvent event) {
-        ImageView image = (ImageView) event.getSource();
-        String id = image.getId();
-        som.Put_in_hand_and_replace(id, player.getTrainCardDeck(), player.getPlayerHand());
+        if (this.player.isPlayerTurn()) {
+            ImageView image = (ImageView) event.getSource();
+            String id = image.getId();
+            som.Put_in_hand_and_replace(id, player.getTrainCardDeck(), player.getPlayerHand());
+        }
     }
 
     public void setopencards() {
         ArrayList<String> col = new ArrayList<>();
-        while (col.size() != 5) {
-            col.add(player.getTrainCardDeck().get(0).getCardColor());
-            player.getTrainCardDeck().remove(0);
+        try {
+            while (col.size() != 5) {
+                col.add(player.getTrainCardDeck().get(0).getCardColor());
+                player.getTrainCardDeck().remove(0);
+            }
+            som.setOpen_cards(col);
+        } catch (IndexOutOfBoundsException ignored) {
+            setopencards();
         }
-        som.setOpen_cards(col);
+
     }
 
 
@@ -158,13 +165,17 @@ public class BoardController implements Controller {
     }
 
     public void getThreeTicketCards() {
-        tcdm.updateTicketDeck(fs.getTicketDeck());
-        tcdm.pullThreeCards();
+        if (this.player.isPlayerTurn()) {
+            tcdm.updateTicketDeck(fs.getTicketDeck());
+            tcdm.pullThreeCards();
+        }
     }
 
     public void pullCards() {
-        this.sc.playSFX(SFX_PULLCARD);
-        this.player.pullCard();
+        if (this.player.isPlayerTurn()) {
+            this.sc.playSFX(SFX_PULLCARD);
+            this.player.pullCard();
+        }
     }
 
     public ArrayList<Locations> getRoute(String id) {
@@ -244,6 +255,18 @@ public class BoardController implements Controller {
         }
     }
 
+    public void removeCardsFromPlayerHand(ArrayList<String> req) {
+        ArrayList<TrainCardModel> hand = this.player.getPlayerHand();
+        for (int i = 0; i < req.size(); i++) {
+            for (int j = 0; j < hand.size(); j++) {
+                if (Objects.equals(req.get(i), hand.get(j).getCardColor())) {
+                    hand.remove(j);
+                    break;
+                }
+            }
+        }
+    }
+
 
     public void addTickets(ArrayList<Node> list) {
         tcdm.updateTicketDeck(fs.getTicketDeck());
@@ -256,6 +279,7 @@ public class BoardController implements Controller {
             this.player.addCardsToTicketHand(addHand);
             tcdm.removeTicket(addHand);
         }
+        endTurn();
     }
 
     public void checkBoardState() {

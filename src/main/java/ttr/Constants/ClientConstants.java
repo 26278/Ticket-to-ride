@@ -2,7 +2,7 @@ package ttr.Constants;
 
 public class ClientConstants {
     String ID = new Token().getToken();
-    public final static int screenX = 1280;
+    public final static int screenX = 1380;
     public final static int screenY = 880;
 
     //firebase field reference constants

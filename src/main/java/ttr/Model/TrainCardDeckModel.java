@@ -87,6 +87,7 @@ public class TrainCardDeckModel implements Observable {
     }
 
     public ArrayList<TrainCardModel> pullCards() {
+        updateDecks();
         ArrayList<TrainCardModel> returnHand = new ArrayList<>();
         if (trainCardDeck.size() <= 5) {
             shuffleDiscardPileIntoDeck();

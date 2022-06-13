@@ -27,6 +27,7 @@ import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,18 +73,15 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc = BoardController.getInstance();
         Collections.addAll(imageview, Card_1, Card_2, Card_3, Card_4, Card_5);
         this.bc.register_open_card_observer(this);
-        this.bc.setopencards();
         this.bc.registerPlayerObserver(this);
         this.bc.registerTrainObserver(this);
         this.bc.registerPlayerObserver(this);
         this.bc.registerFirebaseObserver(this);
         this.bc.registerStationObserver(this);
         this.bc.registerTicketObserver(this);
-    }
-
-    public void clickoncard(MouseEvent event) {
-        bc.click_card(event);
-
+        Platform.runLater(() -> {
+            this.bc.setopencards();
+        });
     }
 
     @FXML
@@ -339,11 +337,12 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
 
 
     @FXML
-    public void place_train_or_station(MouseEvent event) throws IOException {;
+    public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
         Group route = (Group) r.getParent();
         bc.payForTrain(route, event);
     }
+
 
     public void paintStation(String groupName, String color) {
         String url = "/ttr/station/station-" + color + ".png";
@@ -356,18 +355,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         }
         Rectangle rec = (Rectangle) group.getChildren().get(0);
         rec.setFill(new ImagePattern(station));
-    }
-
-    @FXML
-    public void place_train_or_station(MouseEvent event) {
-        Rectangle r = (Rectangle) event.getSource();
-        bc.trainOrStation(r);
-
-    }
-
-    @FXML
-    public void pullTrainCards(ActionEvent actionEvent) {
-        bc.pullCards();
     }
 
 

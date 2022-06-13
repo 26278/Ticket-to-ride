@@ -89,9 +89,13 @@ public class FirestoreService {
         String field = TRAINCARD_DECK;
 
         HashMap td = (HashMap) ds.get(field);
-        String s = td.get(color).toString();
-        int value = Integer.parseInt(s);
+        String s = new String();
+        try {
+            s = td.get(color).toString();
+        } catch (NullPointerException ignored) {
 
+        }
+        int value = Integer.parseInt(s);
         return value;
     }
 
@@ -120,16 +124,12 @@ public class FirestoreService {
 
         HashMap<String, Object> target = td.get(route.toLowerCase(Locale.ROOT));
         Object value = target.get(trainOrStation);
-        if(value == null) {
+        if (value == null) {
             return null;
         }
 
         return value.toString();
     }
-
-
-
-
 
 
     public void updateValue(String field, Object value) {
@@ -164,6 +164,7 @@ public class FirestoreService {
             this.set(cc.getID(), currentMap);
         }
     }
+
     public HashMap getTicketDeck() {
         DocumentSnapshot ds = this.get(cc.getID());
         HashMap td = (HashMap) ds.get(TICKET_DECK);
@@ -199,8 +200,6 @@ public class FirestoreService {
         currentMap.put(BOARD_STATE, td);
         this.set(cc.getID(), currentMap);
     }
-
-
 
 
     public void delete(String documentId) {

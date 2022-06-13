@@ -1,5 +1,6 @@
 package ttr.Model;
 
+import ttr.Controllers.BoardController;
 import ttr.Views.OpenCardObserver;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class SelectOpenCardModel implements OpenCardObservable {
     ArrayList<String> taken_card = new ArrayList<>();
     ArrayList<String> Open_cards = new ArrayList<>();
     ArrayList<OpenCardObserver> observerlist = new ArrayList<>();
+    BoardController bc;
 
     public ArrayList<String> getOpen_cards() {
         return Open_cards;
@@ -29,6 +31,7 @@ public class SelectOpenCardModel implements OpenCardObservable {
 
 
     public void Put_in_hand_and_replace(String id, ArrayList<TrainCardModel> deck, ArrayList<TrainCardModel> hand) {
+        bc = BoardController.getInstance();
         String[] parts = id.split("_");
         int cardid = Integer.parseInt(parts[1]);
         for (int i = 0; i < Open_cards.size(); i++) {
@@ -51,6 +54,8 @@ public class SelectOpenCardModel implements OpenCardObservable {
             }
             taken_card.clear();
         }
+        //Dit mag natuurlijk niet, maar wij zitten in tijdnood.
+        bc.endTurn();
         notifyObservers();
     }
 

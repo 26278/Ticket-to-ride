@@ -28,6 +28,8 @@ public class TrainCardDeckController {
     RequirementModel requirementModel;
     private Group route;
 
+    private ArrayList<String> selectedCards;
+
 
     public void Shuffle() {
         Collections.shuffle(trainDeck.getTrainCardDeck());
@@ -93,12 +95,11 @@ public class TrainCardDeckController {
 
     private void checkRequirementMatch(BorderPane borderPane) {
         boolean matchWithRequirements = false;
-
         ArrayList<String> requirements = this.requirementModel.getRequirements();
-        ArrayList<String> selectedCards = getSelectedCards(borderPane);
+        selectedCards = getSelectedCards(borderPane);
 
         if (requirements.contains(COLOR_GRAY)) {
-            if (grayRequirements(requirements, selectedCards)){
+            if (grayRequirements(requirements, selectedCards)) {
                 matchWithRequirements = true;
             }
         } else {
@@ -147,9 +148,9 @@ public class TrainCardDeckController {
             }
 
             if ((requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 2)
-                    ||  (requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 1)
+                    || (requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 1)
                     || (!requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 1)
-                    || (!requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 2) && selectedCards.contains(COLOR_RAINBOW)){
+                    || (!requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 2) && selectedCards.contains(COLOR_RAINBOW)) {
                 for (int i = 0; i < selectedCards.size(); i++) {
                     if (!Objects.equals(selectedCards.get(i), COLOR_RAINBOW)) {
                         normalCountInput++;
@@ -177,7 +178,7 @@ public class TrainCardDeckController {
         CardColorTypes cardColorTypes[] = getCardColorTypes();
         for (CardColorTypes cardColorType : cardColorTypes) {
             getSelectedAmountOfCardsInt(getCardColorTypeString(cardColorType), borderPane);
-            for (int i = 0; i < getSelectedAmountOfCardsInt(getCardColorTypeString(cardColorType), borderPane); i++ ){
+            for (int i = 0; i < getSelectedAmountOfCardsInt(getCardColorTypeString(cardColorType), borderPane); i++) {
                 selectedCards.add(getCardColorTypeString(cardColorType));
             }
         }
@@ -210,7 +211,8 @@ public class TrainCardDeckController {
 
     public void closePaymentScreen(MouseEvent event) {
         BoardController bc = BoardController.getInstance();
-        bc.placeTrain(route, event);
+        bc.placeTrain(route.getId(), route.getChildren().size());
+        bc.removeCardsFromPlayerHand(selectedCards);
         bc.loadFile(event, "game_interface.fxml");
     }
 

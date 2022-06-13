@@ -15,14 +15,18 @@
 <!-- If the action is cancelled, the user should come back to the map screen with other possibilities. -->
 <!-- This is also a solution for in case the user wants to double-check his/her strategy with TrainCards serperation. -->
 
-<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ttr.Views.SelectTrainCardView">
+<?import javafx.scene.layout.HBox?>
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ttr.Views.SelectTrainCardView">
     <top>
-        <Button onAction="#cancelSelectedCards" text="Cancel" />
-    </top>
-    <center>
 
-    </center>
+    </top>
     <bottom>
-        <Button fx:id="confirmButton" disable="true" onMouseClicked="#confirmSelectedCards" BorderPane.alignment="CENTER">Bevestig</Button>
+        <HBox>
+            <Button onAction="#cancelSelectedCards" text="Cancel"/>
+            <Button fx:id="confirmButton" disable="true" onMouseClicked="#confirmSelectedCards"
+                    BorderPane.alignment="CENTER">Bevestig
+            </Button>
+        </HBox>
     </bottom>
 </BorderPane>
