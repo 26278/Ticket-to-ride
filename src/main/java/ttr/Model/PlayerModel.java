@@ -98,7 +98,6 @@ public class PlayerModel implements PlayerObservable {
 
     public void reduceStationCount(int stationAmount) {
         stationCount = stationCount - stationAmount;
-        System.out.println(stationCount);
         notifyObservers();
     }
     public ArrayList<TrainCardModel> getTrainCardDeck() {
@@ -145,6 +144,9 @@ public class PlayerModel implements PlayerObservable {
         this.playerName = playerName;
         fs.updateField(PLAYERS, ("player_" + this.playerNumber), playerName);
     }
+
+
+
 
 
 

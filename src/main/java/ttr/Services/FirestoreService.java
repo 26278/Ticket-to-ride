@@ -144,7 +144,6 @@ public class FirestoreService {
             this.set(cc.getID(), currentMap);
         }
     }
-
     public HashMap getTicketDeck() {
         DocumentSnapshot ds = this.get(cc.getID());
         HashMap td = (HashMap) ds.get(TICKET_DECK);

@@ -31,7 +31,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,StationObserver ,TicketCardObserver{
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,StationObserver, TicketCardObserver {
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -71,6 +71,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc.registerTrainObserver(this);
         this.bc.registerPlayerObserver(this);
         this.bc.registerFirebaseObserver(this);
+        this.bc.registerStationObserver(this);
         this.bc.registerTicketObserver(this);
         this.bc.registerStationObserver(this);
     }

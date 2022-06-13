@@ -21,6 +21,8 @@ import ttr.Views.*;
 import java.io.IOException;
 import java.util.*;
 
+import static ttr.Constants.ClientConstants.*;
+
 import static java.lang.Math.toIntExact;
 import static ttr.Constants.ClientConstants.*;
 
