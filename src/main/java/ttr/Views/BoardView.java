@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -215,7 +216,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         trainHBox.getChildren().add(trainLabel);
         stationHBox.setAlignment(Pos.CENTER);
         trainHBox.setAlignment(Pos.CENTER);
-        String swapCardHandUrl = "/ttr/menu/swapHnd.png";
+        stationLabel.setTextFill(Color.rgb(153, 88, 42));
+        trainLabel.setTextFill(Color.rgb(153, 88, 42));
+        String swapCardHandUrl = "/ttr/menu/swapHand.png";
         Image swapHandImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(swapCardHandUrl)));
         ImageView swapHandView = new ImageView(swapHandImage);
         swapHandView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -295,6 +298,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
             cardBox.getChildren().add(cardImageView);
             giveHoverEffect(cardImageView, cardBox, cardCounter);
             cardCounter.setText("X " + cardCount);
+            cardCounter.setTextFill(Color.rgb(153, 88, 42));
             PlayerHandHbox.getChildren().add(cardBox);
         }
     }//dynamically creates the view of the playerHand
