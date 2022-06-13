@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Constants.Locations;
 import ttr.Model.*;
+import ttr.Services.*;
 import ttr.Services.FirestoreService;
-import ttr.Services.SoundService;
 import ttr.Views.*;
 
 import java.io.IOException;
@@ -197,7 +197,6 @@ public class BoardController implements Controller {
         this.player.reduceTrainCount(size);
         this.sc.playSFX(SFX_PLACETRAIN);
         checkTicketCards(player.getPlayerTicketHand());
-        this.sc.playSFX("placeTrain");
     }
     public void placeStation(String id, int size) {
         ArrayList<Locations> routes = getRoute(id);
@@ -205,22 +204,19 @@ public class BoardController implements Controller {
         this.cm.addRoute(route);
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
-        this.player.reduceStationCount(size);
+        this.player.reduceStationCount(1);
         this.sc.playSFX("placeStation");
     }
 
 
 
     public void trainOrStation(Rectangle r){
-
-        if(fs.getTrainOrStation(r.getParent().getId(),TRAIN )==(null)){
-            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
-        else if(fs.getTrainOrStation(r.getParent().getId(),STATION )==(null)){
+        if (fs.getTrainOrStation(r.getParent().getId(), TRAIN ) == (null)){
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        }
+        else if (fs.getTrainOrStation(r.getParent().getId(),STATION ) == (null)){
             placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
         }
-
-
-
     }
 
 
@@ -264,15 +260,14 @@ public class BoardController implements Controller {
 
         for (Map.Entry<Object, HashMap> entry : boardState.entrySet()) {
             String key = (String) entry.getKey();
+            key = key.toLowerCase(Locale.ROOT);
             HashMap map = entry.getValue();
-            if (map.get(STATION) != null) {
-                this.sm.placeStation(key, map.get(STATION).toString());
-            }
-
             if (map.get(TRAIN) != null) {
                 this.tm.placeTrain(key, map.get(TRAIN).toString());
             }
-
+            if (map.get(STATION) != null) {
+                this.sm.placeStation(key, map.get(STATION).toString());
+            }
         }
     }
 

@@ -100,7 +100,7 @@ public class TrainCardDeckModel implements Observable {
             firestoreService.updateField(TRAINCARD_DECK, COLOR_RAINBOW,
                     String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(1).getCardColor())) - 1));
             returnHand.add(trainCardDeck.get(0));
-            discardTrainDeck.add(trainCardDeck.get(1));
+            discardDeck.add(trainCardDeck.get(1));
         } else {
             //decreases amount of cards of one color
 

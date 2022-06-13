@@ -96,7 +96,6 @@ public class GameStartController implements Controller {
 
     private int getSelectedPlayerNumber(String id) {
         String[] parts = id.split("_");
-        System.out.println(parts[1]);
         return Integer.parseInt(parts[1]);
     }
 
@@ -106,7 +105,7 @@ public class GameStartController implements Controller {
         Map playerMap = playerMap();
         int playerCount = playerMap.size();
 
-        if (this.player.getPlayerColor() != null && playerCount >= 3) {
+        if (this.player.getPlayerColor() != null && playerCount >= 1) {
             //load file
             BoardController bc = BoardController.getInstance();
             bc.setPlayer(this.player);

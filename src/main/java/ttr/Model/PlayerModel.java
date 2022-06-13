@@ -187,4 +187,8 @@ public class PlayerModel implements PlayerObservable {
     public void removeObserver(PlayerObserver observer) {
 
     }
+
+    public void setScore(int i) {
+        this.score = i;
+    }
 }

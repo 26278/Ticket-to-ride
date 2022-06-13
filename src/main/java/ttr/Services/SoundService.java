@@ -1,11 +1,8 @@
 package ttr.Services;
-
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.util.Objects;
-
 import static ttr.Constants.ClientConstants.*;
 
 public class SoundService {

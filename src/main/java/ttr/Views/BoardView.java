@@ -57,12 +57,13 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     private Button endGameButton;
     @FXML
     private VBox ticketVBOX;
+    public Group groupgroup;
     private ArrayList<Node> groups;
 
 
     @FXML
     protected void initialize() {
-        this.groups = new ArrayList<>(boardPane.getChildren());
+        this.groups = new ArrayList<>(groupgroup.getChildren());
         this.bc = BoardController.getInstance();
         Collections.addAll(imageview, Card_1, Card_2, Card_3, Card_4, Card_5);
         this.bc.register_open_card_observer(this);
@@ -73,7 +74,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc.registerFirebaseObserver(this);
         this.bc.registerStationObserver(this);
         this.bc.registerTicketObserver(this);
-        this.bc.registerStationObserver(this);
     }
 
     public void clickoncard(MouseEvent event) {
@@ -336,18 +336,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
         Group group = new Group();
         for (int i = 0; i < groups.size(); i++) {
-            if (Objects.equals(groups.get(i).getId(), groupName)) {
+            if (Objects.equals(groups.get(i).getId().toLowerCase(Locale.ROOT), groupName.toLowerCase(Locale.ROOT))) {
                 group = (Group) groups.get(i);
             }}
-
-
             Rectangle rec = (Rectangle) group.getChildren().get(0);
-
-
             rec.setFill(new ImagePattern(station));
-
-
-
         }
 
 
@@ -356,10 +349,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         Rectangle r = (Rectangle) event.getSource();
         bc.trainOrStation(r);
 
-    }
-    @Override
-    public void update(StationModel stationModel) {
-        paintStation(stationModel.getGroupName(), stationModel.getColor());
     }
 
     @FXML
@@ -396,7 +385,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         String url = "/ttr/trains/train-" + color + "-Claimed.png";
         Image train = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
         for (int i = 0; i < groups.size(); i++) {
-            if (Objects.equals(groups.get(i).getId(), groupName)) {
+            if (Objects.equals(groups.get(i).getId().toLowerCase(Locale.ROOT), groupName.toLowerCase(Locale.ROOT))) {
                 Group group = (Group) groups.get(i);
                 for (Node node : group.getChildren()) {
                     Rectangle rec = (Rectangle) node;
@@ -453,5 +442,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void update(TicketCardDeckModel ticketCardDeckModel) {
         updateTicketView(ticketCardDeckModel.getReturnHand());
     }
+
+    @Override
+    public void update(StationModel stationModel) {
+        paintStation(stationModel.getGroupName(), stationModel.getColor());
+    }
+
 
 }

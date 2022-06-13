@@ -5,6 +5,7 @@ import ttr.Views.StationObserver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class StationModel implements StationObservable {
     private List<StationObserver> observers = new ArrayList<StationObserver>();
