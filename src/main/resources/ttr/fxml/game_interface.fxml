@@ -7,8 +7,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ttr.Views.BoardView">
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ttr.Views.BoardView" styleClass="background">
+    <stylesheets>
+        <URL value="@../css/gameLoginStart.css"/>
+    </stylesheets>
     <AnchorPane fx:id="boardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                 prefHeight="670.0" prefWidth="1006.0">
         <children>
