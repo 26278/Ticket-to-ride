@@ -3,13 +3,18 @@ package ttr.Controllers;
 
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
+import ttr.Constants.ColorConstants;
 import ttr.Constants.Locations;
 import ttr.Model.*;
 import ttr.Services.FirestoreService;
@@ -169,14 +174,53 @@ public class BoardController implements Controller {
         return locations;
     }
 
-    public void placeTrain(String id, int size) {
-        ArrayList<Locations> routes = getRoute(id);
-        RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
-        this.cm.addRoute(route);
-        this.player.awardPoints(size);
-        this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
-        this.player.reduceTrainCount(size);
-        this.sc.playSFX(SFX_PLACETRAIN);
+    public void placeTrain(Group group, MouseEvent event) throws IOException {
+        this.player.setHasPaidForTrain(false);
+        int amountOfTrains = player.getTrainCount();
+        int size = group.getChildren().size();
+
+        ArrayList<String> requirements = new ArrayList<>();
+
+        System.out.println(size);
+        for (int i = 0; i < group.getChildren().size(); i++) {
+            Rectangle rec = (Rectangle) group.getChildren().get(i);
+
+
+            ArrayList<String[]> colorCodes = ColorConstants.getColorCodes();
+//        colorCode omzetten naar text.
+            String color = rec.getFill().toString();
+            for (int j = 0; j < colorCodes.size(); j++) {
+                if (Objects.equals(colorCodes.get(j)[1], color)) {
+                    String trainColor = colorCodes.get(j)[0];
+                    System.out.println("Color equals: " + trainColor);
+                    requirements.add(trainColor);
+                }
+            }
+        }
+
+        if (size > amountOfTrains) {
+            return;
+        }
+
+        TrainCardDeckController trainCardDeckController = TrainCardDeckController.getInstance();
+        trainCardDeckController.setPlayer(this.player);
+
+        // trainCardDeckController.setRequirement()
+        // player model -> notifyObserver die selectTrainCardView, update je hand
+
+        //loadFile(event, "selectCardsScreen.fxml");
+        String id = group.getChildren().get(0).getId();
+
+//        functie dat player heeft betaald schrijven
+        if (player.isHasPaidForTrain()) {
+            ArrayList<Locations> routes = getRoute(id);
+            RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
+            this.cm.addRoute(route);
+            this.player.awardPoints(size);
+            this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
+            this.player.reduceTrainCount(size);
+            this.sc.playSFX(SFX_PLACETRAIN);
+        }
     }
 
     public void endGame(MouseEvent event) {
