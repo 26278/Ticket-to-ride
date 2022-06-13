@@ -1,11 +1,5 @@
 package ttr.Model;
 
-/*todo
-PLAYERHAND = PlayerHand
-RoutesOwned = Arraylist van Routes
-*/
-
-
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
 import ttr.Views.PlayerObserver;
@@ -68,11 +62,6 @@ public class PlayerModel implements PlayerObservable {
         notifyObservers();
     }//updates score based on the amount of trains placed
 
-
-    public void pullThreeTicketCards() {
-        ticketCardDeck.pullThreeCards();
-    }
-
     public void pullCard() {
         ArrayList<TrainCardModel> hulpList = trainCardDeck.pullCards();
         playerHand.addAll(hulpList);
@@ -86,6 +75,7 @@ public class PlayerModel implements PlayerObservable {
 
     public void addCardsToTicketHand(ArrayList<TicketCardModel> addHand) {
         this.playerTicketHand.addAll(addHand);
+        notifyObservers();
     }
 
 
@@ -97,6 +87,7 @@ public class PlayerModel implements PlayerObservable {
         stationCount = stationCount - stationAmount;
         notifyObservers();
     }
+
     public ArrayList<TrainCardModel> getTrainCardDeck() {
         return trainCardDeck.getTrainCardDeck();
     }
@@ -141,12 +132,6 @@ public class PlayerModel implements PlayerObservable {
         this.playerName = playerName;
         fs.updateField(PLAYERS, ("player_" + this.playerNumber), playerName);
     }
-
-
-
-
-
-
 
     public boolean hasInitialisedFinalTurn() {
         return initialisedFinalTurn;

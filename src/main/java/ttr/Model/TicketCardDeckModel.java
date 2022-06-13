@@ -54,7 +54,6 @@ public class TicketCardDeckModel implements ThreeTicketCardObservable {
     }
 
     public void pullThreeCards() {
-        updateTicketDeck(fs.getTicketDeck());
         returnHand.clear();
         for (int i = 0; i < 3; i++) {
             returnHand.add(ticketCardDeck.get(i));

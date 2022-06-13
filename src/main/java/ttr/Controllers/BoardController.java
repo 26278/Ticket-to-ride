@@ -155,6 +155,7 @@ public class BoardController implements Controller {
     }
 
     public void getThreeTicketCards() {
+        tcdm.updateTicketDeck(fs.getTicketDeck());
         tcdm.pullThreeCards();
     }
 
@@ -198,6 +199,7 @@ public class BoardController implements Controller {
         this.sc.playSFX(SFX_PLACETRAIN);
         checkTicketCards(player.getPlayerTicketHand());
     }
+
     public void placeStation(String id, int size) {
         ArrayList<Locations> routes = getRoute(id);
         RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
@@ -209,12 +211,10 @@ public class BoardController implements Controller {
     }
 
 
-
-    public void trainOrStation(Rectangle r){
-        if (fs.getTrainOrStation(r.getParent().getId(), TRAIN ) == (null)){
+    public void trainOrStation(Rectangle r) {
+        if (fs.getTrainOrStation(r.getParent().getId(), TRAIN) == (null)) {
             placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
-        }
-        else if (fs.getTrainOrStation(r.getParent().getId(),STATION ) == (null)){
+        } else if (fs.getTrainOrStation(r.getParent().getId(), STATION) == (null)) {
             placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
         }
     }

@@ -108,10 +108,8 @@ public class TrainCardDeckModel implements Observable {
 
             firestoreService.updateField(TRAINCARD_DECK, returnHand.get(0).getCardColor(),
                     String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(0).getCardColor())) - 1));
-            firestoreService.updateField(TRAINCARD_DECK, trainCardDeck.get(1).getCardColor(),
+            firestoreService.updateField(TRAINCARD_DECK, returnHand.get(1).getCardColor(),
                     String.valueOf(firestoreService.getTrainCardValue(String.valueOf(trainCardDeck.get(1).getCardColor())) - 1));
-            returnHand.add(trainCardDeck.get(0));
-            returnHand.add(trainCardDeck.get(1));
         }
         trainCardDeck.remove(1);
         trainCardDeck.remove(0);

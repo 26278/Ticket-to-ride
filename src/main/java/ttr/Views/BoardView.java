@@ -32,7 +32,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,StationObserver, TicketCardObserver {
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver, StationObserver,
+        TicketCardObserver {
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -167,7 +168,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void goTicketButtonPress(ArrayList<Node> listOfChosenCards) {
         bc.addTickets(listOfChosenCards);
         ticketCardPane.setVisible(false);
-        this.bc.updateView();
     }
 
 
@@ -219,14 +219,14 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         stationLabel.setTextFill(Color.rgb(153, 88, 42));
         trainLabel.setTextFill(Color.rgb(153, 88, 42));
         String swapCardHandUrl = "/ttr/menu/swapHand.png";
-        Image swapHandImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(swapCardHandUrl)));
+        Image swapHandImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(swapCardHandUrl)));
         ImageView swapHandView = new ImageView(swapHandImage);
         swapHandView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                    changeHands(mouseEvent.getSource());
-                }
-            });
+                changeHands(mouseEvent.getSource());
+            }
+        });
         PlayerInfoVbox.getChildren().addAll(stationHBox, trainHBox, swapHandView);
     }//dynamically creates the view of amount of Stations and Trains the player has left
 
@@ -335,7 +335,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
 
-
     @FXML
     public void paintStation(String groupName, String color) {
         String url = "/ttr/station/station-" + color + ".png";
@@ -344,10 +343,11 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         for (int i = 0; i < groups.size(); i++) {
             if (Objects.equals(groups.get(i).getId().toLowerCase(Locale.ROOT), groupName.toLowerCase(Locale.ROOT))) {
                 group = (Group) groups.get(i);
-            }}
-            Rectangle rec = (Rectangle) group.getChildren().get(0);
-            rec.setFill(new ImagePattern(station));
+            }
         }
+        Rectangle rec = (Rectangle) group.getChildren().get(0);
+        rec.setFill(new ImagePattern(station));
+    }
 
 
     @FXML
@@ -362,9 +362,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         bc.pullCards();
     }
 
-    @FXML
-    public void pullTicketCards(ActionEvent actionEvent) {
-    }
 
     @FXML
     public void change_OpenCardImage(ArrayList arrayList) {
