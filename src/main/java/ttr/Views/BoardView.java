@@ -354,12 +354,6 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
         bc.trainOrStation(r);
-
-    }
-
-    @FXML
-    public void pullTrainCards(ActionEvent actionEvent) {
-        bc.pullCards();
     }
 
 

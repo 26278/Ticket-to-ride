@@ -215,6 +215,7 @@ public class App {
             dataForFirebase.put(FINAL_TURN, false);
             dataForFirebase.put(GAME_FINISHED, false);
             dataForFirebase.put(FINAL_SCORES, new HashMap<String, Integer>());
+            dataForFirebase.put(LONGEST_ROUTE, new HashMap<String, Integer>());
 
             //add data to firebase
             fbService.set(gameIdentifier, dataForFirebase);

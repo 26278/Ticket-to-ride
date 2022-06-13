@@ -17,6 +17,7 @@ public class ClientConstants {
     public static final String TRAINCARD_DECK = "TraincardDeck";
     public static final String DISCARD_DECK = "DiscardDeck";
     public static final String TICKET_DECK = "TicketDeck";
+    public static final String LONGEST_ROUTE = "LongestRoute";
 
 
     //sfx sound reference constants

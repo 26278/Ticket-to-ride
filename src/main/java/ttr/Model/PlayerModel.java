@@ -89,6 +89,7 @@ public class PlayerModel implements PlayerObservable {
     }
 
     public ArrayList<TrainCardModel> getTrainCardDeck() {
+        updateDeck();
         return trainCardDeck.getTrainCardDeck();
     }
 

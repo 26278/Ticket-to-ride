@@ -155,13 +155,18 @@ public class BoardController implements Controller {
     }
 
     public void getThreeTicketCards() {
-        tcdm.updateTicketDeck(fs.getTicketDeck());
-        tcdm.pullThreeCards();
+        if (this.player.isPlayerTurn()) {
+            tcdm.updateTicketDeck(fs.getTicketDeck());
+            tcdm.pullThreeCards();
+        }
     }
 
     public void pullCards() {
-        this.sc.playSFX(SFX_PULLCARD);
-        this.player.pullCard();
+        if (this.player.isPlayerTurn()) {
+            this.sc.playSFX(SFX_PULLCARD);
+            this.player.pullCard();
+            endTurn();
+        }
     }
 
     public ArrayList<Locations> getRoute(String id) {
@@ -193,6 +198,7 @@ public class BoardController implements Controller {
         ArrayList<Locations> routes = getRoute(id);
         RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
         this.cm.addRoute(route);
+        this.fs.updateLongestRoute(this.cm.getLongestRoute(), this.player.getPlayerNumber());
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
@@ -212,10 +218,12 @@ public class BoardController implements Controller {
 
 
     public void trainOrStation(Rectangle r) {
-        if (fs.getTrainOrStation(r.getParent().getId(), TRAIN) == (null)) {
-            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
-        } else if (fs.getTrainOrStation(r.getParent().getId(), STATION) == (null)) {
-            placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        if (this.player.isPlayerTurn()) {
+            if (fs.getTrainOrStation(r.getParent().getId(), TRAIN) == (null)) {
+                placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+            } else if (fs.getTrainOrStation(r.getParent().getId(), STATION) == (null)) {
+                placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+            }
         }
     }
 
@@ -252,6 +260,7 @@ public class BoardController implements Controller {
         if (addHand != null) {
             this.player.addCardsToTicketHand(addHand);
             tcdm.removeTicket(addHand);
+            endTurn();
         }
     }
 
