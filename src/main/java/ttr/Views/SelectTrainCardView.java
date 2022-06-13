@@ -74,7 +74,7 @@ public class SelectTrainCardView {
 
             this.trainCardDeckController.amountOfTrainCardsFromType(cardColorString);
             int userAmountOfCards = this.trainCardDeckController.amountOfTrainCardsFromType(cardColorString);
-            int selectAmountOfCards = 3; //Replace 0 with dynamic selected amount of cards
+            int selectAmountOfCards = 0; //Replace 0 with dynamic selected amount of cards
 
             Text userAmountOfCardsText = new Text("Aantal kaarten: " + String.valueOf(userAmountOfCards));
             Text selectAmountOfCardsText = new Text(String.valueOf(selectAmountOfCards));
@@ -119,11 +119,7 @@ public class SelectTrainCardView {
 
     @FXML
     public void confirmSelectedCards(MouseEvent mouseEvent) {
-//        SelectTrainCardView word gesloten
-//
-//        Kaarten worden naar de Deposit stapel gegooid
-//
-//        BuildTrain functie word aangeroepen
+        trainCardDeckController.closePaymentScreen(mouseEvent);
     }
 
 

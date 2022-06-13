@@ -174,53 +174,16 @@ public class BoardController implements Controller {
         return locations;
     }
 
-    public void placeTrain(Group group, MouseEvent event) throws IOException {
-        this.player.setHasPaidForTrain(false);
-        int amountOfTrains = player.getTrainCount();
-        int size = group.getChildren().size();
-
-        ArrayList<String> requirements = new ArrayList<>();
-
-        System.out.println(size);
-        for (int i = 0; i < group.getChildren().size(); i++) {
-            Rectangle rec = (Rectangle) group.getChildren().get(i);
-
-
-            ArrayList<String[]> colorCodes = ColorConstants.getColorCodes();
-//        colorCode omzetten naar text.
-            String color = rec.getFill().toString();
-            for (int j = 0; j < colorCodes.size(); j++) {
-                if (Objects.equals(colorCodes.get(j)[1], color)) {
-                    String trainColor = colorCodes.get(j)[0];
-                    System.out.println("Color equals: " + trainColor);
-                    requirements.add(trainColor);
-                }
-            }
-        }
-
-        if (size > amountOfTrains) {
-            return;
-        }
-
-        TrainCardDeckController trainCardDeckController = TrainCardDeckController.getInstance();
-        trainCardDeckController.setPlayer(this.player);
-
-        // trainCardDeckController.setRequirement()
-        // player model -> notifyObserver die selectTrainCardView, update je hand
-
-        //loadFile(event, "selectCardsScreen.fxml");
+    public void placeTrain(Group group, MouseEvent event) {
         String id = group.getChildren().get(0).getId();
-
-//        functie dat player heeft betaald schrijven
-        if (player.isHasPaidForTrain()) {
-            ArrayList<Locations> routes = getRoute(id);
-            RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
-            this.cm.addRoute(route);
-            this.player.awardPoints(size);
-            this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
-            this.player.reduceTrainCount(size);
-            this.sc.playSFX(SFX_PLACETRAIN);
-        }
+        int size = group.getChildren().size();
+        ArrayList<Locations> routes = getRoute(id);
+        RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
+        this.cm.addRoute(route);
+        this.player.awardPoints(size);
+        this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
+        this.player.reduceTrainCount(size);
+        this.sc.playSFX(SFX_PLACETRAIN);
     }
 
     public void endGame(MouseEvent event) {
@@ -298,6 +261,42 @@ public class BoardController implements Controller {
         checkCurrentPlayerName((HashMap<String, String>) ds.get(PLAYERS));
         setCurrentPlayer(ds);
         checkPlayerTurn();
+    }
+
+    public void payForTrain(Group group, MouseEvent event) {
+        this.player.setHasPaidForTrain(false);
+        int amountOfTrains = player.getTrainCount();
+        int size = group.getChildren().size();
+
+        ArrayList<String> requirements = new ArrayList<>();
+
+        for (int i = 0; i < group.getChildren().size(); i++) {
+            Rectangle rec = (Rectangle) group.getChildren().get(i);
+
+
+            ArrayList<String[]> colorCodes = ColorConstants.getColorCodes();
+//        colorCode omzetten naar text.
+            String color = rec.getFill().toString();
+            for (int j = 0; j < colorCodes.size(); j++) {
+                if (Objects.equals(colorCodes.get(j)[1], color)) {
+                    String trainColor = colorCodes.get(j)[0];
+                    requirements.add(trainColor);
+                }
+            }
+        }
+
+        if (size > amountOfTrains) {
+            return;
+        }
+
+        RequirementModel requirementModel = new RequirementModel(requirements);
+        TrainCardDeckController trainCardDeckController = TrainCardDeckController.getInstance();
+        trainCardDeckController.setRequirement(requirementModel);
+        trainCardDeckController.setRoute(group);
+        trainCardDeckController.setPlayer(this.player);
+
+        // player model -> notifyObserver die selectTrainCardView, update je hand
+        loadFile(event, "selectCardsScreen.fxml");
     }
 }
 

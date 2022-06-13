@@ -201,7 +201,7 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     public void place_train_or_station(MouseEvent event) throws IOException {;
         Rectangle r = (Rectangle) event.getSource();
         Group route = (Group) r.getParent();
-        bc.placeTrain(route, event);
+        bc.payForTrain(route, event);
     }
 
 
