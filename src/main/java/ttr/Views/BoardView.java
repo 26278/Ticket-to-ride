@@ -21,6 +21,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Rotate;
 import ttr.Constants.ColorConstants;
 import ttr.Controllers.BoardController;
 import ttr.Model.*;
@@ -30,9 +31,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 
-public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,
-        TicketCardObserver {
-
+public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserver, FirebaseObserver,StationObserver, TicketCardObserver {
     public ImageView Card_1;
     public ImageView Card_2;
     public ImageView Card_3;
@@ -72,7 +71,9 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
         this.bc.registerTrainObserver(this);
         this.bc.registerPlayerObserver(this);
         this.bc.registerFirebaseObserver(this);
+        this.bc.registerStationObserver(this);
         this.bc.registerTicketObserver(this);
+        this.bc.registerStationObserver(this);
     }
 
     public void clickoncard(MouseEvent event) {
@@ -328,10 +329,37 @@ public class BoardView implements PlayerObserver, OpenCardObserver, TrainObserve
     }
 
 
+
+    @FXML
+    public void paintStation(String groupName, String color) {
+        String url = "/ttr/station/station-" + color + ".png";
+        Image station = new Image(Objects.requireNonNull(getClass().getResourceAsStream(url)));
+        Group group = new Group();
+        for (int i = 0; i < groups.size(); i++) {
+            if (Objects.equals(groups.get(i).getId(), groupName)) {
+                group = (Group) groups.get(i);
+            }}
+
+
+            Rectangle rec = (Rectangle) group.getChildren().get(0);
+
+
+            rec.setFill(new ImagePattern(station));
+
+
+
+        }
+
+
     @FXML
     public void place_train_or_station(MouseEvent event) {
         Rectangle r = (Rectangle) event.getSource();
-        bc.placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        bc.trainOrStation(r);
+
+    }
+    @Override
+    public void update(StationModel stationModel) {
+        paintStation(stationModel.getGroupName(), stationModel.getColor());
     }
 
     @FXML

@@ -96,6 +96,10 @@ public class PlayerModel implements PlayerObservable {
         return playerTicketHand;
     }
 
+    public void reduceStationCount(int stationAmount) {
+        stationCount = stationCount - stationAmount;
+        notifyObservers();
+    }
     public ArrayList<TrainCardModel> getTrainCardDeck() {
         return trainCardDeck.getTrainCardDeck();
     }
@@ -141,6 +145,12 @@ public class PlayerModel implements PlayerObservable {
         fs.updateField(PLAYERS, ("player_" + this.playerNumber), playerName);
     }
 
+
+
+
+
+
+
     public boolean hasInitialisedFinalTurn() {
         return initialisedFinalTurn;
     }
@@ -148,7 +158,7 @@ public class PlayerModel implements PlayerObservable {
     public void setInitialisedFinalTurn(boolean initialisedFinalTurn) {
         this.initialisedFinalTurn = initialisedFinalTurn;
     }
-    
+
 
     public boolean isPlayerTurn() {
         return playerTurn;

@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
 import ttr.Constants.Locations;
@@ -20,10 +21,14 @@ import ttr.Views.*;
 import java.io.IOException;
 import java.util.*;
 
+import static ttr.Constants.ClientConstants.*;
+
 import static java.lang.Math.toIntExact;
 import static ttr.Constants.ClientConstants.*;
 
+
 public class BoardController implements Controller {
+    StationModel sm = new StationModel();
     SelectOpenCardModel som = new SelectOpenCardModel();
     TrainModel tm = new TrainModel();
     FirebaseModel fbm = new FirebaseModel();
@@ -194,6 +199,30 @@ public class BoardController implements Controller {
         checkTicketCards(player.getPlayerTicketHand());
         this.sc.playSFX("placeTrain");
     }
+    public void placeStation(String id, int size) {
+        ArrayList<Locations> routes = getRoute(id);
+        RouteModel route = new RouteModel(routes.get(0), routes.get(1), size);
+        this.cm.addRoute(route);
+        this.player.awardPoints(size);
+        this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
+        this.player.reduceStationCount(size);
+        this.sc.playSFX("placeStation");
+    }
+
+
+
+    public void trainOrStation(Rectangle r){
+
+        if(fs.getTrainOrStation(r.getParent().getId(),TRAIN )==(null)){
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());}
+        else if(fs.getTrainOrStation(r.getParent().getId(),STATION )==(null)){
+            placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+        }
+
+
+
+    }
+
 
     public void endGame(MouseEvent event) {
         submitScore();
@@ -236,10 +265,14 @@ public class BoardController implements Controller {
         for (Map.Entry<Object, HashMap> entry : boardState.entrySet()) {
             String key = (String) entry.getKey();
             HashMap map = entry.getValue();
+            if (map.get(STATION) != null) {
+                this.sm.placeStation(key, map.get(STATION).toString());
+            }
 
             if (map.get(TRAIN) != null) {
                 this.tm.placeTrain(key, map.get(TRAIN).toString());
             }
+
         }
     }
 
@@ -267,6 +300,10 @@ public class BoardController implements Controller {
         this.fm.addObserver(boardview);
     }
 
+    public void registerStationObserver(StationObserver boardView) {
+        this.sm.addObserver(boardView);
+    }
+
 
     public void loadFile(MouseEvent event, String file) {
         Parent root = null;
@@ -288,6 +325,7 @@ public class BoardController implements Controller {
         checkCurrentPlayerName((HashMap<String, String>) ds.get(PLAYERS));
         setCurrentPlayer(ds);
         checkPlayerTurn();
+
     }
 
 
