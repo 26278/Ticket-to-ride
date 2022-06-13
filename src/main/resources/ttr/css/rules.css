@@ -1,0 +1,8 @@
+.background {
+    -fx-background-image: url("../menu/rules-background.jpg");
+}
+
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}

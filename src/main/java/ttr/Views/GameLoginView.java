@@ -53,6 +53,11 @@ public class GameLoginView {
         settings.setVisible(true);
     }
 
+    public void rulesClicked(MouseEvent event){
+        glc.loadFile(event,"rules.fxml");
+    }
+
+
     public void volumeChanged(MouseEvent event) {
         vc.setMusicVolume(musicSlider.getValue());
     }
