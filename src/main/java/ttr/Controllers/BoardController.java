@@ -175,6 +175,7 @@ public class BoardController implements Controller {
         if (this.player.isPlayerTurn()) {
             this.sc.playSFX(SFX_PULLCARD);
             this.player.pullCard();
+            endTurn();
         }
     }
 
@@ -211,6 +212,7 @@ public class BoardController implements Controller {
         this.fs.updateTrainOrStation(id, TRAIN, this.player.getPlayerColor());
         this.player.reduceTrainCount(size);
         this.sc.playSFX(SFX_PLACETRAIN);
+        endTurn();
         checkTicketCards(player.getPlayerTicketHand());
     }
 
@@ -221,6 +223,7 @@ public class BoardController implements Controller {
         this.player.awardPoints(size);
         this.fs.updateTrainOrStation(id, STATION, this.player.getPlayerColor());
         this.player.reduceStationCount(1);
+        endTurn();
         this.sc.playSFX("placeStation");
     }
 
