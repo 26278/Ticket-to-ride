@@ -325,7 +325,7 @@ public class BoardController implements Controller {
         checkCurrentPlayerName((HashMap<String, String>) ds.get(PLAYERS));
         setCurrentPlayer(ds);
         checkPlayerTurn();
-
+        this.player.updateDeck();
     }
 
 

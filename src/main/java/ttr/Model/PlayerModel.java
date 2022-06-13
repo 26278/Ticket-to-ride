@@ -6,14 +6,8 @@ RoutesOwned = Arraylist van Routes
 */
 
 
-import com.google.cloud.firestore.DocumentSnapshot;
-import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
-import ttr.Constants.Locations;
-import ttr.Controllers.BoardController;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
-import ttr.Views.BoardView;
 import ttr.Views.PlayerObserver;
 
 import java.util.ArrayList;
@@ -53,6 +47,9 @@ public class PlayerModel implements PlayerObservable {
         return ticketCardDeck;
     }
 
+    public void updateDeck() {
+        this.trainCardDeck.updateDecks();
+    }
 
     public void awardPoints(int trainAmount) {
         if (trainAmount == 1) {
@@ -170,10 +167,6 @@ public class PlayerModel implements PlayerObservable {
 
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     @Override
