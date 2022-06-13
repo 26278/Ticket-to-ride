@@ -214,6 +214,7 @@ public class TrainCardDeckController {
         bc.placeTrain(route.getId(), route.getChildren().size());
         bc.removeCardsFromPlayerHand(selectedCards);
         bc.loadFile(event, "game_interface.fxml");
+        bc.checkBoardState();
     }
 
     public void setRoute(Group route) {
