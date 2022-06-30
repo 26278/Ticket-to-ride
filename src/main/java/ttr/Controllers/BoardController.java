@@ -1,6 +1,5 @@
 package ttr.Controllers;
 
-
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -9,8 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ttr.Constants.ClientConstants;
@@ -20,45 +17,37 @@ import ttr.Model.*;
 import ttr.Services.*;
 import ttr.Services.FirestoreService;
 import ttr.Views.*;
-
 import java.io.IOException;
 import java.util.*;
-
 import static ttr.Constants.ClientConstants.*;
-
 import static java.lang.Math.toIntExact;
-import static ttr.Constants.ClientConstants.*;
-
 
 public class BoardController implements Controller {
-    StationModel sm = new StationModel();
-    SelectOpenCardModel som = new SelectOpenCardModel();
-    TrainModel tm = new TrainModel();
-    FirebaseModel fbm = new FirebaseModel();
-    FirestoreService fs = new FirestoreService();
-    ClientConstants cc = new ClientConstants();
-    FirebaseModel fm = new FirebaseModel();
-    TicketCardDeckModel tcdm;
-    PlayerModel player;
-    SoundService sc;
-    private ConnectionModel cm = new ConnectionModel();
+    private final StationModel sm = new StationModel();
+    private final SelectOpenCardModel som = new SelectOpenCardModel();
+    private final TrainModel tm = new TrainModel();
+    private final FirebaseModel fbm = new FirebaseModel();
+    private final FirestoreService fs = new FirestoreService();
+    private final ClientConstants cc = new ClientConstants();
+    private final FirebaseModel fm = new FirebaseModel();
+    private final SoundService sc;
+    private final ConnectionModel cm = new ConnectionModel();
     private static BoardController boardController;
-
+    private TicketCardDeckModel tcdm;
+    private PlayerModel player;
     private int currentPlayer;
     private ArrayList<Integer> players;
-    private Stage stage;
-    private Scene scene;
 
     private BoardController() {
         this.sc = SoundService.getInstance();
         updatePlayerList((Map) fs.get(cc.getID()).get(PLAYERS));
     }
 
-
     public static BoardController getInstance() {
         if (boardController == null) {
             boardController = new BoardController();
         }
+
         return boardController;
     }
 
@@ -68,8 +57,7 @@ public class BoardController implements Controller {
         checkPlayerTurn();
     }
 
-
-    public void click_card(MouseEvent event) {
+    public void clickCard(MouseEvent event) {
         if (this.player.isPlayerTurn()) {
             ImageView image = (ImageView) event.getSource();
             String id = image.getId();
@@ -77,7 +65,7 @@ public class BoardController implements Controller {
         }
     }
 
-    public void setopencards() {
+    public void setOpenCards() {
         ArrayList<String> col = new ArrayList<>();
         try {
             while (col.size() != 5) {
@@ -86,11 +74,10 @@ public class BoardController implements Controller {
             }
             som.setOpen_cards(col);
         } catch (IndexOutOfBoundsException ignored) {
-            setopencards();
+            setOpenCards();
         }
 
     }
-
 
     public void setCurrentPlayer(DocumentSnapshot ds) {
         String value = ds.get(CURRENT_PLAYER).toString();
@@ -227,15 +214,14 @@ public class BoardController implements Controller {
         this.sc.playSFX("placeStation");
     }
 
-
-    public void trainOrStation(Rectangle r) {
+    public void trainOrStation(Rectangle r,MouseEvent event) {
         if (fs.getTrainOrStation(r.getParent().getId(), TRAIN) == (null)) {
-            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
+            Group route = (Group) r.getParent();
+            payForTrain(route,event);
         } else if (fs.getTrainOrStation(r.getParent().getId(), STATION) == (null)) {
             placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
         }
     }
-
 
     public void endGame(MouseEvent event) {
         submitScore();
@@ -269,7 +255,6 @@ public class BoardController implements Controller {
             }
         }
     }
-
 
     public void addTickets(ArrayList<Node> list) {
         tcdm.updateTicketDeck(fs.getTicketDeck());
@@ -329,7 +314,6 @@ public class BoardController implements Controller {
         this.sm.addObserver(boardView);
     }
 
-
     public void loadFile(MouseEvent event, String file) {
         Parent root = null;
         try {
@@ -337,9 +321,9 @@ public class BoardController implements Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        this.scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
-        this.stage.setScene(scene);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, cc.getScreenX(), cc.getScreenY());
+        stage.setScene(scene);
         stage.show();
     }
 

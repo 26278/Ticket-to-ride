@@ -40,13 +40,10 @@ public class Token {
             }
         }
         catch (FileNotFoundException ignored) {
-
         }
     }
 
     public String getToken() {
         return token;
     }
-
-
 }

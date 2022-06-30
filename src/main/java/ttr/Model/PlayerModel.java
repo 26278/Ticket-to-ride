@@ -3,10 +3,8 @@ package ttr.Model;
 import ttr.Services.FirestoreService;
 import ttr.Shared.PlayerObservable;
 import ttr.Views.PlayerObserver;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static ttr.Constants.ClientConstants.PLAYERS;
 
 public class PlayerModel implements PlayerObservable {
@@ -19,18 +17,12 @@ public class PlayerModel implements PlayerObservable {
     private int stationCount = 3;
     private boolean initialisedFinalTurn = false;
     private boolean hasPaidForTrain = false;
-
-
     private ArrayList<TrainCardModel> playerHand;
     private ArrayList<TicketCardModel> playerTicketHand;
-
-
     private TrainCardDeckModel trainCardDeck;
     private TicketCardDeckModel ticketCardDeck;
     private boolean playerTurn;
-
     private List<PlayerObserver> observers = new ArrayList<PlayerObserver>();
-
 
     public PlayerModel() {
         ticketCardDeck = new TicketCardDeckModel();
@@ -79,7 +71,6 @@ public class PlayerModel implements PlayerObservable {
         this.playerTicketHand.addAll(addHand);
         notifyObservers();
     }
-
 
     public ArrayList<TicketCardModel> getPlayerTicketHand() {
         return playerTicketHand;
@@ -161,7 +152,6 @@ public class PlayerModel implements PlayerObservable {
         for (PlayerObserver observer : this.observers) {
             observer.update(this);
         }
-
     }
 
     @Override
@@ -175,13 +165,10 @@ public class PlayerModel implements PlayerObservable {
 
     }
 
-    public boolean isHasPaidForTrain() {
-        return hasPaidForTrain;
-    }
-
     public void setHasPaidForTrain(boolean hasPaidForTrain) {
         this.hasPaidForTrain = hasPaidForTrain;
     }
+
     public void setScore(int i) {
         this.score = i;
     }

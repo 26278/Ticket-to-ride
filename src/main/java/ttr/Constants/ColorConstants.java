@@ -27,8 +27,6 @@ public class ColorConstants {
     public static final String CODE_RAINBOW = "0x800080ff";
     public static final String CODE_GRAY = "0x808080ff";
 
-
-
     public static ArrayList<String> getColors() {
         return new ArrayList<>(Arrays.asList(COLOR_RAINBOW, COLOR_BLACK, COLOR_BLUE, COLOR_BROWN, COLOR_GREEN,
                 COLOR_PURPLE, COLOR_YELLOW, COLOR_WHITE, COLOR_RED));
@@ -46,7 +44,6 @@ public class ColorConstants {
         String[] purple = new String[]{COLOR_PURPLE, CODE_PURPLE};
         String[] loco = new String[]{COLOR_RAINBOW, CODE_RAINBOW};
         String[] gray = new String[]{COLOR_GRAY, CODE_GRAY};
-
 
         Collections.addAll(cl, red, blue, green, yellow, white, black, brown, purple, loco, gray);
         return cl;

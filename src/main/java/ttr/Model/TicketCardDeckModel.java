@@ -3,16 +3,13 @@ package ttr.Model;
 import ttr.Constants.Locations;
 import ttr.Services.FirestoreService;
 import ttr.Views.TicketCardObserver;
-
 import java.util.*;
-
-import static java.lang.Math.toIntExact;
 
 public class TicketCardDeckModel implements ThreeTicketCardObservable {
     private ArrayList<TicketCardModel> ticketCardDeck = new ArrayList<TicketCardModel>();
-    ArrayList<TicketCardObserver> observerlist = new ArrayList<>();
+    private ArrayList<TicketCardObserver> observerlist = new ArrayList<>();
     private ArrayList<TicketCardModel> returnHand = new ArrayList<>();
-    FirestoreService fs = new FirestoreService();
+    private FirestoreService fs = new FirestoreService();
 
     public TicketCardModel searchForTicket(String loc1, String loc2) {
         for (TicketCardModel ticket : ticketCardDeck) {
@@ -45,7 +42,6 @@ public class TicketCardDeckModel implements ThreeTicketCardObservable {
         return null;
     }
 
-
     public void removeTicket(ArrayList<TicketCardModel> tickets) {
         ticketCardDeck.removeAll(tickets);
         for (TicketCardModel ticket : tickets) {
@@ -75,7 +71,6 @@ public class TicketCardDeckModel implements ThreeTicketCardObservable {
     @Override
     public void addObserver(TicketCardObserver boardview) {
         this.observerlist.add(boardview);
-
     }
 
     @Override

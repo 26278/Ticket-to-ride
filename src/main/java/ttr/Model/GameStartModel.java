@@ -2,7 +2,6 @@ package ttr.Model;
 
 import ttr.Shared.GameStartObservable;
 import ttr.Views.GameStartObserver;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

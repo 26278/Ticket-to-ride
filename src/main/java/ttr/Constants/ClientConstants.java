@@ -4,7 +4,6 @@ public class ClientConstants {
     String ID = new Token().getToken();
     public final static int screenX = 1380;
     public final static int screenY = 880;
-
     //firebase field reference constants
     public static final String BOARD_STATE = "BoardState";
     public static final String STATION = "stationColor";
@@ -17,8 +16,6 @@ public class ClientConstants {
     public static final String TRAINCARD_DECK = "TraincardDeck";
     public static final String DISCARD_DECK = "DiscardDeck";
     public static final String TICKET_DECK = "TicketDeck";
-
-
     //sfx sound reference constants
     public static final String SFX_PULLCARD = "pullCard";
     public static final String SFX_BUTTONCLICK = "buttonClick";
@@ -36,5 +33,4 @@ public class ClientConstants {
     public int getScreenY() {
         return screenY;
     }
-
 }

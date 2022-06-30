@@ -6,26 +6,17 @@ import ttr.Config.Database;
 import ttr.Constants.ClientConstants;
 import ttr.Shared.FirebaseObservable;
 import ttr.Views.FirebaseObserver;
-import ttr.Views.PlayerObserver;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import static ttr.Constants.ClientConstants.CURRENT_PLAYER;
 
 public class FirebaseModel implements FirebaseObservable {
-    ClientConstants cc = new ClientConstants();
-
-    Database change = new Database();
-    Firestore db = change.getDb();
-    DocumentReference docRef = db.collection("games").document(cc.getID());
-
+    private ClientConstants cc = new ClientConstants();
+    private Database change = new Database();
+    private Firestore db = change.getDb();
+    private DocumentReference docRef = db.collection("games").document(cc.getID());
     private List<FirebaseObserver> observers = new ArrayList<>();
-
     private String currentPlayerName;
-
     private boolean final_turn = true;
     private boolean gameFinished = false;
 
@@ -41,10 +32,6 @@ public class FirebaseModel implements FirebaseObservable {
 
     public String getCurrentPlayerName() {
         return currentPlayerName;
-    }
-
-    public boolean isFinal_turn() {
-        return final_turn;
     }
 
     public boolean isGameFinished() {

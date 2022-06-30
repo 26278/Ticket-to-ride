@@ -3,21 +3,16 @@ package ttr.Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-
 import ttr.Services.FirestoreService;
-
 import java.util.*;
-
 import static ttr.Constants.ClientConstants.TRAINCARD_DECK;
 import static ttr.Constants.ColorConstants.*;
 
-public class TrainCardDeckModel implements Observable {
-    private ArrayList<TrainCardModel> trainCardDeck = new ArrayList<TrainCardModel>();
-    private ArrayList<TrainCardModel> discardDeck = new ArrayList<TrainCardModel>();
-
-
-    FirestoreService firestoreService = new FirestoreService();
-    boolean updating = false;
+public class TrainCardDeckModel {
+    private final ArrayList<TrainCardModel> trainCardDeck = new ArrayList<>();
+    private final ArrayList<TrainCardModel> discardDeck = new ArrayList<>();
+    private FirestoreService firestoreService = new FirestoreService();
+    private boolean updating = false;
 
     public TrainCardDeckModel() {
         initDeck();
@@ -122,28 +117,8 @@ public class TrainCardDeckModel implements Observable {
         return returnHand;
     }
 
-    public void discardCards(String color) {
-        firestoreService.updateField(TRAINCARD_DECK, color,
-                String.valueOf(firestoreService.getDiscardCardValue(color) + 1));
-    }
-
     public int getDeckCount() {
         return trainCardDeck.size();
     }
 
-
-    @Override
-    public void notifyObservers() {
-
-    }
-
-    @Override
-    public void addObserver() {
-
-    }
-
-    @Override
-    public void removeObserver() {
-
-    }
 }
