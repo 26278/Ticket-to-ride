@@ -2,12 +2,9 @@ package ttr.Model;
 
 import ttr.Controllers.BoardController;
 import ttr.Views.OpenCardObserver;
-
 import java.util.ArrayList;
 import java.util.Objects;
-
 import static ttr.Constants.ColorConstants.COLOR_RAINBOW;
-
 
 public class SelectOpenCardModel implements OpenCardObservable {
     ArrayList<String> taken_card = new ArrayList<>();
@@ -19,7 +16,6 @@ public class SelectOpenCardModel implements OpenCardObservable {
         return Open_cards;
     }
 
-
     public void setOpen_cards(ArrayList<String> deck) {
         int count = 0;
         while (Open_cards.size() < 5) {
@@ -28,7 +24,6 @@ public class SelectOpenCardModel implements OpenCardObservable {
         }
         notifyObservers();
     }
-
 
     public void Put_in_hand_and_replace(String id, ArrayList<TrainCardModel> deck, ArrayList<TrainCardModel> hand) {
         bc = BoardController.getInstance();
@@ -74,6 +69,5 @@ public class SelectOpenCardModel implements OpenCardObservable {
 
     @Override
     public void removeObserver() {
-
     }
 }

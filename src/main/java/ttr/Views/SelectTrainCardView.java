@@ -21,20 +21,14 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import ttr.Constants.CardColorTypes;
 import ttr.Controllers.TrainCardDeckController;
-
 import java.io.IOException;
 import java.util.Locale;
-
 import static ttr.Constants.ClientConstants.screenX;
 import static ttr.Constants.ClientConstants.screenY;
 
 public class SelectTrainCardView {
-
-    @FXML
-    public javafx.scene.control.ListView ListView;
     public BorderPane borderPane;
-
-    TrainCardDeckController trainCardDeckController;
+    private TrainCardDeckController trainCardDeckController;
     private Stage stage;
     private Scene scene;
 
@@ -42,6 +36,11 @@ public class SelectTrainCardView {
     protected void initialize() {
         this.trainCardDeckController = TrainCardDeckController.getInstance();
         this.createCardsListView();
+    }
+
+    @FXML
+    public void confirmSelectedCards(MouseEvent mouseEvent) {
+        trainCardDeckController.closePaymentScreen(mouseEvent);
     }
 
     //  Making dynamic cards for the view based on the CardColorTyped enum and user's TrainCardDeck
@@ -99,15 +98,8 @@ public class SelectTrainCardView {
         this.trainCardDeckController.minusOne(cardColorString, borderPane);
     }
 
-    @FXML
-    public void confirmSelectedCards(MouseEvent mouseEvent) {
-        trainCardDeckController.closePaymentScreen(mouseEvent);
-    }
-
-
     public void cancelSelectedCards(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ttr/fxml/game_interface.fxml"));
-
         this.stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         this.scene = new Scene(root, screenX, screenY);
         stage.setScene(scene);

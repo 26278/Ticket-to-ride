@@ -1,7 +1,6 @@
 package ttr.Shared;
 
 import ttr.Views.GameStartObserver;
-import ttr.Views.PlayerObserver;
 
 public interface GameStartObservable {
     void notifyObservers();

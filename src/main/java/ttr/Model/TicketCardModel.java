@@ -1,11 +1,9 @@
 package ttr.Model;
 
 import ttr.Constants.Locations;
-
 import java.util.Locale;
 
 public class TicketCardModel {
-
     private String type;
     private Locations first_Destination;
     private Locations second_Destination;

@@ -8,32 +8,19 @@ import javafx.scene.text.Text;
 import ttr.Constants.CardColorTypes;
 import ttr.Model.PlayerModel;
 import ttr.Model.RequirementModel;
-import ttr.Model.TrainCardDeckModel;
 import ttr.Model.TrainCardModel;
-import ttr.Services.FirestoreService;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
-
 import static ttr.Constants.ColorConstants.COLOR_GRAY;
 import static ttr.Constants.ColorConstants.COLOR_RAINBOW;
 
 public class TrainCardDeckController {
-    TrainCardDeckModel trainDeck = new TrainCardDeckModel();
-    FirestoreService fs = new FirestoreService();
     static TrainCardDeckController trainCardDeckController;
-    PlayerModel player;
-    RequirementModel requirementModel;
+    private PlayerModel player;
+    private RequirementModel requirementModel;
     private Group route;
-
     private ArrayList<String> selectedCards;
-
-
-    public void Shuffle() {
-        Collections.shuffle(trainDeck.getTrainCardDeck());
-    }
 
     public static TrainCardDeckController getInstance() {
         if (trainCardDeckController == null) {
@@ -63,34 +50,27 @@ public class TrainCardDeckController {
 
     private boolean checkMinimum(String cardColorString, BorderPane borderPane) {
         int amount = getSelectedAmountOfCardsInt(cardColorString, borderPane);
-        if (amount > 0) {
-            return true;
-        }
-        return false;
+        return amount > 0;
     }
 
     private boolean checkMaximum(String cardColorString, BorderPane borderPane) {
         int amountOfTrainCards = amountOfTrainCardsFromType(cardColorString);
         int maxAmount = getSelectedAmountOfCardsInt(cardColorString, borderPane);
 
-        if (maxAmount < amountOfTrainCards) {
-            return true;
-        }
-        return false;
+        return maxAmount < amountOfTrainCards;
     }
 
     private Text getSelectedAmountOfCardsText(String cardColorString, BorderPane borderPane) {
         String id = "#" + cardColorString;
-        Text selectedAmountOfCardsText = ((Text) borderPane.lookup(id));
 
-        return selectedAmountOfCardsText;
+        return ((Text) borderPane.lookup(id));
     }
 
 
     private int getSelectedAmountOfCardsInt(String cardColorString, BorderPane borderPane) {
         String selectAmountOfCardsText = getSelectedAmountOfCardsText(cardColorString, borderPane).getText();
 
-        return Integer.valueOf(selectAmountOfCardsText);
+        return Integer.parseInt(selectAmountOfCardsText);
     }
 
     private void checkRequirementMatch(BorderPane borderPane) {
@@ -123,9 +103,7 @@ public class TrainCardDeckController {
                     return true;
                 }
             }
-            if (selectedCards.stream().distinct().count() == 1 && selectedCards.contains(COLOR_RAINBOW)) {
-                return true;
-            }
+            return selectedCards.stream().distinct().count() == 1 && selectedCards.contains(COLOR_RAINBOW);
         }
         return false;
     }
@@ -151,31 +129,23 @@ public class TrainCardDeckController {
                     || (requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 1)
                     || (!requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 1)
                     || (!requirements.contains(COLOR_RAINBOW) && selectedCards.stream().distinct().count() == 2) && selectedCards.contains(COLOR_RAINBOW)) {
-                for (int i = 0; i < selectedCards.size(); i++) {
-                    if (!Objects.equals(selectedCards.get(i), COLOR_RAINBOW)) {
+                for (String selectedCard : selectedCards) {
+                    if (!Objects.equals(selectedCard, COLOR_RAINBOW)) {
                         normalCountInput++;
                     }
-                    if (Objects.equals(selectedCards.get(i), COLOR_RAINBOW)) {
-                        if (rainbowCountInput != rainbowCountInput) {
-                            rainbowCountInput++;
-                        } else {
-                            normalCountInput++;
-                        }
+                    if (Objects.equals(selectedCard, COLOR_RAINBOW)) {
+                        normalCountInput++;
                     }
                 }
             }
         }
-
-        if (normalCountInput == grayCountRequired && rainbowCountInput == rainbowCountRequired) {
-            return true;
-        }
-        return false;
+        return normalCountInput == grayCountRequired && rainbowCountInput == rainbowCountRequired;
     }
 
 
     private ArrayList<String> getSelectedCards(BorderPane borderPane) {
         ArrayList<String> selectedCards = new ArrayList<>();
-        CardColorTypes cardColorTypes[] = getCardColorTypes();
+        CardColorTypes[] cardColorTypes = getCardColorTypes();
         for (CardColorTypes cardColorType : cardColorTypes) {
             getSelectedAmountOfCardsInt(getCardColorTypeString(cardColorType), borderPane);
             for (int i = 0; i < getSelectedAmountOfCardsInt(getCardColorTypeString(cardColorType), borderPane); i++) {
@@ -185,7 +155,7 @@ public class TrainCardDeckController {
         return selectedCards;
     }
 
-    public String getCardColorTypeString(CardColorTypes cardColorType) {
+    private String getCardColorTypeString(CardColorTypes cardColorType) {
         return cardColorType.toString().toLowerCase(Locale.ROOT);
     }
 
