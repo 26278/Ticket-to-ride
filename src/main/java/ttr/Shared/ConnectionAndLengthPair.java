@@ -8,10 +8,6 @@ public class ConnectionAndLengthPair {
     private Set<Locations> locationsSet;
     private Integer length;
 
-    public ConnectionAndLengthPair() {
-
-    }
-
     public ConnectionAndLengthPair(Set<Locations> locationsSet, Integer length) {
         this.locationsSet = locationsSet;
         this.length = length;
@@ -19,10 +15,6 @@ public class ConnectionAndLengthPair {
 
     public Integer getLength() {
         return length;
-    }
-
-    public void setLocationsSet(Set<Locations> locationsSet) {
-        this.locationsSet = locationsSet;
     }
 
     public void setLength(Integer length) {

@@ -1,33 +1,27 @@
 package ttr;
 
-
 import java.util.HashMap;
 import java.util.Map;
-
 import ttr.Constants.ClientConstants;
 import ttr.Controllers.Controller;
 import ttr.Controllers.FirebaseController;
 import ttr.Services.FirestoreService;
-
 import static ttr.Constants.ClientConstants.*;
 import static ttr.Constants.ColorConstants.*;
 
-
 public class App {
-    ClientConstants cc = new ClientConstants();
-    String gameIdentifier = cc.getID();
-    Controller firebaseController = new FirebaseController();
-    FirestoreService fbService = new FirestoreService();
+    private ClientConstants cc = new ClientConstants();
+    private String gameIdentifier = cc.getID();
+    private Controller firebaseController = new FirebaseController();
+    private FirestoreService fbService = new FirestoreService();
 
     public App() {
         if (fbService.get(gameIdentifier) == null) {
-
             //create hashmap with board-data
             Map<String, Map<String, String>> board = new HashMap<String, Map<String, String>>();
             Map<String, String> trainInfo = new HashMap<String, String>();
             trainInfo.put("trainColor", null);
             trainInfo.put("stationColor", null);
-
             board.put("edinburgh_london_r", trainInfo);
             board.put("edinburgh_london_l", trainInfo);
             board.put("brest_diepe", trainInfo);
@@ -130,7 +124,6 @@ public class App {
             board.put("sofia_constantinople", trainInfo);
             board.put("bucuresti_constantinople", trainInfo);
 
-
             // create hashmap with traincardDeck
             Map trainCardDeck = new HashMap<String, String>();
             trainCardDeck.put(COLOR_RED, 500);
@@ -153,7 +146,6 @@ public class App {
             discardDeck.put(COLOR_RAINBOW, 0);
             discardDeck.put(COLOR_GREEN, 0);
             discardDeck.put(COLOR_PURPLE, 0);
-
 
             //create hashmap with ticketDeck
             Map<String, Integer> ticketDeck = new HashMap<>();
@@ -221,7 +213,5 @@ public class App {
         }
         //initialise listener for firebase
         fbService.listen(gameIdentifier, firebaseController);
-
     }
-
 }

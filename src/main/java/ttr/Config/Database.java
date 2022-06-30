@@ -19,7 +19,6 @@ public class Database {
             FileInputStream serviceAccount =
                     new FileInputStream(privateKey);
 
-
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setDatabaseUrl(databaseUrl)

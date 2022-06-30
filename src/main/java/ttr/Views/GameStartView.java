@@ -8,16 +8,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ttr.Controllers.GameStartController;
 import ttr.Model.GameStartModel;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
 public class GameStartView implements GameStartObserver {
+    private GameStartController gsc;
+    private ArrayList<ImageView> playerButtons = new ArrayList<>();
 
-
-    GameStartController gsc;
     @FXML
     public VBox list;
 
@@ -53,9 +52,6 @@ public class GameStartView implements GameStartObserver {
 
     @FXML
     protected ImageView player_5;
-
-
-    private ArrayList<ImageView> playerButtons = new ArrayList<>();
 
     @FXML
     protected void initialize() {

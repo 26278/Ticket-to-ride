@@ -2,10 +2,8 @@ package ttr.Model;
 
 import ttr.Shared.StationObservable;
 import ttr.Views.StationObserver;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class StationModel implements StationObservable {
     private List<StationObserver> observers = new ArrayList<StationObserver>();
@@ -28,7 +26,6 @@ public class StationModel implements StationObservable {
 
         // daarna een update naar de view;
         this.notifyObservers();
-
     }
 
     @Override
@@ -43,17 +40,10 @@ public class StationModel implements StationObservable {
         observers.add(observer);
     }
 
-
-
-
-
     @Override
     public void removeObserver(StationObserver observer) {
         observers.remove(observer);
     }
-
-
-
 }
 
 

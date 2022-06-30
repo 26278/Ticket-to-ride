@@ -1,6 +1,5 @@
 package ttr.Shared;
 
-
 import ttr.Views.FirebaseObserver;
 
 public interface FirebaseObservable {

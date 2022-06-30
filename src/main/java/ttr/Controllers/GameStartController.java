@@ -1,16 +1,12 @@
 package ttr.Controllers;
 
 import com.google.cloud.firestore.DocumentSnapshot;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ttr.App;
 import ttr.Constants.ClientConstants;
@@ -19,12 +15,9 @@ import ttr.Model.PlayerModel;
 import ttr.Services.FirestoreService;
 import ttr.Services.SoundService;
 import ttr.Views.GameStartObserver;
-
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import static ttr.Constants.ClientConstants.PLAYERS;
 import static ttr.Constants.ClientConstants.SFX_STARTGAME;
 
@@ -90,7 +83,6 @@ public class GameStartController implements Controller {
 
     public void startGame(MouseEvent event) throws IOException {
         //change fxml file if following conditions are met: min 3 players with name, player starting is player 1 (red)
-
         Map playerMap = playerMap();
         int playerCount = playerMap.size();
 
@@ -121,6 +113,4 @@ public class GameStartController implements Controller {
     public void update(DocumentSnapshot ds) {
         gsm.setPlayerCount((Map) ds.get(PLAYERS));
     }
-
-
 }

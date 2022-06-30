@@ -1,28 +1,17 @@
 package ttr.Model;
 
-/*
-todo
-ROTATION
-
-*/
-
-import javafx.scene.shape.Rectangle;
 import ttr.Shared.trainObservable;
 import ttr.Views.TrainObserver;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrainModel implements trainObservable {
     private List<TrainObserver> observers = new ArrayList<TrainObserver>();
-
     private String color;
     private String groupName;
-
     public String getColor() {
         return color;
     }
-
     public String getGroupName() {
         return groupName;
     }
@@ -31,10 +20,8 @@ public class TrainModel implements trainObservable {
         // eerst firebase hier stop ik trein;
         this.color = trainColor;
         this.groupName = rectangleGroupName;
-
         // daarna een update naar de view;
         this.notifyObservers();
-
     }
 
     @Override
@@ -53,6 +40,4 @@ public class TrainModel implements trainObservable {
     public void removeObserver(TrainObserver observer) {
         observers.remove(observer);
     }
-
-
 }

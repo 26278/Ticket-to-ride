@@ -25,7 +25,7 @@ public class GameLoginController {
         sc.playMusic();
     }
 
-    public void joinGame(String token, MouseEvent event) throws IOException {
+    public void joinGame(String token, MouseEvent event) throws NullPointerException {
         new Token().createToken(token);
         new App();
         Platform.runLater(() -> {
@@ -35,7 +35,6 @@ public class GameLoginController {
             }
         });
     }
-
 
     public void loadFile(MouseEvent event, String file) {
         Parent root = null;

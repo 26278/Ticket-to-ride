@@ -1,9 +1,7 @@
 package ttr.Model;
 
-import javafx.util.Pair;
 import ttr.Constants.Locations;
 import ttr.Shared.ConnectionAndLengthPair;
-
 import java.util.*;
 
 public class ConnectionModel {
@@ -69,24 +67,11 @@ public class ConnectionModel {
         connections.remove(set2);
     }//Merges 2 sets of locations and length with each other
 
-
     public boolean checkForRouteCompleted(Locations location1, Locations location2) {
         int set1 = getSetForLocation(location1);
         int set2 = getSetForLocation(location2);
         return set1 == set2 && set1 != NOT_A_SET;
     }//Checks whether 2 locations are connected or not
-
-
-    public int getLongestRoute() {
-        int longestRouteLength = 0;
-        for (ConnectionAndLengthPair pair : connections) {
-            if (pair.getLength() > longestRouteLength) {
-                longestRouteLength = pair.getLength();
-            }
-        }
-        return longestRouteLength;
-    }//returns longest route length
-
 
     public boolean isRouteCardCompleted(TicketCardModel ticketCard) {
         return checkForRouteCompleted(ticketCard.getFirst_Destination(), ticketCard.getSecond_Destination());
