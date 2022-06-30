@@ -228,10 +228,9 @@ public class BoardController implements Controller {
     }
 
 
-    public void trainOrStation(Rectangle r,MouseEvent event) {
+    public void trainOrStation(Rectangle r) {
         if (fs.getTrainOrStation(r.getParent().getId(), TRAIN) == (null)) {
-            Group route = (Group) r.getParent();
-            payForTrain(route,event);
+            placeTrain(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
         } else if (fs.getTrainOrStation(r.getParent().getId(), STATION) == (null)) {
             placeStation(r.getParent().getId(), r.getParent().getChildrenUnmodifiable().size());
         }
